@@ -296,45 +296,56 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
 }
 
 /* ============================================================
-   Tabs (Overview / Stats / Feed)
+   Tabs (Overview / Stats / Feed) — segmented-control style
    ============================================================ */
 .tabs {
   display: flex;
-  gap: var(--x6);
-  padding: 0 var(--x6);
-  margin-top: var(--x4);
-  border-bottom: 1px solid var(--color-border);
+  gap: var(--x1);
+  padding: var(--x1);
+  margin: var(--x4) var(--x6) 0;
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-full);
 }
 .tab {
-  padding: var(--x3) 0;
-  font-size: var(--type-body-sm);
+  flex: 1;
+  padding: 8px var(--x3);
+  font-size: 13px;
   font-weight: 500;
   color: var(--color-text-secondary);
-  position: relative;
+  border-radius: var(--radius-full);
+  transition: all 0.15s ease;
+  text-align: center;
 }
-.tab.active { color: var(--color-text-primary); font-weight: 600; }
-.tab.active::after {
-  content: '';
-  position: absolute;
-  bottom: -1px; left: 0; right: 0;
-  height: 2px;
-  background: var(--color-brand-primary);
+.tab:hover { color: var(--color-text-primary); }
+.tab.active {
+  color: var(--color-text-primary);
+  font-weight: 600;
+  background: var(--color-surface);
+  box-shadow: var(--elevation-1);
 }
 
 /* ============================================================
-   Metric Cards
+   Metric Cards — with sparklines and delta pills
    ============================================================ */
 .metric-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: var(--x3);
-  padding: var(--x4) var(--x6);
+  gap: var(--x2);
+  padding: var(--x4) var(--x6) var(--x2);
 }
 .metric-card {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-x2);
   padding: var(--x3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--x2);
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+.metric-card:hover {
+  box-shadow: var(--elevation-1);
+  transform: translateY(-1px);
 }
 .metric-label {
   font-size: 10px;
@@ -344,13 +355,125 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
   font-weight: 500;
 }
 .metric-value {
-  font-size: var(--type-body-sm);
-  font-weight: 600;
+  font-size: 15px;
+  font-weight: 700;
   color: var(--color-text-primary);
-  margin-top: var(--x1);
+  letter-spacing: -0.2px;
 }
 .metric-value.positive { color: var(--color-brand-primary); }
 .metric-value.negative { color: var(--color-negative); }
+.metric-delta {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px var(--x2);
+  border-radius: var(--radius-full);
+  background: var(--color-brand-primary-bg);
+  color: var(--color-brand-primary);
+  align-self: flex-start;
+}
+.metric-delta.negative { background: var(--color-negative-bg); color: var(--color-negative); }
+.metric-spark { width: 100%; height: 24px; display: block; }
+
+/* ============================================================
+   Market Overview Panels — sentiment, funding, trades
+   ============================================================ */
+.overview-stack { padding: 0 var(--x6) var(--x4); display: flex; flex-direction: column; gap: var(--x3); }
+
+.panel {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-x2);
+  padding: var(--x4);
+}
+.panel-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: var(--x3);
+}
+.panel-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+.panel-meta { font-size: 11px; color: var(--color-text-muted); font-weight: 500; }
+
+/* Sentiment bar */
+.sentiment-row {
+  display: flex; align-items: baseline; justify-content: space-between;
+  margin-bottom: var(--x2);
+  font-size: var(--type-body-sm);
+  font-weight: 600;
+}
+.sentiment-row .long  { color: var(--color-brand-primary); }
+.sentiment-row .short { color: var(--color-negative); }
+.sentiment-bar {
+  display: flex; height: 6px;
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  background: var(--color-bg-secondary);
+}
+.sentiment-bar__long  { background: var(--color-brand-primary); }
+.sentiment-bar__short { background: var(--color-negative); }
+.sentiment-footer {
+  display: flex; justify-content: space-between;
+  margin-top: var(--x2);
+  font-size: 11px;
+  color: var(--color-text-secondary);
+}
+.sentiment-footer strong { color: var(--color-text-primary); font-weight: 600; }
+
+/* Funding countdown with progress ring */
+.funding-row {
+  display: flex; align-items: center; gap: var(--x4);
+}
+.funding-ring { flex-shrink: 0; position: relative; width: 56px; height: 56px; }
+.funding-ring svg { transform: rotate(-90deg); }
+.funding-ring__track { stroke: var(--color-border); }
+.funding-ring__fill  { stroke: var(--color-brand-primary); stroke-linecap: round; transition: stroke-dashoffset 0.5s ease; }
+.funding-ring__label {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 600; color: var(--color-text-primary);
+  line-height: 1;
+}
+.funding-ring__label .h { font-size: 13px; }
+.funding-body { flex: 1; min-width: 0; }
+.funding-rate {
+  font-size: 18px; font-weight: 700;
+  color: var(--color-brand-primary);
+  letter-spacing: -0.3px;
+}
+.funding-rate.negative { color: var(--color-negative); }
+.funding-hint { font-size: 11px; color: var(--color-text-secondary); margin-top: 2px; line-height: 1.4; }
+
+/* Recent trades feed */
+.trades-feed { display: flex; flex-direction: column; gap: var(--x2); }
+.trade-row {
+  display: grid;
+  grid-template-columns: 20px 1fr auto auto;
+  align-items: center;
+  gap: var(--x3);
+  padding: var(--x2) 0;
+  font-size: 12px;
+  border-bottom: 1px solid var(--color-border);
+}
+.trade-row:last-child { border-bottom: none; }
+.trade-marker {
+  width: 16px; height: 16px;
+  border-radius: var(--radius-full);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; font-weight: 700; color: #FFFFFF;
+}
+.trade-marker.buy  { background: var(--color-brand-primary); }
+.trade-marker.sell { background: var(--color-negative); }
+.trade-size  { color: var(--color-text-primary); font-weight: 600; }
+.trade-price { color: var(--color-text-primary); font-weight: 600; font-variant-numeric: tabular-nums; }
+.trade-time  { color: var(--color-text-muted); font-size: 11px; font-variant-numeric: tabular-nums; }
 .metric-sublabel {
   font-size: 10px;
   color: var(--color-text-muted);
@@ -1144,20 +1267,121 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
     <button class="tab">Feed</button>
   </div>
 
-  <!-- Metric Cards -->
+  <!-- Metric Cards with sparklines + delta pills -->
   <div class="metric-grid">
     <div class="metric-card">
       <div class="metric-label">24h Volume</div>
       <div class="metric-value">$48.2B</div>
+      <svg class="metric-spark" viewBox="0 0 100 24" preserveAspectRatio="none" fill="none">
+        <path d="M0 18 L10 15 L20 17 L30 12 L40 14 L50 8 L60 11 L70 6 L80 9 L90 4 L100 6" stroke="var(--color-brand-primary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="metric-delta">▲ 12.4%</span>
     </div>
     <div class="metric-card">
       <div class="metric-label">Open Interest</div>
       <div class="metric-value">$18.7B</div>
+      <svg class="metric-spark" viewBox="0 0 100 24" preserveAspectRatio="none" fill="none">
+        <path d="M0 10 L10 12 L20 8 L30 11 L40 7 L50 9 L60 5 L70 8 L80 4 L90 6 L100 3" stroke="var(--color-accent-blue)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="metric-delta" style="background: var(--color-accent-blue-bg); color: var(--color-accent-blue);">▲ 3.8%</span>
     </div>
     <div class="metric-card">
       <div class="metric-label">Funding</div>
       <div class="metric-value positive">+0.010%</div>
-      <div class="metric-sublabel">in 5h 23m</div>
+      <svg class="metric-spark" viewBox="0 0 100 24" preserveAspectRatio="none" fill="none">
+        <path d="M0 14 L10 10 L20 16 L30 8 L40 12 L50 6 L60 14 L70 4 L80 10 L90 8 L100 12" stroke="var(--color-brand-primary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="0" y1="12" x2="100" y2="12" stroke="var(--color-border)" stroke-width="0.5" stroke-dasharray="2 2"/>
+      </svg>
+      <span class="metric-delta">Next 5h 23m</span>
+    </div>
+  </div>
+
+  <!-- Rich Overview stack — sentiment, funding countdown, recent trades -->
+  <div class="overview-stack">
+
+    <!-- Market Sentiment -->
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">Market Sentiment</span>
+        <span class="panel-meta">eToro traders · 24h</span>
+      </div>
+      <div class="sentiment-row">
+        <span class="long">Long 62%</span>
+        <span class="short">38% Short</span>
+      </div>
+      <div class="sentiment-bar">
+        <div class="sentiment-bar__long"  style="width: 62%;"></div>
+        <div class="sentiment-bar__short" style="width: 38%;"></div>
+      </div>
+      <div class="sentiment-footer">
+        <span><strong>14,382</strong> traders positioned</span>
+        <span><strong>+2.1%</strong> vs yesterday</span>
+      </div>
+    </div>
+
+    <!-- Funding Countdown -->
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">Funding Rate</span>
+        <span class="panel-meta">Every 8h · Longs pay shorts</span>
+      </div>
+      <div class="funding-row">
+        <div class="funding-ring" aria-label="Time to next funding">
+          <svg width="56" height="56" viewBox="0 0 56 56">
+            <circle class="funding-ring__track" cx="28" cy="28" r="24" stroke-width="4" fill="none"/>
+            <circle class="funding-ring__fill"  cx="28" cy="28" r="24" stroke-width="4" fill="none"
+                    stroke-dasharray="150.8" stroke-dashoffset="42"/>
+          </svg>
+          <div class="funding-ring__label">
+            <span class="h">5<span style="color: var(--color-text-muted); font-weight: 500;">h</span></span>
+            <span style="color: var(--color-text-secondary);">23m</span>
+          </div>
+        </div>
+        <div class="funding-body">
+          <div class="funding-rate">+0.0100%</div>
+          <div class="funding-hint">Based on a $1,000 position, you'd pay <strong style="color: var(--color-text-primary); font-weight: 600;">$0.10</strong> at next funding.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Trades -->
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">Recent Trades</span>
+        <span class="panel-meta">Live · BTC/USD Perp</span>
+      </div>
+      <div class="trades-feed">
+        <div class="trade-row">
+          <span class="trade-marker buy">B</span>
+          <span class="trade-size">0.248 BTC</span>
+          <span class="trade-price positive" style="color: var(--color-brand-primary);">$84,238.10</span>
+          <span class="trade-time">20:14:58</span>
+        </div>
+        <div class="trade-row">
+          <span class="trade-marker sell">S</span>
+          <span class="trade-size">0.052 BTC</span>
+          <span class="trade-price" style="color: var(--color-negative);">$84,232.40</span>
+          <span class="trade-time">20:14:52</span>
+        </div>
+        <div class="trade-row">
+          <span class="trade-marker buy">B</span>
+          <span class="trade-size">1.180 BTC</span>
+          <span class="trade-price" style="color: var(--color-brand-primary);">$84,236.70</span>
+          <span class="trade-time">20:14:47</span>
+        </div>
+        <div class="trade-row">
+          <span class="trade-marker buy">B</span>
+          <span class="trade-size">0.094 BTC</span>
+          <span class="trade-price" style="color: var(--color-brand-primary);">$84,235.20</span>
+          <span class="trade-time">20:14:41</span>
+        </div>
+        <div class="trade-row">
+          <span class="trade-marker sell">S</span>
+          <span class="trade-size">0.336 BTC</span>
+          <span class="trade-price" style="color: var(--color-negative);">$84,230.80</span>
+          <span class="trade-time">20:14:35</span>
+        </div>
+      </div>
     </div>
   </div>
 
