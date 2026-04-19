@@ -956,13 +956,56 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
 .disclaimer a:hover { text-decoration: underline; }
 
 /* ============================================================
-   Position Card (Screen 3)
+   Portfolio Section (desktop-style, no longer phone-width)
    ============================================================ */
 .position-section {
-  max-width: 430px;
+  max-width: 960px;
   margin: var(--x8) auto 0;
   padding: 0 var(--x6) var(--x8);
 }
+@media (max-width: 560px) {
+  .position-section { padding: 0 var(--x4) var(--x6); }
+}
+
+.portfolio-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--x4);
+  margin-bottom: var(--x5);
+  flex-wrap: wrap;
+}
+.portfolio-title {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  color: var(--color-text-primary);
+}
+.portfolio-subtitle {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  margin-top: 2px;
+}
+.portfolio-summary {
+  display: flex;
+  gap: var(--x5);
+  align-items: flex-end;
+}
+.portfolio-stat .k {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-text-muted);
+  font-weight: 600;
+}
+.portfolio-stat .v {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-top: 2px;
+}
+.portfolio-stat .v.positive { color: var(--color-brand-primary); }
+
 .section-eyebrow {
   font-size: 10px;
   text-transform: uppercase;
@@ -984,7 +1027,9 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--x4);
+  padding: var(--x5) var(--x5) var(--x4);
+  gap: var(--x4);
+  flex-wrap: wrap;
 }
 .position-id { display: flex; align-items: center; gap: var(--x3); }
 .position-id .avatar {
@@ -1000,18 +1045,29 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
 .position-name { font-weight: 600; color: var(--color-text-primary); }
 .position-meta { font-size: var(--type-caption); color: var(--color-text-secondary); margin-top: 2px; }
 
-.position-pnl { padding: 0 var(--x4) var(--x3); }
+.position-pnl {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
 .pnl-main {
   display: flex; align-items: baseline; gap: var(--x2);
 }
-.pnl-value { font-size: var(--type-h2); font-weight: 700; letter-spacing: -0.3px; }
+.pnl-value { font-size: 28px; font-weight: 700; letter-spacing: -0.3px; line-height: 1.1; }
 .pnl-pct { font-size: var(--type-body-sm); font-weight: 600; }
+.pnl-caption { font-size: 11px; color: var(--color-text-muted); margin-top: 2px; }
 
 .position-details {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--x3) var(--x4);
-  padding: 0 var(--x4) var(--x4);
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--x4) var(--x5);
+  padding: var(--x4) var(--x5);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+@media (max-width: 720px) {
+  .position-details { grid-template-columns: repeat(2, 1fr); }
 }
 .detail-label {
   font-size: 10px;
@@ -1030,9 +1086,10 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
 .detail-sub { font-size: 10px; color: var(--color-text-muted); }
 
 .sltp-pair {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: var(--x3);
-  padding: 0 var(--x4) var(--x4);
+  padding: var(--x4) var(--x5);
 }
 .sltp-slot {
   flex: 1;
@@ -1055,7 +1112,13 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
 .position-actions {
   display: flex;
   gap: var(--x3);
-  padding: 0 var(--x4) var(--x4);
+  padding: 0 var(--x5) var(--x5);
+  justify-content: flex-end;
+}
+.position-actions .btn { flex: 0 0 auto; min-width: 180px; }
+@media (max-width: 560px) {
+  .position-actions { flex-direction: column; }
+  .position-actions .btn { width: 100%; min-width: 0; }
 }
 
 .breakdown-card {
@@ -1064,6 +1127,139 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
   border-radius: var(--radius-x2);
   padding: var(--x4);
   margin-top: var(--x3);
+}
+
+/* ============================================================
+   Portfolio modals (Edit SL/TP, Close confirm)
+   ============================================================ */
+.pf-modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(10, 12, 16, 0.55);
+  z-index: 60;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: var(--x4);
+  animation: pfFade 0.15s ease-out;
+}
+.pf-modal-overlay.open { display: flex; }
+@keyframes pfFade { from { opacity: 0 } to { opacity: 1 } }
+
+.pf-modal {
+  position: relative;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-x2);
+  box-shadow: var(--elevation-3);
+  width: 100%;
+  max-width: 440px;
+  animation: pfPop 0.2s cubic-bezier(0.32, 0.72, 0, 1);
+  overflow: hidden;
+}
+.pf-modal.sltp { max-width: 520px; }
+@keyframes pfPop {
+  from { transform: translateY(8px) scale(0.98); opacity: 0; }
+  to   { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.pf-modal-header {
+  padding: var(--x5) var(--x5) var(--x3);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--x3);
+}
+.pf-modal-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  letter-spacing: -0.2px;
+}
+.pf-modal-sub {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  margin-top: 2px;
+}
+.pf-modal-close {
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-full);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+}
+.pf-modal-close:hover { background: var(--color-bg-secondary); color: var(--color-text-primary); }
+
+.pf-modal-body { padding: 0 var(--x5) var(--x5); }
+
+.pf-field { margin-top: var(--x4); }
+.pf-field-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+  margin-bottom: var(--x2);
+}
+.pf-field-hint { font-size: 11px; color: var(--color-text-muted); font-weight: 400; }
+.pf-input-wrap {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-x1);
+  padding: 0 var(--x3);
+  background: var(--color-bg);
+  transition: border-color 0.15s;
+}
+.pf-input-wrap:focus-within { border-color: var(--color-brand-primary); }
+.pf-input-wrap .prefix { color: var(--color-text-muted); font-weight: 500; }
+.pf-input-wrap input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: var(--x3);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  font-family: inherit;
+}
+.pf-input-sub {
+  margin-top: var(--x2);
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  display: flex;
+  justify-content: space-between;
+}
+.pf-input-sub .neg { color: var(--color-negative); font-weight: 600; }
+.pf-input-sub .pos { color: var(--color-brand-primary); font-weight: 600; }
+
+.pf-confirm-summary {
+  margin-top: var(--x4);
+  padding: var(--x4);
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-x1);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--x3);
+}
+.pf-confirm-summary .k { font-size: 11px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+.pf-confirm-summary .v { font-size: 14px; font-weight: 600; color: var(--color-text-primary); margin-top: 2px; }
+
+.pf-modal-footer {
+  padding: var(--x4) var(--x5);
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  gap: var(--x3);
+  justify-content: flex-end;
+  background: var(--color-bg-secondary);
+}
+.pf-modal-footer .btn { flex: 0 0 auto; min-width: 120px; }
+@media (max-width: 480px) {
+  .pf-modal-footer { flex-direction: column-reverse; }
+  .pf-modal-footer .btn { width: 100%; }
 }
 .breakdown-header {
   display: flex;
@@ -1523,9 +1719,28 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
   </div>
 </div>
 
-<!-- ==================== SCREEN 3: OPEN POSITION CARD ==================== -->
+<!-- ==================== SCREEN 3: PORTFOLIO / OPEN POSITIONS ==================== -->
 <div class="position-section">
-  <div class="section-eyebrow">Open Position</div>
+  <div class="portfolio-header">
+    <div>
+      <div class="portfolio-title">Portfolio</div>
+      <div class="portfolio-subtitle">1 open position · Perpetuals</div>
+    </div>
+    <div class="portfolio-summary">
+      <div class="portfolio-stat">
+        <div class="k">Invested</div>
+        <div class="v" id="pf-invested">$1,000.00</div>
+      </div>
+      <div class="portfolio-stat">
+        <div class="k">Exposure</div>
+        <div class="v" id="pf-exposure">$10,000.00</div>
+      </div>
+      <div class="portfolio-stat">
+        <div class="k">Unrealized P&L</div>
+        <div class="v positive" id="pf-pnl">+$234.50</div>
+      </div>
+    </div>
+  </div>
 
   <div class="position-card">
     <div class="position-header">
@@ -1535,17 +1750,17 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
           <div class="position-name-row">
             <span class="position-name">BTC/USD</span>
             <span class="badge badge-positive">LONG</span>
-            <span class="text-caption text-subtle">×10</span>
+            <span class="text-caption text-subtle">×<span id="pos-leverage">10</span></span>
           </div>
           <div class="position-meta">Opened Apr 16, 2026 · 20:15</div>
         </div>
       </div>
-    </div>
-
-    <div class="position-pnl">
-      <div class="pnl-main">
-        <span class="pnl-value text-positive">+$234.50</span>
-        <span class="pnl-pct text-positive">(+23.45%)</span>
+      <div class="position-pnl">
+        <div class="pnl-main">
+          <span class="pnl-value text-positive" id="pos-pnl-value">+$234.50</span>
+          <span class="pnl-pct text-positive" id="pos-pnl-pct">(+23.45%)</span>
+        </div>
+        <div class="pnl-caption">Current $84,466.00 · Mark</div>
       </div>
     </div>
 
@@ -1577,19 +1792,19 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
     <div class="sltp-pair">
       <div class="sltp-slot sl">
         <div class="sltp-slot-label">Stop Loss</div>
-        <div class="sltp-slot-value">$82,000.00</div>
-        <div class="sltp-slot-sub">-$265.10</div>
+        <div class="sltp-slot-value" id="sl-display">$82,000.00</div>
+        <div class="sltp-slot-sub" id="sl-sub">-$265.10</div>
       </div>
       <div class="sltp-slot tp">
         <div class="sltp-slot-label">Take Profit</div>
-        <div class="sltp-slot-value">$88,000.00</div>
-        <div class="sltp-slot-sub">+$447.30</div>
+        <div class="sltp-slot-value" id="tp-display">$88,000.00</div>
+        <div class="sltp-slot-sub" id="tp-sub">+$447.30</div>
       </div>
     </div>
 
     <div class="position-actions">
-      <button class="btn btn-l btn-secondary btn-block">Edit SL/TP</button>
-      <button class="btn btn-l btn-negative btn-block">Close Position</button>
+      <button class="btn btn-l btn-secondary" onclick="openSLTPSheet()">Edit SL/TP</button>
+      <button class="btn btn-l btn-negative" onclick="openCloseConfirm()">Close Position</button>
     </div>
   </div>
 
@@ -1613,6 +1828,97 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
     </div>
   </div>
 </div>
+
+<!-- ==================== Edit SL/TP modal ==================== -->
+<div id="sltp-modal" class="pf-modal-overlay" onclick="if(event.target===this)closeSLTPSheet()">
+  <div class="pf-modal sltp" role="dialog" aria-labelledby="sltp-modal-title">
+    <div class="pf-modal-header">
+      <div>
+        <div class="pf-modal-title" id="sltp-modal-title">Edit Stop Loss &amp; Take Profit</div>
+        <div class="pf-modal-sub">BTC/USD · LONG · ×10 · Open $84,231.50</div>
+      </div>
+      <button class="pf-modal-close" onclick="closeSLTPSheet()" aria-label="Close">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="pf-modal-body">
+      <div class="pf-field">
+        <div class="pf-field-label">
+          <span>Stop Loss</span>
+          <span class="pf-field-hint">Max loss: -100% of invested</span>
+        </div>
+        <div class="pf-input-wrap">
+          <span class="prefix">$</span>
+          <input id="sl-input" type="text" value="82,000.00" inputmode="decimal" oninput="recomputeSLTP()">
+        </div>
+        <div class="pf-input-sub">
+          <span>At this rate your P&amp;L will be:</span>
+          <span class="neg" id="sl-preview">-$265.10</span>
+        </div>
+      </div>
+      <div class="pf-field">
+        <div class="pf-field-label">
+          <span>Take Profit</span>
+          <span class="pf-field-hint">Auto-close when target hit</span>
+        </div>
+        <div class="pf-input-wrap">
+          <span class="prefix">$</span>
+          <input id="tp-input" type="text" value="88,000.00" inputmode="decimal" oninput="recomputeSLTP()">
+        </div>
+        <div class="pf-input-sub">
+          <span>At this rate your P&amp;L will be:</span>
+          <span class="pos" id="tp-preview">+$447.30</span>
+        </div>
+      </div>
+    </div>
+    <div class="pf-modal-footer">
+      <button class="btn btn-l btn-secondary" onclick="closeSLTPSheet()">Cancel</button>
+      <button class="btn btn-l btn-primary" onclick="applySLTP()">Update Orders</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== Close Position confirmation ==================== -->
+<div id="close-modal" class="pf-modal-overlay" onclick="if(event.target===this)closeCloseConfirm()">
+  <div class="pf-modal" role="dialog" aria-labelledby="close-modal-title">
+    <div class="pf-modal-header">
+      <div>
+        <div class="pf-modal-title" id="close-modal-title">Close position?</div>
+        <div class="pf-modal-sub">This will close your BTC/USD long at the current mark price.</div>
+      </div>
+      <button class="pf-modal-close" onclick="closeCloseConfirm()" aria-label="Close">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="pf-modal-body">
+      <div class="pf-confirm-summary">
+        <div>
+          <div class="k">Close rate</div>
+          <div class="v">$84,466.00</div>
+        </div>
+        <div>
+          <div class="k">Realized P&amp;L</div>
+          <div class="v text-positive">+$234.50</div>
+        </div>
+        <div>
+          <div class="k">Exposure</div>
+          <div class="v">$10,000.00</div>
+        </div>
+        <div>
+          <div class="k">Closing fee</div>
+          <div class="v">-$1.25 (0.0125%)</div>
+        </div>
+      </div>
+    </div>
+    <div class="pf-modal-footer">
+      <button class="btn btn-l btn-secondary" onclick="closeCloseConfirm()">Keep Open</button>
+      <button class="btn btn-l btn-negative" onclick="confirmClose()">Close Position</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== Toast ==================== -->
+<div id="pf-toast" style="position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(20px); background:var(--color-text-primary); color:var(--color-bg); padding:12px 20px; border-radius:var(--radius-full); font-size:14px; font-weight:600; z-index:100; opacity:0; transition:all 0.25s; pointer-events:none; box-shadow:var(--elevation-3);"></div>
 
 <!-- ==================== Footer ==================== -->
 <div class="page-footer">
@@ -1764,6 +2070,102 @@ function toggleBreakdown() {
   document.getElementById('bd-body').classList.toggle('open');
   document.getElementById('bd-chevron').classList.toggle('open');
 }
+
+/* ----------------------- Portfolio: position state ----------------------- */
+const posOpenRate = 84231.50;
+const posInvested = 1000;
+const posLeverage = 10;
+const posExposure = posInvested * posLeverage;
+const posUnits = posExposure / posOpenRate;
+
+function fmtUsd(n) {
+  const sign = n >= 0 ? '+' : '-';
+  return sign + '$' + Math.abs(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+function fmtUsdPlain(n) {
+  return '$' + Math.abs(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+function parseNum(str) {
+  const n = parseFloat(String(str).replace(/[^0-9.]/g, ''));
+  return isNaN(n) ? 0 : n;
+}
+
+/* ----------------------- Edit SL/TP modal ----------------------- */
+function openSLTPSheet() {
+  document.getElementById('sltp-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  recomputeSLTP();
+}
+function closeSLTPSheet() {
+  document.getElementById('sltp-modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function recomputeSLTP() {
+  const sl = parseNum(document.getElementById('sl-input').value);
+  const tp = parseNum(document.getElementById('tp-input').value);
+  const slPnl = (sl - posOpenRate) * posUnits;
+  const tpPnl = (tp - posOpenRate) * posUnits;
+  const slEl = document.getElementById('sl-preview');
+  const tpEl = document.getElementById('tp-preview');
+  slEl.textContent = fmtUsd(slPnl);
+  slEl.className = slPnl < 0 ? 'neg' : 'pos';
+  tpEl.textContent = fmtUsd(tpPnl);
+  tpEl.className = tpPnl < 0 ? 'neg' : 'pos';
+}
+function applySLTP() {
+  const sl = parseNum(document.getElementById('sl-input').value);
+  const tp = parseNum(document.getElementById('tp-input').value);
+  const slPnl = (sl - posOpenRate) * posUnits;
+  const tpPnl = (tp - posOpenRate) * posUnits;
+  document.getElementById('sl-display').textContent = fmtUsdPlain(sl);
+  document.getElementById('tp-display').textContent = fmtUsdPlain(tp);
+  document.getElementById('sl-sub').textContent = fmtUsd(slPnl);
+  document.getElementById('tp-sub').textContent = fmtUsd(tpPnl);
+  closeSLTPSheet();
+  showToast('SL/TP updated');
+}
+
+/* ----------------------- Close Position confirmation ----------------------- */
+function openCloseConfirm() {
+  document.getElementById('close-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeCloseConfirm() {
+  document.getElementById('close-modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function confirmClose() {
+  closeCloseConfirm();
+  showToast('Position closed · P&L +$234.50 credited');
+  const card = document.querySelector('.position-card');
+  if (card) {
+    card.style.transition = 'opacity 0.4s, transform 0.4s';
+    card.style.opacity = '0.4';
+    card.style.transform = 'scale(0.98)';
+  }
+}
+
+/* ----------------------- Toast ----------------------- */
+function showToast(msg) {
+  const t = document.getElementById('pf-toast');
+  if (!t) return;
+  t.textContent = msg;
+  t.style.opacity = '1';
+  t.style.transform = 'translateX(-50%) translateY(0)';
+  clearTimeout(window._tToast);
+  window._tToast = setTimeout(() => {
+    t.style.opacity = '0';
+    t.style.transform = 'translateX(-50%) translateY(20px)';
+  }, 2200);
+}
+
+/* Close modals on Escape */
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    closeSLTPSheet();
+    closeCloseConfirm();
+  }
+});
 </script>
 </body>
 </html>
