@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perps Competitive Analysis — eToro</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+      colors: {
+        etoro: {
+          green: '#6cca98',
+          red: '#e2574c',
+          blue: '#1997f6',
+          dark: '#0b1426',
+          'dark-card': '#131d33',
+          'dark-surface': '#1a2744',
+          'dark-border': '#2a3a5c',
+          'gray-text': '#8c98b1',
+          'light-text': '#d1d9e8',
+        }
+      }
+    }
+  }
+}
+</script>
+<style>
+  body { background: #0b1426; color: #d1d9e8; }
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #0b1426; }
+  ::-webkit-scrollbar-thumb { background: #2a3a5c; border-radius: 3px; }
+  .section-card { background: #131d33; border: 1px solid #2a3a5c; border-radius: 16px; }
+  .table-row:nth-child(even) { background: rgba(26, 39, 68, 0.5); }
+  .tag { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 6px; font-size: 11px; font-weight: 600; }
+  .tag-green { background: rgba(108,202,152,0.15); color: #6cca98; }
+  .tag-red { background: rgba(226,87,76,0.15); color: #e2574c; }
+  .tag-blue { background: rgba(25,151,246,0.15); color: #1997f6; }
+  .tag-purple { background: rgba(168,85,247,0.15); color: #a855f7; }
+  .tag-yellow { background: rgba(234,179,8,0.15); color: #eab308; }
+  .tag-gray { background: rgba(140,152,177,0.15); color: #8c98b1; }
+  .bar { height: 8px; border-radius: 4px; transition: width 0.6s ease; }
+  .stat-number { font-size: 2rem; font-weight: 800; line-height: 1; }
+  .nav-pill { transition: all 0.15s; }
+  .nav-pill:hover { background: #1a2744; }
+  .nav-pill.active { background: #1997f6; color: white; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+  .fade-in-delay-1 { animation-delay: 0.1s; opacity: 0; }
+  .fade-in-delay-2 { animation-delay: 0.2s; opacity: 0; }
+  .fade-in-delay-3 { animation-delay: 0.3s; opacity: 0; }
+</style>
+</head>
+<body class="font-sans min-h-screen">
+
+<!-- Navigation -->
+<nav class="sticky top-0 z-50 bg-etoro-dark/90 backdrop-blur-md border-b border-etoro-dark-border">
+  <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 rounded-lg bg-etoro-blue flex items-center justify-center text-white font-bold text-sm">e</div>
+      <div>
+        <div class="text-white font-semibold text-sm">Perps Competitive Analysis</div>
+        <div class="text-etoro-gray-text text-[10px]">April 2026 • Live API Data</div>
+      </div>
+    </div>
+    <a href="index.html" class="text-etoro-blue text-xs font-medium hover:underline">← Mockup</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<header class="max-w-5xl mx-auto px-4 pt-10 pb-8">
+  <h1 class="text-3xl md:text-4xl font-extrabold text-white leading-tight fade-in">
+    Perpetual Futures<br>
+    <span class="text-etoro-blue">Competitive Landscape</span>
+  </h1>
+  <p class="text-etoro-gray-text mt-3 text-base max-w-2xl fade-in fade-in-delay-1">
+    Who offers perps, how they compare on cost, UX, and breadth — and where eToro can win.
+    Data pulled from live exchange APIs on April 16, 2026.
+  </p>
+</header>
+
+<!-- Key Numbers -->
+<section class="max-w-5xl mx-auto px-4 pb-8">
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+    <div class="section-card p-4 fade-in">
+      <div class="stat-number text-etoro-blue">7</div>
+      <div class="text-xs text-etoro-gray-text mt-1">Major competitors analyzed</div>
+    </div>
+    <div class="section-card p-4 fade-in fade-in-delay-1">
+      <div class="stat-number text-etoro-green">604</div>
+      <div class="text-xs text-etoro-gray-text mt-1">Most perp pairs (Bybit)</div>
+    </div>
+    <div class="section-card p-4 fade-in fade-in-delay-2">
+      <div class="stat-number text-purple-400">125×</div>
+      <div class="text-xs text-etoro-gray-text mt-1">Max leverage in market</div>
+    </div>
+    <div class="section-card p-4 fade-in fade-in-delay-3">
+      <div class="stat-number text-yellow-400">0</div>
+      <div class="text-xs text-etoro-gray-text mt-1">Regulated brokers with simplified perps UX</div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 1: Market Landscape -->
+<section class="max-w-5xl mx-auto px-4 pb-10">
+  <div class="section-card p-6">
+    <h2 class="text-xl font-bold text-white mb-1">1. Who Offers Perps</h2>
+    <p class="text-sm text-etoro-gray-text mb-5">Live pair counts from exchange APIs — April 16, 2026</p>
+
+    <!-- Visual bars -->
+    <div class="space-y-4">
+      <div>
+        <div class="flex items-center justify-between mb-1">
+          <div class="flex items-center gap-2">
+            <span class="text-sm font-semibold text-white">Bybit</span>
+            <span class="tag tag-yellow">CEX</span>
+          </div>
+          <span class="text-sm font-bold text-white">604 pairs</span>
+        </div>
+        <div class="w-full bg-etoro-dark-surface rounded-full"><div class="bar bg-yellow-400" style="width:100%"></div></div>
+        <div class="text-[10px] text-etoro-gray-text mt-1">125× max • Dubai VARA • Fastest to list new tokens</div>
+      </div>
+
+      <div>
+        <div class="flex items-center justify-between mb-1">
+          <div class="flex items-center gap-2">
+            <span class="text-sm font-semibold text-white">Binance</span>
+            <span class="tag tag-yellow">CEX</span>
+          </div>
+          <span class="text-sm font-bold text-white">576 pairs</span>
+        </div>
+        <div class="w-full bg-etoro-dark-surface rounded-full"><div class="bar bg-yellow-500" style="width:95%"></div></div>
+        <div class="text-[10px] text-etoro-gray-text mt-1">125× max • Limited regulation • Deepest liquidity per pair</div>
+      </div>
+
+      <div>
+        <div class="flex items-center justify-between mb-1">
+          <div class="flex items-center gap-2">
+            <span class="text-sm font-semibold text-white">Bitget</span>
+            <span class="tag tag-yellow">CEX</span>
+          </div>
+          <span class="text-sm font-bold text-white">541 pairs</span>
+        </div>
+        <div class="w-full bg-etoro-dark-surface rounded-full"><div class="bar bg-yellow-600" style="width:90%"></div></div>
+        <div class="text-[10px] text-etoro-gray-text mt-1">125× max • Copy-trading #1 • Aggressive retail marketing</div>
+      </div>
+
+      <div>
+        <div class="flex items-center justify-between mb-1">
+          <div class="flex items-center gap-2">
+            <span class="text-sm font-semibold text-white">OKX</span>
+            <span class="tag tag-yellow">CEX</span>
+          </div>
+          <span class="text-sm font-bold text-white">290 pairs</span>
+        </div>
+        <div class="w-full bg-etoro-dark-surface rounded-full"><div class="bar bg-orange-400" style="width:48%"></div></div>
+        <div class="text-[10px] text-etoro-gray-text mt-1">125× max • EU MiCA • Quality over quantity, best VIP rates</div>
+      </div>
+
+      <div>
+        <div class="flex items-center justify-between mb-1">
+          <div class="flex items-center gap-2">
+            <span class="text-sm font-semibold text-white">Coinbase Intl</span>
+            <span class="tag tag-green">Regulated</span>
+          </div>
+          <span class="text-sm font-bold text-white">232 pairs</span>
+        </div>
+        <div class="w-full bg-etoro-dark-surface rounded-full"><div class="bar bg-etoro-blue" style="width:38%"></div></div>
+        <div class="text-[10px] text-etoro-gray-text mt-1">10× max • Bermuda/EU MiCA • Institutional focus</div>
+      </div>
+
+      <div>
+        <div class="flex items-center justify-between mb-1">
+          <div class="flex items-center gap-2">
+            <span class="text-sm font-semibold text-white">Hyperliquid</span>
+            <span class="tag tag-purple">DEX</span>
+          </div>
+          <span class="text-sm font-bold text-white">229 pairs</span>
+        </div>
+        <div class="w-full bg-etoro-dark-surface rounded-full"><div class="bar bg-purple-400" style="width:38%"></div></div>
+        <div class="text-[10px] text-etoro-gray-text mt-1">40× max • No KYC • Fastest DEX, growing rapidly</div>
+      </div>
+
+      <div>
+        <div class="flex items-center justify-between mb-1">
+          <div class="flex items-center gap-2">
+            <span class="text-sm font-semibold text-white">dYdX v4</span>
+            <span class="tag tag-purple">DEX</span>
+          </div>
+          <span class="text-sm font-bold text-white">124 pairs</span>
+        </div>
+        <div class="w-full bg-etoro-dark-surface rounded-full"><div class="bar bg-purple-500" style="width:21%"></div></div>
+        <div class="text-[10px] text-etoro-gray-text mt-1">20× max • Fully decentralized • Self-custody</div>
+      </div>
+
+      <div class="pt-2 border-t border-etoro-dark-border">
+        <div class="flex items-center justify-between mb-1">
+          <div class="flex items-center gap-2">
+            <span class="text-sm font-semibold text-white">eToro (today)</span>
+            <span class="tag tag-red">No perps</span>
+          </div>
+          <span class="text-sm font-bold text-etoro-red">0 pairs</span>
+        </div>
+        <div class="w-full bg-etoro-dark-surface rounded-full"><div class="bar bg-etoro-red" style="width:1%"></div></div>
+        <div class="text-[10px] text-etoro-gray-text mt-1">×2 crypto CFDs only • CySEC/FCA/ASIC • Social trading pioneer</div>
+      </div>
+    </div>
+
+    <div class="mt-5 p-3 rounded-xl bg-etoro-blue/10 border border-etoro-blue/20">
+      <div class="text-xs text-etoro-blue font-semibold">💡 Key Insight</div>
+      <div class="text-xs text-etoro-light-text mt-1">eToro doesn't need 600 pairs. Launching with <strong>20-50 of the most liquid pairs</strong> covers 95%+ of retail demand. Quality and UX over quantity.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 2: Fee Comparison -->
+<section class="max-w-5xl mx-auto px-4 pb-10">
+  <div class="section-card p-6">
+    <h2 class="text-xl font-bold text-white mb-1">2. Fee Structure</h2>
+    <p class="text-sm text-etoro-gray-text mb-5">Trading fees at base tier (no VIP discounts)</p>
+
+    <div class="overflow-x-auto">
+      <table class="w-full text-xs">
+        <thead>
+          <tr class="text-left text-etoro-gray-text border-b border-etoro-dark-border">
+            <th class="pb-3 pr-4 font-medium">Platform</th>
+            <th class="pb-3 pr-4 font-medium">Maker</th>
+            <th class="pb-3 pr-4 font-medium">Taker</th>
+            <th class="pb-3 pr-4 font-medium">Funding</th>
+            <th class="pb-3 font-medium">Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="table-row">
+            <td class="py-3 pr-4 text-white font-medium">Binance</td>
+            <td class="py-3 pr-4 text-etoro-green">0.020%</td>
+            <td class="py-3 pr-4">0.050%</td>
+            <td class="py-3 pr-4">8h</td>
+            <td class="py-3 text-etoro-gray-text">-10% with BNB</td>
+          </tr>
+          <tr class="table-row">
+            <td class="py-3 pr-4 text-white font-medium">Bybit</td>
+            <td class="py-3 pr-4 text-etoro-green">0.020%</td>
+            <td class="py-3 pr-4">0.055%</td>
+            <td class="py-3 pr-4">8h</td>
+            <td class="py-3 text-etoro-gray-text">Aggressive VIP tiers</td>
+          </tr>
+          <tr class="table-row">
+            <td class="py-3 pr-4 text-white font-medium">OKX</td>
+            <td class="py-3 pr-4 text-etoro-green">0.020%</td>
+            <td class="py-3 pr-4">0.050%</td>
+            <td class="py-3 pr-4">8h</td>
+            <td class="py-3 text-etoro-gray-text">Best VIP rates in industry</td>
+          </tr>
+          <tr class="table-row">
+            <td class="py-3 pr-4 text-white font-medium">Bitget</td>
+            <td class="py-3 pr-4">0.020%</td>
+            <td class="py-3 pr-4 text-etoro-red">0.060%</td>
+            <td class="py-3 pr-4">8h</td>
+            <td class="py-3 text-etoro-gray-text">Higher taker fee</td>
+          </tr>
+          <tr class="table-row">
+            <td class="py-3 pr-4 text-white font-medium">Hyperliquid</td>
+            <td class="py-3 pr-4 text-etoro-green font-semibold">0.010%</td>
+            <td class="py-3 pr-4 text-etoro-green font-semibold">0.035%</td>
+            <td class="py-3 pr-4">1h</td>
+            <td class="py-3 text-etoro-gray-text">Lowest fees overall</td>
+          </tr>
+          <tr class="table-row">
+            <td class="py-3 pr-4 text-white font-medium">dYdX</td>
+            <td class="py-3 pr-4 text-etoro-green">0.020%</td>
+            <td class="py-3 pr-4">0.050%</td>
+            <td class="py-3 pr-4">1h</td>
+            <td class="py-3 text-etoro-gray-text">Maker rebates at high volume</td>
+          </tr>
+          <tr class="table-row border-t-2 border-etoro-dark-border">
+            <td class="py-3 pr-4 text-white font-medium">eToro CFDs</td>
+            <td class="py-3 pr-4 text-etoro-red font-semibold" colspan="2">Spread: 0.75–2.0%</td>
+            <td class="py-3 pr-4">Daily</td>
+            <td class="py-3 text-etoro-red">10-40× more expensive than perps</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="mt-5 p-3 rounded-xl bg-etoro-green/10 border border-etoro-green/20">
+      <div class="text-xs text-etoro-green font-semibold">💰 eToro Pricing Strategy</div>
+      <div class="text-xs text-etoro-light-text mt-1">Don't compete with Binance on maker fees. Use spread-based pricing at <strong>~0.10-0.15% all-in</strong>. Frame as "no commissions." Still a <strong>massive improvement</strong> over current eToro crypto CFD costs (0.75-2%).</div>
+    </div>
+  </div>
+</section>
+
+<!-- Section: Competitor Screenshots -->
+<section class="max-w-5xl mx-auto px-4 pb-10">
+  <div class="section-card p-6">
+    <h2 class="text-xl font-bold text-white mb-1">3. Competitor Screens — Real Screenshots</h2>
+    <p class="text-sm text-etoro-gray-text mb-6">Captured live from competitor platforms via Playwright, April 16, 2026</p>
+
+    <!-- Binance Desktop -->
+    <div class="mb-8">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="tag tag-yellow">CEX</span>
+        <h3 class="text-base font-semibold text-white">Binance Futures — Desktop</h3>
+      </div>
+      <div class="rounded-xl overflow-hidden border border-etoro-dark-border">
+        <img src="screenshots/binance-futures.png" alt="Binance Futures Trading Interface" class="w-full" loading="lazy">
+      </div>
+      <div class="mt-3 space-y-1">
+        <div class="text-xs text-etoro-light-text">🔍 <strong>Key observations:</strong></div>
+        <ul class="text-xs text-etoro-gray-text space-y-1 ml-4">
+          <li>• TradingView chart dominates center — candles, depth, indicators all visible</li>
+          <li>• Order book on the left — dense, intimidating for retail users</li>
+          <li>• Order panel on right — Limit/Market/Stop-Limit/Stop-Market all visible</li>
+          <li>• Leverage slider below order type — manual 1-125x</li>
+          <li>• Funding rate + countdown in header bar next to price</li>
+          <li>• Cross/Isolated margin toggle above order entry</li>
+          <li>• <strong>Complexity level: Very high</strong> — not designed for retail newcomers</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Binance Mobile -->
+    <div class="mb-8">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="tag tag-yellow">CEX</span>
+        <h3 class="text-base font-semibold text-white">Binance Futures — Mobile</h3>
+      </div>
+      <div class="max-w-[300px] rounded-xl overflow-hidden border border-etoro-dark-border">
+        <img src="screenshots/binance-mobile.png" alt="Binance Futures Mobile" class="w-full" loading="lazy">
+      </div>
+      <div class="mt-3 space-y-1">
+        <div class="text-xs text-etoro-light-text">🔍 <strong>Key observations:</strong></div>
+        <ul class="text-xs text-etoro-gray-text space-y-1 ml-4">
+          <li>• Same dense layout squeezed into mobile — chart, order book, order panel all stacked</li>
+          <li>• Price + funding rate visible in header</li>
+          <li>• Still shows all order types and leverage slider</li>
+          <li>• <strong>This is what eToro should NOT do</strong> — too much info on mobile</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Hyperliquid -->
+    <div class="mb-8">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="tag tag-purple">DEX</span>
+        <h3 class="text-base font-semibold text-white">Hyperliquid — Desktop</h3>
+      </div>
+      <div class="rounded-xl overflow-hidden border border-etoro-dark-border">
+        <img src="screenshots/hyperliquid.png" alt="Hyperliquid Trading Interface" class="w-full" loading="lazy">
+      </div>
+      <div class="mt-3 space-y-1">
+        <div class="text-xs text-etoro-light-text">🔍 <strong>Key observations:</strong></div>
+        <ul class="text-xs text-etoro-gray-text space-y-1 ml-4">
+          <li>• Cleaner than Binance — less visual clutter</li>
+          <li>• Chart center, order book left, order entry right</li>
+          <li>• Buy Long / Sell Short buttons prominently colored green/red</li>
+          <li>• "Connect" wallet button — no KYC required</li>
+          <li>• 40x leverage shown — lower than CEX competitors</li>
+          <li>• <strong>Growing fast</strong> — simplest DEX interface in the market</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- dYdX -->
+    <div class="mb-8">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="tag tag-purple">DEX</span>
+        <h3 class="text-base font-semibold text-white">dYdX v4 — Desktop</h3>
+      </div>
+      <div class="rounded-xl overflow-hidden border border-etoro-dark-border">
+        <img src="screenshots/dydx.png" alt="dYdX Trading Interface" class="w-full" loading="lazy">
+      </div>
+      <div class="mt-3 space-y-1">
+        <div class="text-xs text-etoro-light-text">🔍 <strong>Key observations:</strong></div>
+        <ul class="text-xs text-etoro-gray-text space-y-1 ml-4">
+          <li>• Portfolio-first view — shows positions, orders, fee history</li>
+          <li>• "Connect wallet" prominent — no account needed</li>
+          <li>• Clean navigation: Trade / Portfolio / Vault / Rewards</li>
+          <li>• Fully decentralized — chain-based settlement</li>
+          <li>• 20x max leverage — most conservative</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- eToro current -->
+    <div class="mb-8">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="tag tag-green">Broker</span>
+        <h3 class="text-base font-semibold text-white">eToro — Current BTC Page (no perps)</h3>
+      </div>
+      <div class="rounded-xl overflow-hidden border border-etoro-dark-border">
+        <img src="screenshots/etoro-crypto.png" alt="eToro Current BTC Page" class="w-full" loading="lazy">
+      </div>
+      <div class="mt-3 space-y-1">
+        <div class="text-xs text-etoro-light-text">🔍 <strong>Key observations:</strong></div>
+        <ul class="text-xs text-etoro-gray-text space-y-1 ml-4">
+          <li>• Clean, simple, retail-friendly — this is eToro's DNA</li>
+          <li>• Price chart dominant, minimal clutter</li>
+          <li>• No order book, no complex order types visible</li>
+          <li>• <strong>The perps integration should maintain this simplicity level</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Robinhood -->
+    <div class="mb-4">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="tag tag-green">Broker</span>
+        <h3 class="text-base font-semibold text-white">Robinhood — Futures Landing Page</h3>
+      </div>
+      <div class="rounded-xl overflow-hidden border border-etoro-dark-border">
+        <img src="screenshots/robinhood-futures.png" alt="Robinhood Futures Page" class="w-full" loading="lazy">
+      </div>
+      <div class="mt-3 space-y-1">
+        <div class="text-xs text-etoro-light-text">🔍 <strong>Key observations:</strong></div>
+        <ul class="text-xs text-etoro-gray-text space-y-1 ml-4">
+          <li>• Marketing-first approach — focuses on simplicity messaging</li>
+          <li>• No crypto perps yet — only CME-regulated commodity/index futures</li>
+          <li>• Clean, consumer-grade design — close to what eToro should target</li>
+          <li>• <strong>If Robinhood launches crypto perps, they'll be the closest competitor</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-5 p-3 rounded-xl bg-purple-500/10 border border-purple-500/20">
+      <div class="text-xs text-purple-300 font-semibold">📸 Note on screenshots</div>
+      <div class="text-xs text-etoro-light-text mt-1">Bybit, Bitget, and OKX trading views require auth or are geo-restricted. The team can access these directly via Mobbin (mobbin.com) or by logging in. Binance, Hyperliquid, and dYdX trading interfaces were captured directly.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 4: UX Comparison -->
+<section class="max-w-5xl mx-auto px-4 pb-10">
+  <div class="section-card p-6">
+    <h2 class="text-xl font-bold text-white mb-1">4. UX / UI Comparison</h2>
+    <p class="text-sm text-etoro-gray-text mb-5">How competitors present perps vs. what eToro should do</p>
+
+    <div class="overflow-x-auto">
+      <table class="w-full text-xs">
+        <thead>
+          <tr class="text-left text-etoro-gray-text border-b border-etoro-dark-border">
+            <th class="pb-3 pr-4 font-medium">Element</th>
+            <th class="pb-3 pr-4 font-medium">Competitors do</th>
+            <th class="pb-3 font-medium text-etoro-blue">eToro should do</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="table-row">
+            <td class="py-3 pr-4 text-white font-medium">Funding rate</td>
+            <td class="py-3 pr-4 text-etoro-gray-text">Show 0.0100%</td>
+            <td class="py-3 text-etoro-blue">Show "~$2.31/day"</td>
+          </tr>
+          <tr class="table-row">
+            <td class="py-3 pr-4 text-white font-medium">Order book</td>
+            <td class="py-3 pr-4 text-etoro-gray-text">Always visible</td>
+            <td class="py-3 text-etoro-blue">Hidden (optional advanced)</td>
+          </tr>
+          <tr class="table-row">
+            <td class="py-3 pr-4 text-white font-medium">Leverage</td>
+            <td class="py-3 pr-4 text-etoro-gray-text">Manual slider 1-125×</td>
+            <td class="py-3 text-etoro-blue">Preset tiers: ×1 Real, ×2/×5 CFD, ×10 Perp</td>
+          </tr>
+          <tr class="table-row">
+            <td class="py-3 pr-4 text-white font-medium">Position display</td>
+            <td class="py-3 pr-4 text-etoro-gray-text">Dense tables</td>
+            <td class="py-3 text-etoro-blue">Clean cards (mobile-first)</td>
+          </tr>
+          <tr class="table-row">
+            <td class="py-3 pr-4 text-white font-medium">Amount input</td>
+            <td class="py-3 pr-4 text-etoro-gray-text">Contracts / lots</td>
+            <td class="py-3 text-etoro-blue">Dollars ($)</td>
+          </tr>
+          <tr class="table-row">
+            <td class="py-3 pr-4 text-white font-medium">Price display</td>
+            <td class="py-3 pr-4 text-etoro-gray-text">Mark, index, last price</td>
+            <td class="py-3 text-etoro-blue">Just "current price"</td>
+          </tr>
+          <tr class="table-row">
+            <td class="py-3 pr-4 text-white font-medium">Layout</td>
+            <td class="py-3 pr-4 text-etoro-gray-text">Multi-panel desktop</td>
+            <td class="py-3 text-etoro-blue">Chart + bottom sheet order entry</td>
+          </tr>
+          <tr class="table-row">
+            <td class="py-3 pr-4 text-white font-medium">Social trading</td>
+            <td class="py-3 pr-4 text-etoro-gray-text">Bitget has basic copy</td>
+            <td class="py-3 text-etoro-blue font-semibold">Full social + copy + sentiment</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- Section 4: Differentiation -->
+<section class="max-w-5xl mx-auto px-4 pb-10">
+  <div class="section-card p-6">
+    <h2 class="text-xl font-bold text-white mb-1">5. How eToro Stands Out</h2>
+    <p class="text-sm text-etoro-gray-text mb-5">Five differentiation pillars</p>
+
+    <div class="space-y-4">
+      <!-- Pillar 1 -->
+      <div class="p-4 rounded-xl bg-etoro-dark-surface border border-etoro-dark-border">
+        <div class="flex items-center gap-2 mb-2">
+          <div class="w-8 h-8 rounded-lg bg-etoro-blue/20 flex items-center justify-center text-lg">🎯</div>
+          <div>
+            <div class="text-sm font-semibold text-white">Simplicity as a Feature</div>
+            <div class="text-[10px] text-etoro-gray-text">Nobody else has done this</div>
+          </div>
+        </div>
+        <div class="text-xs text-etoro-light-text">Perps that feel like buying stocks. Dollar amounts, no order book, holding cost in $/day. The leverage tier (×1 Real → ×2/×5 CFD → ×10 Perp) makes instrument complexity invisible.</div>
+      </div>
+
+      <!-- Pillar 2 -->
+      <div class="p-4 rounded-xl bg-etoro-dark-surface border border-etoro-dark-border">
+        <div class="flex items-center gap-2 mb-2">
+          <div class="w-8 h-8 rounded-lg bg-etoro-green/20 flex items-center justify-center text-lg">👥</div>
+          <div>
+            <div class="text-sm font-semibold text-white">Social Trading + Perps</div>
+            <div class="text-[10px] text-etoro-green">Unfair advantage</div>
+          </div>
+        </div>
+        <div class="text-xs text-etoro-light-text">Copy perps positions from top traders. Social sentiment ("73% going LONG"). Smart Popular Investor perps portfolios. Nobody has this at eToro's scale (35M+ users).</div>
+      </div>
+
+      <!-- Pillar 3 -->
+      <div class="p-4 rounded-xl bg-etoro-dark-surface border border-etoro-dark-border">
+        <div class="flex items-center gap-2 mb-2">
+          <div class="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center text-lg">🛡️</div>
+          <div>
+            <div class="text-sm font-semibold text-white">Regulated & Responsible</div>
+            <div class="text-[10px] text-etoro-gray-text">Trust as a moat</div>
+          </div>
+        </div>
+        <div class="text-xs text-etoro-light-text">CySEC/FCA/ASIC licensing. Negative balance protection. Segregated funds. ×20 max leverage cap. The mass retail audience that Binance scares away comes to eToro.</div>
+      </div>
+
+      <!-- Pillar 4 -->
+      <div class="p-4 rounded-xl bg-etoro-dark-surface border border-etoro-dark-border">
+        <div class="flex items-center gap-2 mb-2">
+          <div class="w-8 h-8 rounded-lg bg-yellow-500/20 flex items-center justify-center text-lg">💰</div>
+          <div>
+            <div class="text-sm font-semibold text-white">Better Than CFDs</div>
+            <div class="text-[10px] text-etoro-gray-text">Upgrade path for existing users</div>
+          </div>
+        </div>
+        <div class="text-xs text-etoro-light-text">Current eToro crypto CFDs cost 0.75-2% in spreads. Perps at ~0.10-0.15% all-in is a 5-15× cost reduction. Frame as "same experience, lower costs." Instant adoption driver.</div>
+      </div>
+
+      <!-- Pillar 5 -->
+      <div class="p-4 rounded-xl bg-etoro-dark-surface border border-etoro-dark-border">
+        <div class="flex items-center gap-2 mb-2">
+          <div class="w-8 h-8 rounded-lg bg-etoro-red/20 flex items-center justify-center text-lg">🌍</div>
+          <div>
+            <div class="text-sm font-semibold text-white">Multi-Asset Platform</div>
+            <div class="text-[10px] text-etoro-gray-text">One account for everything</div>
+          </div>
+        </div>
+        <div class="text-xs text-etoro-light-text">Perps alongside stocks, ETFs, crypto spot — all in one account. No competitor offers this. Binance users can't buy Tesla. Robinhood users can't trade perps. eToro can do both.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 5: Threat Assessment -->
+<section class="max-w-5xl mx-auto px-4 pb-10">
+  <div class="section-card p-6">
+    <h2 class="text-xl font-bold text-white mb-1">6. Threat Assessment</h2>
+    <p class="text-sm text-etoro-gray-text mb-5">Who competes most directly with eToro's perps play</p>
+
+    <div class="space-y-3">
+      <div class="flex items-center justify-between p-3 rounded-xl bg-etoro-dark-surface">
+        <div class="flex items-center gap-3">
+          <span class="tag tag-red">HIGH</span>
+          <div>
+            <div class="text-sm font-semibold text-white">Bybit</div>
+            <div class="text-[10px] text-etoro-gray-text">Copy-trading + perps, overlaps with eToro's social value prop</div>
+          </div>
+        </div>
+      </div>
+      <div class="flex items-center justify-between p-3 rounded-xl bg-etoro-dark-surface">
+        <div class="flex items-center gap-3">
+          <span class="tag tag-red">HIGH</span>
+          <div>
+            <div class="text-sm font-semibold text-white">Bitget</div>
+            <div class="text-[10px] text-etoro-gray-text">Copy-trading pioneer in crypto, same retail audience</div>
+          </div>
+        </div>
+      </div>
+      <div class="flex items-center justify-between p-3 rounded-xl bg-etoro-dark-surface">
+        <div class="flex items-center gap-3">
+          <span class="tag tag-red">HIGH</span>
+          <div>
+            <div class="text-sm font-semibold text-white">Robinhood</div>
+            <div class="text-[10px] text-etoro-gray-text">If they launch crypto perps — exact same retail audience</div>
+          </div>
+        </div>
+      </div>
+      <div class="flex items-center justify-between p-3 rounded-xl bg-etoro-dark-surface">
+        <div class="flex items-center gap-3">
+          <span class="tag tag-yellow">MEDIUM</span>
+          <div>
+            <div class="text-sm font-semibold text-white">Coinbase International</div>
+            <div class="text-[10px] text-etoro-gray-text">Trusted brand + regulated, but slow UX, no social trading</div>
+          </div>
+        </div>
+      </div>
+      <div class="flex items-center justify-between p-3 rounded-xl bg-etoro-dark-surface">
+        <div class="flex items-center gap-3">
+          <span class="tag tag-green">LOW</span>
+          <div>
+            <div class="text-sm font-semibold text-white">Hyperliquid / dYdX</div>
+            <div class="text-[10px] text-etoro-gray-text">Different audience (DeFi-native), no overlap with eToro retail</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 6: Recommended Rollout -->
+<section class="max-w-5xl mx-auto px-4 pb-10">
+  <div class="section-card p-6">
+    <h2 class="text-xl font-bold text-white mb-1">7. Recommended Rollout</h2>
+    <p class="text-sm text-etoro-gray-text mb-5">Phased approach</p>
+
+    <div class="space-y-4">
+      <div class="flex gap-4">
+        <div class="flex flex-col items-center">
+          <div class="w-10 h-10 rounded-full bg-etoro-blue flex items-center justify-center text-white font-bold text-sm">1</div>
+          <div class="w-0.5 flex-1 bg-etoro-dark-border mt-2"></div>
+        </div>
+        <div class="pb-6">
+          <div class="text-sm font-semibold text-white">MVP Launch</div>
+          <div class="text-[10px] text-etoro-gray-text mb-2">Day 1</div>
+          <div class="text-xs text-etoro-light-text">BTC + ETH perps. ×1/×2/×5/×10 leverage. Market + Limit orders. Holding cost display. Mobile-first.</div>
+        </div>
+      </div>
+
+      <div class="flex gap-4">
+        <div class="flex flex-col items-center">
+          <div class="w-10 h-10 rounded-full bg-etoro-green flex items-center justify-center text-white font-bold text-sm">2</div>
+          <div class="w-0.5 flex-1 bg-etoro-dark-border mt-2"></div>
+        </div>
+        <div class="pb-6">
+          <div class="text-sm font-semibold text-white">Expand</div>
+          <div class="text-[10px] text-etoro-gray-text mb-2">+30 days</div>
+          <div class="text-xs text-etoro-light-text">Top 20 pairs (SOL, XRP, DOGE, ADA, LINK, AVAX, etc.). TP/SL orders. Copy-trading for perps. Sentiment indicators.</div>
+        </div>
+      </div>
+
+      <div class="flex gap-4">
+        <div class="flex flex-col items-center">
+          <div class="w-10 h-10 rounded-full bg-purple-500 flex items-center justify-center text-white font-bold text-sm">3</div>
+        </div>
+        <div>
+          <div class="text-sm font-semibold text-white">Scale</div>
+          <div class="text-[10px] text-etoro-gray-text mb-2">+90 days</div>
+          <div class="text-xs text-etoro-light-text">50 pairs. Portfolio margin. Advanced order types. Social Popular Investor perps portfolios. Full integration with existing portfolio view.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="max-w-5xl mx-auto px-4 py-8 border-t border-etoro-dark-border">
+  <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+    <div class="text-center md:text-left">
+      <div class="text-xs text-etoro-gray-text">Data sourced from live exchange APIs — Binance, Bybit, OKX, Bitget, dYdX, Hyperliquid, Coinbase International</div>
+      <div class="text-[10px] text-etoro-gray-text mt-1">CoreClaw 🦀 • April 16, 2026</div>
+    </div>
+    <a href="index.html" class="px-4 py-2 rounded-lg bg-etoro-blue text-white text-xs font-semibold hover:bg-blue-600 transition-colors">
+      View Mockup →
+    </a>
+  </div>
+</footer>
+
+</body>
+</html>

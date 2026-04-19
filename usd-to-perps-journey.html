@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>eToro Perps — User Journey Mockup</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+      colors: {
+        et: {
+          bg: '#f5f7fa',
+          white: '#ffffff',
+          card: '#ffffff',
+          border: '#e5e9f0',
+          'border-light': '#f0f2f5',
+          green: '#00b67a',
+          'green-light': '#e6f9f1',
+          'green-dark': '#009966',
+          red: '#e2574c',
+          'red-light': '#fdf0ef',
+          blue: '#0086e6',
+          'blue-light': '#e8f4fd',
+          text: '#1a2233',
+          'text-secondary': '#6b7b8d',
+          'text-muted': '#97a5b3',
+          accent: '#0086e6',
+        }
+      }
+    }
+  }
+}
+</script>
+<style>
+  * { box-sizing: border-box; }
+  body { background: #f5f7fa; color: #1a2233; font-family: 'Inter', -apple-system, system-ui, sans-serif; }
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 4px; }
+
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  .screen-nav { display: flex; gap: 6px; justify-content: center; padding: 8px; }
+  .screen-dot { width: 8px; height: 8px; border-radius: 50%; background: #d1d5db; cursor: pointer; transition: all 0.2s; }
+  .screen-dot.active { background: #0086e6; width: 24px; border-radius: 4px; }
+
+  .journey-bar {
+    position: fixed; top: 0; left: 50%; transform: translateX(-50%);
+    z-index: 100; background: rgba(255,255,255,0.97); backdrop-filter: blur(8px);
+    border-bottom: 1px solid #e5e9f0; padding: 8px 16px; width: 100%; max-width: 430px;
+  }
+
+  @keyframes pricePulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+  .price-live { animation: pricePulse 2s ease-in-out infinite; }
+
+  input:focus { outline: none; border-color: #0086e6; }
+  input[type="range"] { -webkit-appearance: none; background: #e5e9f0; height: 4px; border-radius: 2px; }
+  input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%; background: #0086e6; cursor: pointer; border: 3px solid white; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+
+  .lev-pill { transition: all 0.15s ease; }
+  .lev-pill.active { background: #0086e6; color: white; }
+
+  .tooltip-trigger:hover .tooltip-content { display: block; }
+  .tooltip-content { display: none; }
+
+  /* eToro-style green promo banner */
+  .promo-banner {
+    background: linear-gradient(135deg, #00b67a 0%, #009966 100%);
+    color: white;
+  }
+
+  /* Subtle card shadow — eToro style */
+  .et-card {
+    background: white;
+    border-radius: 12px;
+    border: 1px solid #e5e9f0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+
+  .status-bar { color: #1a2233; }
+</style>
+</head>
+<body class="font-sans min-h-screen">
+
+<!-- Journey Nav -->
+<div class="journey-bar">
+  <div class="flex items-center justify-between">
+    <div class="text-[10px] text-et-text-muted uppercase tracking-wider font-medium" id="journey-step">Step 1 of 5</div>
+    <div class="text-[10px] text-et-blue font-medium" id="journey-title">BTC/USD Execution Screen</div>
+  </div>
+  <div class="screen-nav mt-1">
+    <div class="screen-dot active" onclick="goToScreen(1)"></div>
+    <div class="screen-dot" onclick="goToScreen(2)"></div>
+    <div class="screen-dot" onclick="goToScreen(3)"></div>
+    <div class="screen-dot" onclick="goToScreen(4)"></div>
+    <div class="screen-dot" onclick="goToScreen(5)"></div>
+  </div>
+</div>
+
+<div class="pt-14">
+
+<!-- ==================== SCREEN 1: EXISTING BTC/USD EXECUTION ==================== -->
+<div id="screen-1" class="screen active max-w-[430px] mx-auto bg-et-bg min-h-screen">
+
+  <!-- Status Bar -->
+  <div class="flex items-center justify-between px-4 py-2 text-xs status-bar font-medium">
+    <span>20:15</span>
+    <div class="flex items-center gap-1 text-et-text-secondary">
+      <span>●●●●</span>
+      <span>WiFi</span>
+      <span>🔋</span>
+    </div>
+  </div>
+
+  <!-- Top Nav — white bg, eToro style -->
+  <div class="bg-white px-4 py-3 flex items-center justify-between border-b border-et-border">
+    <div class="flex items-center gap-3">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6b7b8d" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      <div class="flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded-full bg-[#f7931a] flex items-center justify-center text-white font-bold text-xs">₿</div>
+        <div>
+          <div class="text-et-text font-semibold text-[15px]">Bitcoin</div>
+          <div class="text-et-text-muted text-xs">BTC</div>
+        </div>
+      </div>
+    </div>
+    <div class="flex items-center gap-4">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6b7b8d" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6b7b8d" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+    </div>
+  </div>
+
+  <!-- Price Section -->
+  <div class="bg-white px-4 py-4">
+    <div class="flex items-baseline gap-2">
+      <span class="text-[28px] font-bold text-et-text price-live">$84,231.50</span>
+    </div>
+    <div class="flex items-center gap-1.5 mt-1">
+      <span class="text-sm font-semibold text-et-green">+$1,931.20 (+2.34%)</span>
+      <span class="text-xs text-et-text-muted">Today</span>
+    </div>
+  </div>
+
+  <!-- Chart Tabs -->
+  <div class="bg-white px-4 pb-2 flex items-center gap-1">
+    <button class="px-3 py-1.5 text-xs rounded-full text-et-text-muted">1H</button>
+    <button class="px-3 py-1.5 text-xs rounded-full bg-et-blue text-white font-medium">1D</button>
+    <button class="px-3 py-1.5 text-xs rounded-full text-et-text-muted">1W</button>
+    <button class="px-3 py-1.5 text-xs rounded-full text-et-text-muted">1M</button>
+    <button class="px-3 py-1.5 text-xs rounded-full text-et-text-muted">1Y</button>
+    <button class="px-3 py-1.5 text-xs rounded-full text-et-text-muted">MAX</button>
+  </div>
+
+  <!-- Chart -->
+  <div class="bg-white mx-0 px-4 pb-4">
+    <div class="rounded-lg h-44 relative overflow-hidden bg-et-bg/50">
+      <svg viewBox="0 0 400 160" class="w-full h-full" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="cg1" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#00b67a" stop-opacity="0.15"/>
+            <stop offset="100%" stop-color="#00b67a" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <path d="M0,120 Q20,115 40,105 T80,90 T120,95 T160,70 T200,60 T240,65 T280,40 T320,30 T360,25 T400,15" fill="none" stroke="#00b67a" stroke-width="2"/>
+        <path d="M0,120 Q20,115 40,105 T80,90 T120,95 T160,70 T200,60 T240,65 T280,40 T320,30 T360,25 T400,15 L400,160 L0,160 Z" fill="url(#cg1)"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Tabs: Overview / Stats / Feed -->
+  <div class="bg-white flex items-center gap-0 px-4 border-b border-et-border">
+    <button class="px-4 py-3 text-sm font-semibold text-et-text border-b-2 border-et-blue">Overview</button>
+    <button class="px-4 py-3 text-sm text-et-text-muted">Stats</button>
+    <button class="px-4 py-3 text-sm text-et-text-muted">Feed</button>
+  </div>
+
+  <!-- ⭐ PERPS PROMOTIONAL BANNER — eToro green style -->
+  <div class="px-4 mt-4">
+    <div class="promo-banner rounded-xl p-4 cursor-pointer" onclick="goToScreen(2)">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+            </svg>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="font-semibold text-[15px]">BTC Perpetual</span>
+              <span class="text-[9px] font-bold bg-white/25 px-2 py-0.5 rounded-full uppercase tracking-wider">New</span>
+            </div>
+            <div class="text-sm opacity-90 mt-0.5">Long or Short with up to ×10 leverage</div>
+          </div>
+        </div>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Key Stats -->
+  <div class="px-4 mt-4 grid grid-cols-3 gap-3">
+    <div class="et-card p-3">
+      <div class="text-[10px] text-et-text-muted uppercase tracking-wider font-medium">Market Cap</div>
+      <div class="text-sm font-semibold text-et-text mt-1">$1.67T</div>
+    </div>
+    <div class="et-card p-3">
+      <div class="text-[10px] text-et-text-muted uppercase tracking-wider font-medium">24h Volume</div>
+      <div class="text-sm font-semibold text-et-text mt-1">$48.2B</div>
+    </div>
+    <div class="et-card p-3">
+      <div class="text-[10px] text-et-text-muted uppercase tracking-wider font-medium">Circulating</div>
+      <div class="text-sm font-semibold text-et-text mt-1">19.8M</div>
+    </div>
+  </div>
+
+  <!-- Available Instruments -->
+  <div class="px-4 mt-5 mb-4">
+    <div class="text-xs text-et-text-muted uppercase tracking-wider font-medium mb-3">Trade BTC as</div>
+    <div class="space-y-2">
+      <div class="et-card p-3.5 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-2 h-2 rounded-full bg-et-green"></div>
+          <div>
+            <div class="text-sm text-et-text font-medium">Real Crypto</div>
+            <div class="text-[11px] text-et-text-muted">Own the underlying asset</div>
+          </div>
+        </div>
+        <span class="text-[11px] text-et-green font-semibold">×1</span>
+      </div>
+      <div class="et-card p-3.5 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-2 h-2 rounded-full bg-et-blue"></div>
+          <div>
+            <div class="text-sm text-et-text font-medium">CFD</div>
+            <div class="text-[11px] text-et-text-muted">Leveraged trading with overnight fees</div>
+          </div>
+        </div>
+        <span class="text-[11px] text-et-blue font-semibold">Up to ×5</span>
+      </div>
+      <div class="et-card p-3.5 flex items-center justify-between cursor-pointer hover:bg-et-bg transition-colors border-et-green/30" onclick="goToScreen(2)" style="border-color: #00b67a40;">
+        <div class="flex items-center gap-3">
+          <div class="w-2 h-2 rounded-full bg-et-green"></div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-sm text-et-text font-medium">Perpetual</span>
+              <span class="text-[9px] text-white font-bold bg-et-green px-1.5 py-0.5 rounded-full uppercase">New</span>
+            </div>
+            <div class="text-[11px] text-et-text-muted">Long or Short • Up to ×10 leverage</div>
+          </div>
+        </div>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00b67a" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="h-24"></div>
+
+  <!-- Bottom Trade Buttons — eToro style -->
+  <div class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] bg-white border-t border-et-border p-4 flex gap-3 z-40">
+    <button class="flex-1 py-3.5 rounded-xl bg-et-red font-semibold text-white text-sm">SELL</button>
+    <button class="flex-1 py-3.5 rounded-xl bg-et-green font-semibold text-white text-sm">BUY</button>
+  </div>
+</div>
+
+
+<!-- ==================== SCREEN 2: BTC PERPETUAL INSTRUMENT PAGE ==================== -->
+<div id="screen-2" class="screen max-w-[430px] mx-auto bg-et-bg min-h-screen">
+
+  <div class="flex items-center justify-between px-4 py-2 text-xs status-bar font-medium">
+    <span>20:15</span>
+    <div class="flex items-center gap-1 text-et-text-secondary"><span>●●●●</span><span>WiFi</span><span>🔋</span></div>
+  </div>
+
+  <div class="bg-white px-4 py-3 flex items-center justify-between border-b border-et-border">
+    <div class="flex items-center gap-3">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6b7b8d" stroke-width="2" class="cursor-pointer" onclick="goToScreen(1)"><path d="M15 18l-6-6 6-6"/></svg>
+      <div class="flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded-full bg-[#f7931a] flex items-center justify-center text-white font-bold text-xs">₿</div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-et-text font-semibold text-[15px]">BTC Perpetual</span>
+            <span class="text-[9px] text-white font-bold bg-et-green px-1.5 py-0.5 rounded-full uppercase">New</span>
+          </div>
+          <div class="text-et-text-muted text-xs">Perpetual Contract</div>
+        </div>
+      </div>
+    </div>
+    <div class="flex items-center gap-4">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6b7b8d" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6b7b8d" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+    </div>
+  </div>
+
+  <!-- Price -->
+  <div class="bg-white px-4 py-4">
+    <div class="flex items-baseline gap-2">
+      <span class="text-[28px] font-bold text-et-text price-live">$84,235.00</span>
+    </div>
+    <div class="flex items-center gap-1.5 mt-1">
+      <span class="text-sm font-semibold text-et-green">+$1,934.70 (+2.35%)</span>
+      <span class="text-xs text-et-text-muted">Today</span>
+    </div>
+    <div class="flex items-center gap-4 mt-2 text-xs text-et-text-muted">
+      <span>Mark: $84,232.10</span>
+      <span>Index: $84,231.50</span>
+      <span class="text-et-green font-medium">Funding: +0.010% in 5h 23m</span>
+    </div>
+  </div>
+
+  <!-- Chart -->
+  <div class="bg-white px-4 pb-2 flex items-center gap-1">
+    <button class="px-3 py-1.5 text-xs rounded-full text-et-text-muted">1H</button>
+    <button class="px-3 py-1.5 text-xs rounded-full bg-et-blue text-white font-medium">1D</button>
+    <button class="px-3 py-1.5 text-xs rounded-full text-et-text-muted">1W</button>
+    <button class="px-3 py-1.5 text-xs rounded-full text-et-text-muted">1M</button>
+  </div>
+
+  <div class="bg-white px-4 pb-4">
+    <div class="rounded-lg h-44 relative overflow-hidden bg-et-bg/50">
+      <svg viewBox="0 0 400 160" class="w-full h-full" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="cg2" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#00b67a" stop-opacity="0.15"/>
+            <stop offset="100%" stop-color="#00b67a" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <path d="M0,120 Q20,115 40,105 T80,90 T120,95 T160,70 T200,60 T240,65 T280,40 T320,30 T360,25 T400,15" fill="none" stroke="#00b67a" stroke-width="2"/>
+        <path d="M0,120 Q20,115 40,105 T80,90 T120,95 T160,70 T200,60 T240,65 T280,40 T320,30 T360,25 T400,15 L400,160 L0,160 Z" fill="url(#cg2)"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Also available link -->
+  <div class="px-4 mt-3">
+    <div class="et-card p-3 flex items-center justify-between cursor-pointer" onclick="goToScreen(1)">
+      <div class="flex items-center gap-2">
+        <div class="w-6 h-6 rounded-full bg-[#f7931a] flex items-center justify-center text-white font-bold text-[8px]">₿</div>
+        <span class="text-xs text-et-text-muted">Also available: <span class="text-et-text font-medium">BTC/USD</span> (Real & CFD)</span>
+      </div>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#97a5b3" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+    </div>
+  </div>
+
+  <!-- Key Stats -->
+  <div class="px-4 mt-4 grid grid-cols-3 gap-3">
+    <div class="et-card p-3 text-center">
+      <div class="text-[10px] text-et-text-muted uppercase tracking-wider font-medium">Max Leverage</div>
+      <div class="text-base font-bold text-et-blue mt-1">×10</div>
+    </div>
+    <div class="et-card p-3 text-center">
+      <div class="text-[10px] text-et-text-muted uppercase tracking-wider font-medium">Spread</div>
+      <div class="text-base font-bold text-et-text mt-1">0.015%</div>
+    </div>
+    <div class="et-card p-3 text-center">
+      <div class="text-[10px] text-et-text-muted uppercase tracking-wider font-medium">Funding</div>
+      <div class="text-base font-bold text-et-green mt-1">+0.010%</div>
+    </div>
+  </div>
+
+  <!-- About -->
+  <div class="px-4 mt-4 pb-4">
+    <div class="et-card p-4">
+      <div class="text-sm font-semibold text-et-text mb-2">About BTC Perpetual</div>
+      <div class="text-xs text-et-text-secondary leading-relaxed">
+        A perpetual futures contract on Bitcoin with no expiry date. Trade long or short with up to ×10 leverage.
+        Funding rates are exchanged between longs and shorts every 8 hours to keep the contract price aligned with spot.
+      </div>
+      <div class="mt-3 space-y-2.5">
+        <div class="flex justify-between text-xs">
+          <span class="text-et-text-muted">Contract type</span>
+          <span class="text-et-text font-medium">Perpetual (no expiry)</span>
+        </div>
+        <div class="flex justify-between text-xs">
+          <span class="text-et-text-muted">Max leverage</span>
+          <span class="text-et-blue font-medium">×10</span>
+        </div>
+        <div class="flex justify-between text-xs">
+          <span class="text-et-text-muted">Min trade</span>
+          <span class="text-et-text font-medium">$50</span>
+        </div>
+        <div class="flex justify-between text-xs">
+          <span class="text-et-text-muted">Funding interval</span>
+          <span class="text-et-text font-medium">Every 8 hours</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="h-24"></div>
+
+  <div class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] bg-white border-t border-et-border p-4 z-40">
+    <div class="flex gap-3">
+      <button onclick="goToScreen(3); setOrderDir('sell')" class="flex-1 py-3.5 rounded-xl bg-et-red font-semibold text-white text-sm">SHORT</button>
+      <button onclick="goToScreen(3); setOrderDir('buy')" class="flex-1 py-3.5 rounded-xl bg-et-green font-semibold text-white text-sm">LONG</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ==================== SCREEN 3: ORDER ENTRY ==================== -->
+<div id="screen-3" class="screen max-w-[430px] mx-auto bg-et-bg min-h-screen">
+
+  <div class="flex items-center justify-between px-4 py-2 text-xs status-bar font-medium">
+    <span>20:16</span>
+    <div class="flex items-center gap-1 text-et-text-secondary"><span>●●●●</span><span>WiFi</span><span>🔋</span></div>
+  </div>
+
+  <div class="bg-white px-4 py-3 flex items-center justify-between border-b border-et-border">
+    <div class="flex items-center gap-3">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6b7b8d" stroke-width="2" class="cursor-pointer" onclick="goToScreen(2)"><path d="M15 18l-6-6 6-6"/></svg>
+      <div class="flex items-center gap-2.5">
+        <div class="w-7 h-7 rounded-full bg-[#f7931a] flex items-center justify-center text-white font-bold text-[10px]">₿</div>
+        <div>
+          <span class="text-et-text font-semibold text-[15px]">BTC Perpetual</span>
+        </div>
+      </div>
+    </div>
+    <div class="text-right">
+      <div class="text-et-text font-semibold text-sm price-live">$84,235.00</div>
+      <div class="text-et-green text-[11px] font-medium">+2.35%</div>
+    </div>
+  </div>
+
+  <div class="bg-white">
+    <!-- Long / Short Toggle -->
+    <div class="px-4 pt-4 pb-3">
+      <div class="flex rounded-xl bg-et-bg p-1">
+        <button id="btn-long" onclick="setOrderDir('buy')" class="flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all bg-et-green text-white">LONG</button>
+        <button id="btn-short" onclick="setOrderDir('sell')" class="flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all text-et-text-muted">SHORT</button>
+      </div>
+    </div>
+
+    <!-- Order Type -->
+    <div class="flex gap-0 px-4 border-b border-et-border">
+      <button class="px-4 py-2.5 text-sm font-semibold text-et-text border-b-2 border-et-blue">Market</button>
+      <button class="px-4 py-2.5 text-sm text-et-text-muted">Limit</button>
+      <button class="px-4 py-2.5 text-sm text-et-text-muted">Stop</button>
+    </div>
+  </div>
+
+  <!-- Amount (USD) -->
+  <div class="px-4 mt-4">
+    <div class="et-card p-4">
+      <div class="flex items-center justify-between mb-2">
+        <label class="text-xs text-et-text-muted font-medium">Amount</label>
+        <span class="text-xs text-et-text-muted">Available: <span class="text-et-text font-medium">$12,450.00</span></span>
+      </div>
+      <div class="relative">
+        <span class="absolute left-4 top-1/2 -translate-y-1/2 text-et-text-muted font-medium">$</span>
+        <input id="amount-input" type="text" value="1,000"
+               class="w-full bg-et-bg border border-et-border rounded-xl py-3.5 pl-8 pr-4 text-et-text font-semibold text-xl">
+      </div>
+      <div class="flex gap-2 mt-3">
+        <button onclick="setAmountUSD(100)" class="px-3 py-1.5 text-xs rounded-lg bg-et-bg text-et-text-muted border border-et-border font-medium">$100</button>
+        <button onclick="setAmountUSD(500)" class="px-3 py-1.5 text-xs rounded-lg bg-et-bg text-et-text-muted border border-et-border font-medium">$500</button>
+        <button onclick="setAmountUSD(1000)" class="px-3 py-1.5 text-xs rounded-lg bg-et-blue/10 text-et-blue border border-et-blue/30 font-medium">$1,000</button>
+        <button onclick="setAmountUSD(5000)" class="px-3 py-1.5 text-xs rounded-lg bg-et-bg text-et-text-muted border border-et-border font-medium">$5,000</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Leverage -->
+  <div class="px-4 mt-3">
+    <div class="et-card p-4">
+      <div class="flex items-center justify-between mb-2">
+        <label class="text-xs text-et-text-muted font-medium">Leverage</label>
+        <span class="text-xs text-et-text font-medium" id="s3-exposure">Exposure: $10,000</span>
+      </div>
+      <div class="flex gap-2">
+        <button class="lev-pill flex-1 py-2.5 rounded-lg text-center bg-et-bg text-et-text-muted text-sm font-semibold border border-et-border" onclick="pickLev(this,2)">×2</button>
+        <button class="lev-pill flex-1 py-2.5 rounded-lg text-center bg-et-bg text-et-text-muted text-sm font-semibold border border-et-border" onclick="pickLev(this,3)">×3</button>
+        <button class="lev-pill flex-1 py-2.5 rounded-lg text-center bg-et-bg text-et-text-muted text-sm font-semibold border border-et-border" onclick="pickLev(this,5)">×5</button>
+        <button class="lev-pill active flex-1 py-2.5 rounded-lg text-center text-sm font-semibold border border-transparent" onclick="pickLev(this,10)">×10</button>
+      </div>
+      <div class="mt-3 flex items-center gap-3">
+        <input id="lev-slider" type="range" min="2" max="10" value="10" class="flex-1" oninput="updateLevFromSlider(this.value)">
+        <span class="text-xs text-et-blue font-semibold w-8 text-right" id="lev-label">×10</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SL/TP -->
+  <div class="px-4 mt-3">
+    <div class="et-card p-4">
+      <div class="flex items-center justify-between mb-3">
+        <label class="text-xs text-et-text-muted font-medium">Stop Loss & Take Profit</label>
+        <div id="sltp-toggle" class="w-9 h-5 rounded-full bg-et-green flex items-center px-0.5 cursor-pointer" onclick="toggleSLTP()">
+          <div id="sltp-thumb" class="w-4 h-4 rounded-full bg-white shadow transition-transform" style="transform: translateX(16px)"></div>
+        </div>
+      </div>
+      <div id="sltp-fields">
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <div class="text-[11px] text-et-red mb-1.5 font-medium">Stop Loss</div>
+            <div class="relative">
+              <span class="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-et-text-muted">$</span>
+              <input type="text" value="80,000" class="w-full bg-et-bg border border-et-border rounded-lg py-2.5 pl-7 pr-3 text-et-text text-sm font-medium">
+            </div>
+            <div class="text-[10px] text-et-red mt-1 font-medium">-$503.50 (-50.4%)</div>
+          </div>
+          <div>
+            <div class="text-[11px] text-et-green mb-1.5 font-medium">Take Profit</div>
+            <div class="relative">
+              <span class="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-et-text-muted">$</span>
+              <input type="text" value="90,000" class="w-full bg-et-bg border border-et-border rounded-lg py-2.5 pl-7 pr-3 text-et-text text-sm font-medium">
+            </div>
+            <div class="text-[10px] text-et-green mt-1 font-medium">+$684.60 (+68.5%)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Order Summary -->
+  <div class="px-4 mt-3 mb-4">
+    <div class="et-card p-4">
+      <div class="text-xs text-et-text-muted font-medium mb-3 uppercase tracking-wider">Order summary</div>
+      <div class="space-y-2.5">
+        <div class="flex justify-between text-xs">
+          <span class="text-et-text-muted">Position size</span>
+          <span class="text-et-text font-medium" id="sum-position">$10,000.00</span>
+        </div>
+        <div class="flex justify-between text-xs">
+          <span class="text-et-text-muted">Required margin</span>
+          <span class="text-et-text font-medium" id="sum-margin">$1,000.00</span>
+        </div>
+        <div class="flex justify-between text-xs">
+          <span class="text-et-text-muted">Liquidation price</span>
+          <span class="text-et-red font-medium" id="sum-liq">$76,651</span>
+        </div>
+        <div class="flex justify-between text-xs">
+          <span class="text-et-text-muted">Est. holding cost</span>
+          <span class="text-et-text-secondary font-medium">~$2.31/day (funding)</span>
+        </div>
+        <div class="flex justify-between text-xs">
+          <span class="text-et-text-muted">Spread</span>
+          <span class="text-et-text-secondary font-medium">0.015%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Submit -->
+  <div class="px-4 pb-6">
+    <button id="s3-submit" onclick="goToScreen(4)" class="w-full py-4 rounded-xl bg-et-green font-bold text-white text-base active:scale-[0.98] transition-all shadow-sm">
+      Open LONG Position
+    </button>
+    <p class="text-[10px] text-et-text-muted text-center mt-3 leading-relaxed">
+      Perpetual contracts involve significant risk. You may lose more than your invested amount.
+      <a href="#" class="text-et-blue underline">Learn more</a>
+    </p>
+  </div>
+</div>
+
+
+<!-- ==================== SCREEN 4: POSITION CONFIRMATION ==================== -->
+<div id="screen-4" class="screen max-w-[430px] mx-auto bg-et-bg min-h-screen">
+
+  <div class="flex items-center justify-between px-4 py-2 text-xs status-bar font-medium">
+    <span>20:16</span>
+    <div class="flex items-center gap-1 text-et-text-secondary"><span>●●●●</span><span>WiFi</span><span>🔋</span></div>
+  </div>
+
+  <!-- Success -->
+  <div class="bg-white flex flex-col items-center justify-center py-10 border-b border-et-border">
+    <div class="w-16 h-16 rounded-full bg-et-green-light flex items-center justify-center mb-4">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#00b67a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 6L9 17l-5-5"/>
+      </svg>
+    </div>
+    <div class="text-et-text font-bold text-lg">Position Opened</div>
+    <div class="text-et-text-muted text-sm mt-1">BTC Perpetual • LONG ×10</div>
+  </div>
+
+  <!-- Position Card -->
+  <div class="px-4 mt-4 pb-4">
+    <div class="et-card overflow-hidden">
+      <div class="p-4 flex items-center justify-between border-b border-et-border-light">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-[#f7931a] flex items-center justify-center text-white font-bold text-sm">₿</div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-et-text font-semibold">BTC Perpetual</span>
+              <span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-et-green-light text-et-green">LONG</span>
+              <span class="text-et-text-muted text-xs">×10</span>
+            </div>
+            <div class="text-[11px] text-et-text-muted mt-0.5">Opened just now</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- P&L -->
+      <div class="px-4 py-3 bg-et-green-light/50">
+        <div class="flex items-baseline gap-2">
+          <span class="text-xl font-bold text-et-green">+$3.50</span>
+          <span class="text-sm text-et-green font-medium">(+0.35%)</span>
+        </div>
+      </div>
+
+      <!-- Details -->
+      <div class="px-4 py-4 grid grid-cols-2 gap-y-4 gap-x-4">
+        <div>
+          <div class="text-[10px] text-et-text-muted uppercase tracking-wider font-medium">Invested</div>
+          <div class="text-sm text-et-text font-semibold mt-0.5">$1,000.00</div>
+        </div>
+        <div>
+          <div class="text-[10px] text-et-text-muted uppercase tracking-wider font-medium">Exposure</div>
+          <div class="text-sm text-et-text font-semibold mt-0.5">$10,000.00</div>
+        </div>
+        <div>
+          <div class="text-[10px] text-et-text-muted uppercase tracking-wider font-medium">Open rate</div>
+          <div class="text-sm text-et-text font-semibold mt-0.5">$84,235.00</div>
+        </div>
+        <div>
+          <div class="text-[10px] text-et-text-muted uppercase tracking-wider font-medium">Current</div>
+          <div class="text-sm text-et-text font-semibold mt-0.5 price-live">$84,264.50</div>
+        </div>
+        <div>
+          <div class="text-[10px] text-et-text-muted uppercase tracking-wider font-medium">Liquidation</div>
+          <div class="text-sm text-et-red font-semibold mt-0.5">$76,651.00</div>
+        </div>
+        <div>
+          <div class="text-[10px] text-et-text-muted uppercase tracking-wider font-medium">Next funding</div>
+          <div class="text-sm text-et-blue font-semibold mt-0.5">5h 22m</div>
+        </div>
+      </div>
+
+      <!-- SL/TP -->
+      <div class="px-4 pb-4 flex gap-3">
+        <div class="flex-1 bg-et-red-light rounded-xl p-3">
+          <div class="text-[10px] text-et-red font-semibold">Stop Loss</div>
+          <div class="text-sm text-et-text font-semibold mt-0.5">$80,000.00</div>
+          <div class="text-[10px] text-et-text-muted">-$503.50</div>
+        </div>
+        <div class="flex-1 bg-et-green-light rounded-xl p-3">
+          <div class="text-[10px] text-et-green font-semibold">Take Profit</div>
+          <div class="text-sm text-et-text font-semibold mt-0.5">$90,000.00</div>
+          <div class="text-[10px] text-et-text-muted">+$684.60</div>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="px-4 pb-4 flex gap-3">
+        <button class="flex-1 py-3 rounded-xl border border-et-border text-et-text-secondary font-medium text-sm">Edit SL/TP</button>
+        <button class="flex-1 py-3 rounded-xl bg-et-red font-semibold text-white text-sm">Close Position</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Funding Card -->
+  <div class="px-4 pb-4">
+    <div class="et-card p-4">
+      <div class="flex items-center gap-2 mb-3">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0086e6" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span class="text-xs text-et-text font-semibold">Funding schedule</span>
+      </div>
+      <div class="space-y-2">
+        <div class="flex justify-between text-xs">
+          <span class="text-et-text-muted">Next payment</span>
+          <span class="text-et-blue font-medium">In 5h 22m</span>
+        </div>
+        <div class="flex justify-between text-xs">
+          <span class="text-et-text-muted">Current rate</span>
+          <span class="text-et-green font-medium">+0.010%</span>
+        </div>
+        <div class="flex justify-between text-xs">
+          <span class="text-et-text-muted">Est. per payment</span>
+          <span class="text-et-text font-medium">~$1.00</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Nav -->
+  <div class="px-4 pb-4">
+    <button onclick="goToScreen(5)" class="w-full py-3 rounded-xl bg-et-blue font-semibold text-white text-sm">
+      View in Portfolio
+    </button>
+  </div>
+
+  <div class="px-4 pb-8">
+    <div class="et-card p-3 flex items-center justify-between cursor-pointer" onclick="goToScreen(1)">
+      <div class="flex items-center gap-2">
+        <div class="w-6 h-6 rounded-full bg-[#f7931a] flex items-center justify-center text-white font-bold text-[8px]">₿</div>
+        <span class="text-xs text-et-text-muted">Back to <span class="text-et-text font-medium">Bitcoin (BTC/USD)</span></span>
+      </div>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#97a5b3" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+    </div>
+  </div>
+</div>
+
+
+<!-- ==================== SCREEN 5: PORTFOLIO VIEW ==================== -->
+<div id="screen-5" class="screen max-w-[430px] mx-auto bg-et-bg min-h-screen">
+
+  <div class="flex items-center justify-between px-4 py-2 text-xs status-bar font-medium">
+    <span>20:18</span>
+    <div class="flex items-center gap-1 text-et-text-secondary"><span>●●●●</span><span>WiFi</span><span>🔋</span></div>
+  </div>
+
+  <div class="bg-white px-4 py-4 border-b border-et-border">
+    <div class="text-et-text font-bold text-lg">Portfolio</div>
+  </div>
+
+  <!-- Portfolio Summary -->
+  <div class="px-4 mt-4">
+    <div class="et-card p-4">
+      <div class="flex items-center justify-between mb-3">
+        <span class="text-xs text-et-text-muted uppercase tracking-wider font-medium">Total P&L Today</span>
+        <span class="text-sm font-bold text-et-green">+$127.40 (+1.2%)</span>
+      </div>
+      <div class="flex gap-3">
+        <div class="flex-1 text-center">
+          <div class="text-[10px] text-et-text-muted">Invested</div>
+          <div class="text-sm text-et-text font-semibold">$10,850</div>
+        </div>
+        <div class="w-px bg-et-border"></div>
+        <div class="flex-1 text-center">
+          <div class="text-[10px] text-et-text-muted">Available</div>
+          <div class="text-sm text-et-text font-semibold">$1,600</div>
+        </div>
+        <div class="w-px bg-et-border"></div>
+        <div class="flex-1 text-center">
+          <div class="text-[10px] text-et-text-muted">Total</div>
+          <div class="text-sm text-et-text font-semibold">$12,577</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="flex items-center gap-2 px-4 mt-4 mb-3">
+    <button class="px-3 py-1.5 text-xs rounded-full bg-et-blue text-white font-medium">All</button>
+    <button class="px-3 py-1.5 text-xs rounded-full bg-white text-et-text-muted border border-et-border">Crypto</button>
+    <button class="px-3 py-1.5 text-xs rounded-full bg-et-green-light text-et-green border border-et-green/20 font-medium">Perps</button>
+    <button class="px-3 py-1.5 text-xs rounded-full bg-white text-et-text-muted border border-et-border">Stocks</button>
+  </div>
+
+  <!-- Positions -->
+  <div class="px-4 space-y-2 pb-8">
+
+    <!-- BTC Real -->
+    <div class="et-card p-3.5 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-full bg-[#f7931a] flex items-center justify-center text-white font-bold text-[10px]">₿</div>
+        <div>
+          <div class="text-sm text-et-text font-medium">Bitcoin</div>
+          <div class="text-[11px] text-et-text-muted">BTC/USD • Real • ×1</div>
+        </div>
+      </div>
+      <div class="text-right">
+        <div class="text-sm text-et-green font-semibold">+$89.20</div>
+        <div class="text-[11px] text-et-text-muted">$5,000</div>
+      </div>
+    </div>
+
+    <!-- ETH Real -->
+    <div class="et-card p-3.5 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-full bg-[#627eea] flex items-center justify-center text-white font-bold text-[10px]">Ξ</div>
+        <div>
+          <div class="text-sm text-et-text font-medium">Ethereum</div>
+          <div class="text-[11px] text-et-text-muted">ETH/USD • Real • ×1</div>
+        </div>
+      </div>
+      <div class="text-right">
+        <div class="text-sm text-et-green font-semibold">+$34.70</div>
+        <div class="text-[11px] text-et-text-muted">$3,500</div>
+      </div>
+    </div>
+
+    <!-- ⭐ BTC PERP -->
+    <div class="et-card p-3.5 cursor-pointer border-et-green/20" onclick="goToScreen(4)" style="border-color: #00b67a30;">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-full bg-[#f7931a] flex items-center justify-center text-white font-bold text-[10px]">₿</div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-sm text-et-text font-medium">BTC Perpetual</span>
+              <span class="text-[9px] text-et-green font-bold bg-et-green-light px-1.5 py-0.5 rounded-full">LONG</span>
+            </div>
+            <div class="text-[11px] text-et-text-muted">Perp • ×10</div>
+          </div>
+        </div>
+        <div class="text-right">
+          <div class="text-sm text-et-green font-semibold">+$3.50</div>
+          <div class="text-[11px] text-et-text-muted">$1,000</div>
+        </div>
+      </div>
+      <div class="mt-2 flex items-center gap-2 pt-2 border-t border-et-border-light">
+        <div class="w-1.5 h-1.5 rounded-full bg-et-blue"></div>
+        <span class="text-[10px] text-et-text-muted">Next funding in 5h 22m</span>
+      </div>
+    </div>
+
+    <!-- AAPL -->
+    <div class="et-card p-3.5 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center text-lg">🍎</div>
+        <div>
+          <div class="text-sm text-et-text font-medium">Apple</div>
+          <div class="text-[11px] text-et-text-muted">AAPL • CFD • ×5</div>
+        </div>
+      </div>
+      <div class="text-right">
+        <div class="text-sm text-et-red font-semibold">-$12.30</div>
+        <div class="text-[11px] text-et-text-muted">$1,350</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /pt-14 -->
+
+
+<!-- ==================== FOOTER ==================== -->
+<div class="max-w-[430px] mx-auto px-4 py-6 bg-white border-t border-et-border mt-4">
+  <div class="text-center">
+    <div class="text-et-blue text-xs font-semibold uppercase tracking-wider mb-2">User Journey: BTC/USD → Perps</div>
+    <div class="text-et-text-muted text-xs leading-relaxed">
+      <strong>1.</strong> Existing BTC/USD screen — promo banner + instrument list<br>
+      <strong>2.</strong> BTC Perpetual instrument page (separate asset)<br>
+      <strong>3.</strong> Order entry — ×10 max leverage<br>
+      <strong>4.</strong> Position confirmation + funding schedule<br>
+      <strong>5.</strong> Portfolio view — perps alongside existing positions
+    </div>
+    <div class="mt-4 p-3 bg-et-bg rounded-xl text-left">
+      <div class="text-[11px] text-et-text font-semibold mb-2">⚠️ Assumptions (pending Yossi)</div>
+      <div class="space-y-1 text-[10px] text-et-text-muted">
+        <div>• Separate asset — own pricing, fees, spreads</div>
+        <div>• Real perps (not CFD) — funding rate model</div>
+        <div>• Flow Traders = execution + book management</div>
+        <div>• eToro = distribution + UX</div>
+        <div>• ×10 leverage — no margin accounts</div>
+        <div>• Crypto-denominated internally (not shown to user)</div>
+        <div>• Isolated positions</div>
+        <div>• Funding rate every 8h</div>
+      </div>
+    </div>
+    <div class="text-et-text-muted text-[10px] mt-3">CoreClaw • April 2026</div>
+  </div>
+</div>
+
+
+<script>
+let currentScreen = 1;
+let currentLev = 10;
+
+function handleDeepLink() {
+  const hash = window.location.hash;
+  if (!hash) return;
+  const params = new URLSearchParams(hash.substring(1));
+  const screen = parseInt(params.get('screen'));
+  const side = params.get('side');
+  if (screen >= 1 && screen <= 5) {
+    setTimeout(() => {
+      goToScreen(screen);
+      if (side && screen === 3) setOrderDir(side === 'short' ? 'sell' : 'buy');
+    }, 100);
+  }
+}
+window.addEventListener('hashchange', handleDeepLink);
+window.addEventListener('load', handleDeepLink);
+
+function goToScreen(n) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-' + n).classList.add('active');
+  document.querySelectorAll('.screen-dot').forEach((d, i) => d.classList.toggle('active', i === n - 1));
+  const steps = {
+    1: 'BTC/USD Execution Screen',
+    2: 'BTC Perpetual — Instrument Page',
+    3: 'Order Entry',
+    4: 'Position Confirmation',
+    5: 'Portfolio View'
+  };
+  document.getElementById('journey-step').textContent = `Step ${n} of 5`;
+  document.getElementById('journey-title').textContent = steps[n];
+  currentScreen = n;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function setOrderDir(dir) {
+  const longBtn = document.getElementById('btn-long');
+  const shortBtn = document.getElementById('btn-short');
+  const submitBtn = document.getElementById('s3-submit');
+  if (dir === 'buy') {
+    longBtn.className = 'flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all bg-et-green text-white';
+    shortBtn.className = 'flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all text-et-text-muted';
+    submitBtn.className = 'w-full py-4 rounded-xl bg-et-green font-bold text-white text-base active:scale-[0.98] transition-all shadow-sm';
+    submitBtn.textContent = 'Open LONG Position';
+  } else {
+    shortBtn.className = 'flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all bg-et-red text-white';
+    longBtn.className = 'flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all text-et-text-muted';
+    submitBtn.className = 'w-full py-4 rounded-xl bg-et-red font-bold text-white text-base active:scale-[0.98] transition-all shadow-sm';
+    submitBtn.textContent = 'Open SHORT Position';
+  }
+}
+
+function setAmountUSD(val) {
+  document.getElementById('amount-input').value = val.toLocaleString();
+  updateSummary();
+}
+
+function pickLev(el, val) {
+  document.querySelectorAll('.lev-pill').forEach(p => {
+    p.classList.remove('active');
+    p.classList.add('bg-et-bg', 'text-et-text-muted', 'border', 'border-et-border');
+  });
+  el.classList.add('active');
+  el.classList.remove('bg-et-bg', 'text-et-text-muted', 'border-et-border');
+  el.classList.add('border-transparent');
+  currentLev = val;
+  document.getElementById('lev-slider').value = val;
+  document.getElementById('lev-label').textContent = '×' + val;
+  updateSummary();
+}
+
+function updateLevFromSlider(val) {
+  currentLev = parseInt(val);
+  document.getElementById('lev-label').textContent = '×' + currentLev;
+  document.querySelectorAll('.lev-pill').forEach(p => {
+    const pv = parseInt(p.textContent.replace('×', ''));
+    if (pv === currentLev) {
+      p.classList.add('active');
+      p.classList.remove('bg-et-bg', 'text-et-text-muted', 'border-et-border');
+      p.classList.add('border-transparent');
+    } else {
+      p.classList.remove('active');
+      p.classList.add('bg-et-bg', 'text-et-text-muted', 'border', 'border-et-border');
+    }
+  });
+  updateSummary();
+}
+
+function updateSummary() {
+  const amountStr = document.getElementById('amount-input').value.replace(/,/g, '');
+  const amount = parseFloat(amountStr) || 0;
+  const exposure = amount * currentLev;
+  document.getElementById('s3-exposure').textContent = 'Exposure: $' + exposure.toLocaleString();
+  document.getElementById('sum-position').textContent = '$' + exposure.toLocaleString() + '.00';
+  document.getElementById('sum-margin').textContent = '$' + amount.toLocaleString() + '.00';
+  const liqPrice = Math.round(84235 * (1 - 0.9 / currentLev));
+  document.getElementById('sum-liq').textContent = '$' + liqPrice.toLocaleString();
+}
+
+function toggleSLTP() {
+  const fields = document.getElementById('sltp-fields');
+  const toggle = document.getElementById('sltp-toggle');
+  const thumb = document.getElementById('sltp-thumb');
+  if (fields.style.display === 'none') {
+    fields.style.display = '';
+    toggle.classList.add('bg-et-green');
+    toggle.classList.remove('bg-gray-300');
+    thumb.style.transform = 'translateX(16px)';
+  } else {
+    fields.style.display = 'none';
+    toggle.classList.remove('bg-et-green');
+    toggle.classList.add('bg-gray-300');
+    thumb.style.transform = 'translateX(0)';
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>eToro Perps — Execution Mockup</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+      colors: {
+        etoro: {
+          green: '#6cca98',
+          'green-dark': '#4eb87d',
+          'green-bg': '#e8f7ef',
+          red: '#e2574c',
+          'red-dark': '#cc3f34',
+          'red-bg': '#fce8e6',
+          blue: '#1997f6',
+          dark: '#0b1426',
+          'dark-card': '#131d33',
+          'dark-surface': '#1a2744',
+          'dark-border': '#2a3a5c',
+          'gray-text': '#8c98b1',
+          'light-text': '#d1d9e8',
+        }
+      }
+    }
+  }
+}
+</script>
+<style>
+  * { box-sizing: border-box; }
+  body { background: #0b1426; color: #d1d9e8; }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #2a3a5c; border-radius: 4px; }
+
+  /* Toggle switch */
+  .toggle-track { transition: background 0.2s; }
+  .toggle-thumb { transition: transform 0.2s; }
+
+  /* Leverage pill active state */
+  .lev-pill { transition: all 0.15s ease; }
+  .lev-pill.active { background: #1997f6; color: white; }
+  .lev-pill:not(.active):hover { background: #1a2744; }
+
+  /* Order type tabs */
+  .order-tab { transition: all 0.15s; }
+  .order-tab.active { color: #fff; border-bottom: 2px solid #1997f6; }
+
+  /* Animated price chart placeholder */
+  .chart-area {
+    background: linear-gradient(180deg, rgba(108,202,152,0.08) 0%, transparent 100%);
+  }
+
+  /* Slide-up animation */
+  @keyframes slideUp {
+    from { transform: translateY(100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  .slide-up { animation: slideUp 0.3s ease-out; }
+
+  /* Subtle pulse for live price */
+  @keyframes pricePulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }
+  .price-live { animation: pricePulse 2s ease-in-out infinite; }
+
+  /* Input focus */
+  input:focus { outline: none; border-color: #1997f6; }
+
+  /* Tooltip */
+  .tooltip-trigger:hover .tooltip-content { display: block; }
+  .tooltip-content { display: none; }
+
+  /* Tab navigation */
+  .nav-tab { position: relative; }
+  .nav-tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #1997f6;
+  }
+</style>
+</head>
+<body class="font-sans min-h-screen">
+
+<!-- ==================== SCREEN 1: INSTRUMENT PAGE ==================== -->
+<div id="screen-instrument" class="max-w-[430px] mx-auto relative">
+
+  <!-- Status Bar (Mobile) -->
+  <div class="flex items-center justify-between px-4 py-2 text-xs text-etoro-gray-text">
+    <span>20:15</span>
+    <div class="flex items-center gap-1">
+      <i data-lucide="signal" class="w-3 h-3"></i>
+      <i data-lucide="wifi" class="w-3 h-3"></i>
+      <i data-lucide="battery" class="w-3 h-3"></i>
+    </div>
+  </div>
+
+  <!-- Top Nav -->
+  <div class="flex items-center justify-between px-4 py-3">
+    <div class="flex items-center gap-3">
+      <i data-lucide="arrow-left" class="w-5 h-5 text-etoro-light-text cursor-pointer"></i>
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-full bg-[#f7931a] flex items-center justify-center text-white font-bold text-xs">₿</div>
+        <div>
+          <div class="text-white font-semibold text-sm">Bitcoin</div>
+          <div class="text-etoro-gray-text text-xs">BTC/USD • <span class="text-purple-300">Real</span> • <span class="text-etoro-blue">CFD</span> • <span class="text-purple-300">Perp</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="flex items-center gap-3">
+      <i data-lucide="bell" class="w-5 h-5 text-etoro-gray-text"></i>
+      <i data-lucide="star" class="w-5 h-5 text-etoro-gray-text"></i>
+    </div>
+  </div>
+
+  <!-- Price Header -->
+  <div class="px-4 pb-3">
+    <div class="flex items-baseline gap-2">
+      <span class="text-2xl font-bold text-white price-live">$84,231.50</span>
+      <span class="text-sm font-medium text-etoro-green">+2.34%</span>
+      <span class="text-xs text-etoro-gray-text">24h</span>
+    </div>
+    <div class="flex items-center gap-4 mt-1 text-xs text-etoro-gray-text">
+      <span>H: $85,100.00</span>
+      <span>L: $81,443.20</span>
+      <div class="flex items-center gap-1 tooltip-trigger relative">
+        <span>Holding cost: </span>
+        <span class="text-etoro-light-text font-medium">~$2.31/day</span>
+        <i data-lucide="info" class="w-3 h-3 text-etoro-gray-text"></i>
+        <div class="tooltip-content absolute bottom-full left-0 mb-2 p-3 bg-etoro-dark-surface border border-etoro-dark-border rounded-lg text-xs w-56 z-50 shadow-xl">
+          <div class="font-semibold text-white mb-1">Funding Rate</div>
+          <div class="text-etoro-gray-text">Current: <span class="text-etoro-green">+0.0100%</span></div>
+          <div class="text-etoro-gray-text">Next in: 5h 23m</div>
+          <div class="text-etoro-gray-text mt-1">Based on a $1,000 position. Longs pay shorts when positive.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chart Timeframe Tabs -->
+  <div class="flex items-center gap-1 px-4 pb-2">
+    <button class="px-3 py-1 text-xs rounded-full bg-etoro-dark-surface text-etoro-gray-text">1H</button>
+    <button class="px-3 py-1 text-xs rounded-full bg-etoro-blue text-white">1D</button>
+    <button class="px-3 py-1 text-xs rounded-full bg-etoro-dark-surface text-etoro-gray-text">1W</button>
+    <button class="px-3 py-1 text-xs rounded-full bg-etoro-dark-surface text-etoro-gray-text">1M</button>
+    <button class="px-3 py-1 text-xs rounded-full bg-etoro-dark-surface text-etoro-gray-text">YTD</button>
+  </div>
+
+  <!-- Chart Area (Placeholder) -->
+  <div class="chart-area mx-4 rounded-xl h-56 relative overflow-hidden border border-etoro-dark-border/30">
+    <svg viewBox="0 0 400 200" class="w-full h-full" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#6cca98" stop-opacity="0.3"/>
+          <stop offset="100%" stop-color="#6cca98" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <path d="M0,160 Q20,150 40,140 T80,120 T120,130 T160,100 T200,90 T240,95 T280,70 T320,60 T360,50 T400,40" 
+            fill="none" stroke="#6cca98" stroke-width="2"/>
+      <path d="M0,160 Q20,150 40,140 T80,120 T120,130 T160,100 T200,90 T240,95 T280,70 T320,60 T360,50 T400,40 L400,200 L0,200 Z" 
+            fill="url(#chartGrad)"/>
+    </svg>
+    <!-- Price line label -->
+    <div class="absolute right-2 top-[18%] bg-etoro-green text-white text-[10px] px-2 py-0.5 rounded font-medium">
+      84,231.50
+    </div>
+  </div>
+
+  <!-- Info Tabs -->
+  <div class="flex items-center gap-6 px-4 mt-4 border-b border-etoro-dark-border text-sm">
+    <button class="nav-tab active pb-3 text-white font-medium">Overview</button>
+    <button class="nav-tab pb-3 text-etoro-gray-text">Stats</button>
+    <button class="nav-tab pb-3 text-etoro-gray-text">Feed</button>
+  </div>
+
+  <!-- Quick Stats Row -->
+  <div class="grid grid-cols-3 gap-3 p-4">
+    <div class="bg-etoro-dark-card rounded-xl p-3">
+      <div class="text-[10px] text-etoro-gray-text uppercase tracking-wider">24h Volume</div>
+      <div class="text-sm font-semibold text-white mt-1">$48.2B</div>
+    </div>
+    <div class="bg-etoro-dark-card rounded-xl p-3">
+      <div class="text-[10px] text-etoro-gray-text uppercase tracking-wider">Open Interest</div>
+      <div class="text-sm font-semibold text-white mt-1">$18.7B</div>
+    </div>
+    <div class="bg-etoro-dark-card rounded-xl p-3">
+      <div class="text-[10px] text-etoro-gray-text uppercase tracking-wider">Funding</div>
+      <div class="text-sm font-semibold text-etoro-green mt-1">+0.010%</div>
+      <div class="text-[10px] text-etoro-gray-text">in 5h 23m</div>
+    </div>
+  </div>
+
+  <!-- Spacer for bottom buttons -->
+  <div class="h-24"></div>
+
+  <!-- Trade Buttons (Fixed Bottom) -->
+  <div class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] bg-etoro-dark/95 backdrop-blur-sm border-t border-etoro-dark-border p-4 flex gap-3">
+    <button onclick="openTradeSheet('sell')" class="flex-1 py-3.5 rounded-xl bg-etoro-red font-semibold text-white text-sm hover:bg-etoro-red-dark transition-colors">
+      SELL
+    </button>
+    <button onclick="openTradeSheet('buy')" class="flex-1 py-3.5 rounded-xl bg-etoro-green font-semibold text-white text-sm hover:bg-etoro-green-dark transition-colors">
+      BUY
+    </button>
+  </div>
+</div>
+
+<!-- ==================== SCREEN 2: ORDER ENTRY BOTTOM SHEET ==================== -->
+<div id="trade-sheet" class="fixed inset-0 z-50 hidden">
+  <!-- Backdrop -->
+  <div class="absolute inset-0 bg-black/60" onclick="closeTradeSheet()"></div>
+  
+  <!-- Sheet -->
+  <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] bg-etoro-dark-card rounded-t-3xl slide-up" style="max-height: 85vh;">
+    
+    <!-- Handle -->
+    <div class="flex justify-center pt-3 pb-2">
+      <div class="w-10 h-1 rounded-full bg-etoro-dark-border"></div>
+    </div>
+
+    <div class="px-5 pb-6 overflow-y-auto" style="max-height: calc(85vh - 24px);">
+      
+      <!-- Header -->
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-2">
+          <div class="w-7 h-7 rounded-full bg-[#f7931a] flex items-center justify-center text-white font-bold text-[10px]">₿</div>
+          <div>
+            <span class="text-white font-semibold text-sm">BTC/USD</span>
+            <span class="text-etoro-gray-text text-xs ml-1">Perp</span>
+          </div>
+        </div>
+        <button onclick="closeTradeSheet()" class="text-etoro-gray-text">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- BUY / SELL Toggle -->
+      <div class="flex rounded-xl bg-etoro-dark-surface p-1 mb-4">
+        <button id="btn-buy" onclick="setDirection('buy')" class="flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all bg-etoro-green text-white">
+          BUY
+        </button>
+        <button id="btn-sell" onclick="setDirection('sell')" class="flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all text-etoro-gray-text">
+          SELL
+        </button>
+      </div>
+
+      <!-- Order Type Tabs -->
+      <div class="flex gap-4 mb-4 border-b border-etoro-dark-border">
+        <button class="order-tab active pb-2 text-sm font-medium text-white">Market</button>
+        <button class="order-tab pb-2 text-sm font-medium text-etoro-gray-text">Limit</button>
+      </div>
+
+      <!-- Amount Input -->
+      <div class="mb-4">
+        <div class="flex items-center justify-between mb-2">
+          <label class="text-xs text-etoro-gray-text">Amount (USD)</label>
+          <span class="text-xs text-etoro-gray-text">Available: <span class="text-etoro-light-text">$12,450.00</span></span>
+        </div>
+        <div class="relative">
+          <span class="absolute left-4 top-1/2 -translate-y-1/2 text-etoro-gray-text font-medium">$</span>
+          <input type="text" value="1,000" 
+                 class="w-full bg-etoro-dark-surface border border-etoro-dark-border rounded-xl py-3.5 pl-8 pr-4 text-white font-semibold text-lg focus:border-etoro-blue transition-colors">
+        </div>
+        <!-- Quick amount pills -->
+        <div class="flex gap-2 mt-2">
+          <button class="px-3 py-1.5 text-xs rounded-lg bg-etoro-dark-surface text-etoro-gray-text hover:bg-etoro-dark-border transition-colors">$100</button>
+          <button class="px-3 py-1.5 text-xs rounded-lg bg-etoro-dark-surface text-etoro-gray-text hover:bg-etoro-dark-border transition-colors">$500</button>
+          <button class="px-3 py-1.5 text-xs rounded-lg bg-etoro-blue/20 text-etoro-blue border border-etoro-blue/30">$1,000</button>
+          <button class="px-3 py-1.5 text-xs rounded-lg bg-etoro-dark-surface text-etoro-gray-text hover:bg-etoro-dark-border transition-colors">$5,000</button>
+        </div>
+      </div>
+
+      <!-- Leverage Selector -->
+      <div class="mb-4">
+        <div class="flex items-center justify-between mb-2">
+          <label class="text-xs text-etoro-gray-text">Leverage</label>
+          <span class="text-xs text-etoro-light-text font-medium" id="exposure-label">Exposure: $10,000</span>
+        </div>
+        <div class="flex gap-2">
+          <button class="lev-pill flex-1 py-2 rounded-lg text-center bg-etoro-dark-surface text-etoro-gray-text" onclick="setLeverage(this, 1)">
+            <div class="text-sm font-medium">×1</div>
+            <div class="text-[9px] opacity-70 mt-0.5">Real</div>
+          </button>
+          <button class="lev-pill flex-1 py-2 rounded-lg text-center bg-etoro-dark-surface text-etoro-gray-text" onclick="setLeverage(this, 2)">
+            <div class="text-sm font-medium">×2</div>
+            <div class="text-[9px] opacity-70 mt-0.5">CFD</div>
+          </button>
+          <button class="lev-pill flex-1 py-2 rounded-lg text-center bg-etoro-dark-surface text-etoro-gray-text" onclick="setLeverage(this, 5)">
+            <div class="text-sm font-medium">×5</div>
+            <div class="text-[9px] opacity-70 mt-0.5">CFD</div>
+          </button>
+          <button class="lev-pill active flex-1 py-2 rounded-lg text-center" onclick="setLeverage(this, 10)">
+            <div class="text-sm font-medium">×10</div>
+            <div class="text-[9px] opacity-70 mt-0.5">Perp</div>
+          </button>
+        </div>
+        <!-- Instrument type indicator -->
+        <div id="instrument-badge" class="mt-2 flex items-center gap-2">
+          <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-purple-500/15 border border-purple-500/30">
+            <div class="w-1.5 h-1.5 rounded-full bg-purple-400"></div>
+            <span class="text-[10px] font-medium text-purple-300" id="instrument-type-label">Perpetual Contract</span>
+          </div>
+          <span class="text-[10px] text-etoro-gray-text" id="instrument-type-desc">Funding rate applies every 8h</span>
+        </div>
+      </div>
+
+      <!-- Stop Loss / Take Profit -->
+      <div class="mb-4">
+        <div class="flex items-center justify-between mb-2">
+          <label class="text-xs text-etoro-gray-text">Stop Loss & Take Profit</label>
+          <div class="flex items-center gap-1.5">
+            <span class="text-xs text-etoro-gray-text">Optional</span>
+            <div class="w-8 h-[18px] rounded-full bg-etoro-dark-surface toggle-track cursor-pointer flex items-center px-0.5" onclick="toggleSLTP(this)">
+              <div class="w-3.5 h-3.5 rounded-full bg-etoro-gray-text toggle-thumb transition-transform"></div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- SL/TP Fields (collapsed by default) -->
+        <div id="sltp-fields" class="hidden">
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <div class="text-[10px] text-etoro-red mb-1 font-medium">Stop Loss</div>
+              <div class="relative">
+                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-etoro-gray-text">$</span>
+                <input type="text" placeholder="—" class="w-full bg-etoro-dark-surface border border-etoro-dark-border rounded-lg py-2.5 pl-7 pr-3 text-white text-sm">
+              </div>
+            </div>
+            <div>
+              <div class="text-[10px] text-etoro-green mb-1 font-medium">Take Profit</div>
+              <div class="relative">
+                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-etoro-gray-text">$</span>
+                <input type="text" placeholder="—" class="w-full bg-etoro-dark-surface border border-etoro-dark-border rounded-lg py-2.5 pl-7 pr-3 text-white text-sm">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Divider -->
+      <div class="border-t border-etoro-dark-border my-4"></div>
+
+      <!-- Order Summary -->
+      <div id="order-summary" class="space-y-2.5 mb-5">
+        <div class="flex justify-between text-xs summary-row">
+          <span class="text-etoro-gray-text">Position size</span>
+          <span class="text-white font-medium value">$10,000.00</span>
+        </div>
+        <div class="flex justify-between text-xs summary-row">
+          <span class="text-etoro-gray-text">Required margin</span>
+          <span class="text-white font-medium value">$1,000.00</span>
+        </div>
+
+        <div class="flex justify-between text-xs items-center" id="holding-cost-row">
+          <div class="flex items-center gap-1 tooltip-trigger relative">
+            <span class="text-etoro-gray-text">Holding cost</span>
+            <i data-lucide="info" class="w-3 h-3 text-etoro-gray-text"></i>
+            <div class="tooltip-content absolute bottom-full left-0 mb-2 p-3 bg-etoro-dark-surface border border-etoro-dark-border rounded-lg text-xs w-52 z-50 shadow-xl">
+              <div class="text-etoro-gray-text" id="holding-cost-tooltip">This position accrues a funding fee every 8 hours based on market conditions. Current rate: +0.010%</div>
+            </div>
+          </div>
+          <span class="text-etoro-light-text font-medium">~$2.31/day (funding rate)</span>
+        </div>
+        <div class="flex justify-between text-xs" id="spread-row">
+          <span class="text-etoro-gray-text">Spread</span>
+          <span class="text-etoro-light-text font-medium">$12.50 (0.015%)</span>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <button id="submit-btn" class="w-full py-4 rounded-xl bg-etoro-green font-bold text-white text-base transition-all hover:bg-etoro-green-dark active:scale-[0.98]">
+        Open BUY Position
+      </button>
+
+      <!-- Risk Warning -->
+      <p class="text-[10px] text-etoro-gray-text text-center mt-3 leading-relaxed">
+        Perpetual contracts involve significant risk. You may lose more than your invested amount. 
+        <a href="#" class="text-etoro-blue underline">Learn more</a>
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SCREEN 3: OPEN POSITION CARD ==================== -->
+<div class="max-w-[430px] mx-auto mt-8 px-4 pb-8">
+  
+  <div class="text-xs text-etoro-gray-text uppercase tracking-wider mb-3 font-medium">Open Position</div>
+  
+  <div class="bg-etoro-dark-card rounded-2xl border border-etoro-dark-border overflow-hidden">
+    <!-- Position Header -->
+    <div class="p-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-[#f7931a] flex items-center justify-center text-white font-bold text-sm">₿</div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-white font-semibold">BTC/USD</span>
+            <span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-etoro-green/20 text-etoro-green">LONG</span>
+            <span class="text-etoro-gray-text text-xs">×10</span>
+          </div>
+          <div class="text-xs text-etoro-gray-text mt-0.5">Opened Apr 16, 2026 • 20:15</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- P&L Section -->
+    <div class="px-4 pb-3">
+      <div class="flex items-baseline gap-2">
+        <span class="text-xl font-bold text-etoro-green">+$234.50</span>
+        <span class="text-sm text-etoro-green font-medium">(+23.45%)</span>
+      </div>
+    </div>
+
+    <!-- Position Details -->
+    <div class="px-4 pb-4">
+      <div class="grid grid-cols-2 gap-y-3 gap-x-4">
+        <div>
+          <div class="text-[10px] text-etoro-gray-text uppercase tracking-wider">Invested</div>
+          <div class="text-sm text-white font-medium mt-0.5">$1,000.00</div>
+        </div>
+        <div>
+          <div class="text-[10px] text-etoro-gray-text uppercase tracking-wider">Exposure</div>
+          <div class="text-sm text-white font-medium mt-0.5">$10,000.00</div>
+        </div>
+        <div>
+          <div class="text-[10px] text-etoro-gray-text uppercase tracking-wider">Open rate</div>
+          <div class="text-sm text-white font-medium mt-0.5">$84,231.50</div>
+        </div>
+        <div>
+          <div class="text-[10px] text-etoro-gray-text uppercase tracking-wider">Current</div>
+          <div class="text-sm text-white font-medium mt-0.5">$84,466.00</div>
+        </div>
+        <div>
+          <div class="text-[10px] text-etoro-gray-text uppercase tracking-wider">Holding cost</div>
+          <div class="text-sm text-etoro-light-text font-medium mt-0.5 flex items-center gap-1">
+            -$4.62 <span class="text-[10px] text-etoro-gray-text">(2 days)</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SL/TP Indicators -->
+    <div class="px-4 pb-4">
+      <div class="flex gap-3">
+        <div class="flex-1 bg-etoro-red/10 rounded-lg p-2.5 border border-etoro-red/20">
+          <div class="text-[10px] text-etoro-red font-medium">Stop Loss</div>
+          <div class="text-sm text-white font-medium mt-0.5">$82,000.00</div>
+          <div class="text-[10px] text-etoro-gray-text">-$265.10</div>
+        </div>
+        <div class="flex-1 bg-etoro-green/10 rounded-lg p-2.5 border border-etoro-green/20">
+          <div class="text-[10px] text-etoro-green font-medium">Take Profit</div>
+          <div class="text-sm text-white font-medium mt-0.5">$88,000.00</div>
+          <div class="text-[10px] text-etoro-gray-text">+$447.30</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="px-4 pb-4 flex gap-3">
+      <button class="flex-1 py-3 rounded-xl border border-etoro-dark-border text-etoro-light-text font-medium text-sm hover:bg-etoro-dark-surface transition-colors">
+        Edit SL/TP
+      </button>
+      <button class="flex-1 py-3 rounded-xl bg-etoro-red font-semibold text-white text-sm hover:bg-etoro-red-dark transition-colors">
+        Close Position
+      </button>
+    </div>
+  </div>
+
+  <!-- Holding Cost Breakdown (Expandable) -->
+  <div class="mt-3 bg-etoro-dark-card rounded-xl border border-etoro-dark-border p-4">
+    <div class="flex items-center justify-between cursor-pointer" onclick="toggleCostBreakdown()">
+      <div class="flex items-center gap-2">
+        <i data-lucide="clock" class="w-4 h-4 text-etoro-gray-text"></i>
+        <span class="text-xs text-etoro-gray-text">Holding cost breakdown</span>
+      </div>
+      <i data-lucide="chevron-down" id="cost-chevron" class="w-4 h-4 text-etoro-gray-text transition-transform"></i>
+    </div>
+    <div id="cost-breakdown" class="hidden mt-3 space-y-2">
+      <div class="flex justify-between text-xs">
+        <span class="text-etoro-gray-text">Apr 16, 04:00 UTC</span>
+        <span class="text-etoro-light-text">-$0.77</span>
+      </div>
+      <div class="flex justify-between text-xs">
+        <span class="text-etoro-gray-text">Apr 16, 12:00 UTC</span>
+        <span class="text-etoro-light-text">-$0.82</span>
+      </div>
+      <div class="flex justify-between text-xs">
+        <span class="text-etoro-gray-text">Apr 16, 20:00 UTC</span>
+        <span class="text-etoro-light-text">-$0.71</span>
+      </div>
+      <div class="flex justify-between text-xs">
+        <span class="text-etoro-gray-text">Apr 17, 04:00 UTC</span>
+        <span class="text-etoro-light-text">-$0.69</span>
+      </div>
+      <div class="flex justify-between text-xs">
+        <span class="text-etoro-gray-text">Apr 17, 12:00 UTC</span>
+        <span class="text-etoro-light-text">-$0.81</span>
+      </div>
+      <div class="flex justify-between text-xs">
+        <span class="text-etoro-gray-text">Apr 17, 20:00 UTC</span>
+        <span class="text-etoro-light-text">-$0.82</span>
+      </div>
+      <div class="flex justify-between text-xs border-t border-etoro-dark-border pt-2 mt-2">
+        <span class="text-etoro-gray-text font-medium">Total</span>
+        <span class="text-white font-medium">-$4.62</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SCREEN LABELS ==================== -->
+<div class="max-w-[430px] mx-auto px-4 py-6 border-t border-etoro-dark-border mt-4">
+  <div class="text-center">
+    <div class="text-etoro-blue text-xs font-medium uppercase tracking-wider mb-2">eToro Perps Mockup</div>
+    <div class="text-etoro-gray-text text-xs">3 views: Instrument Page → Order Entry (tap Buy/Sell) → Open Position</div>
+    <div class="text-etoro-gray-text text-[10px] mt-1">CoreClaw • April 2026</div>
+    <a href="/PERPS-COMPETITIVE-ANALYSIS.md" class="inline-block mt-3 text-etoro-blue text-xs underline">📊 Full Competitive Analysis Report</a>
+  </div>
+</div>
+
+<script>
+  // Initialize Lucide icons
+  lucide.createIcons();
+
+  // Trade sheet
+  function openTradeSheet(direction) {
+    document.getElementById('trade-sheet').classList.remove('hidden');
+    setDirection(direction);
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeTradeSheet() {
+    document.getElementById('trade-sheet').classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+
+  // Direction toggle
+  function setDirection(dir) {
+    const buyBtn = document.getElementById('btn-buy');
+    const sellBtn = document.getElementById('btn-sell');
+    const submitBtn = document.getElementById('submit-btn');
+
+    if (dir === 'buy') {
+      buyBtn.className = 'flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all bg-etoro-green text-white';
+      sellBtn.className = 'flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all text-etoro-gray-text';
+      submitBtn.className = 'w-full py-4 rounded-xl bg-etoro-green font-bold text-white text-base transition-all hover:bg-etoro-green-dark active:scale-[0.98]';
+      submitBtn.textContent = 'Open BUY Position';
+    } else {
+      sellBtn.className = 'flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all bg-etoro-red text-white';
+      buyBtn.className = 'flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all text-etoro-gray-text';
+      submitBtn.className = 'w-full py-4 rounded-xl bg-etoro-red font-bold text-white text-base transition-all hover:bg-etoro-red-dark active:scale-[0.98]';
+      submitBtn.textContent = 'Open SELL Position';
+    }
+  }
+
+  // Leverage + Instrument Type
+  function setLeverage(el, value) {
+    document.querySelectorAll('.lev-pill').forEach(p => {
+      p.classList.remove('active');
+      p.classList.add('bg-etoro-dark-surface', 'text-etoro-gray-text');
+    });
+    el.classList.add('active');
+    el.classList.remove('bg-etoro-dark-surface', 'text-etoro-gray-text');
+    
+    // Update exposure
+    const amount = 1000;
+    const exposure = amount * value;
+    document.getElementById('exposure-label').textContent = 
+      'Exposure: $' + exposure.toLocaleString();
+
+    // Update instrument type badge
+    const badge = document.getElementById('instrument-badge');
+    const typeLabel = document.getElementById('instrument-type-label');
+    const typeDesc = document.getElementById('instrument-type-desc');
+    const dot = badge.querySelector('.w-1\\.5');
+    const pill = badge.querySelector('.rounded-full');
+
+    // Update holding cost row visibility
+    const holdingCostRow = document.getElementById('holding-cost-row');
+    const spreadRow = document.getElementById('spread-row');
+    const liqRow = document.getElementById('liq-row');
+
+    if (value === 1) {
+      // Real crypto — no derivative
+      typeLabel.textContent = 'Real Crypto';
+      typeDesc.textContent = 'You own the underlying asset';
+      pill.className = 'flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-etoro-green/15 border border-etoro-green/30';
+      typeLabel.className = 'text-[10px] font-medium text-etoro-green';
+      if (holdingCostRow) holdingCostRow.style.display = 'none';
+      if (liqRow) liqRow.style.display = 'none';
+      if (spreadRow) spreadRow.querySelector('.text-etoro-light-text').textContent = '$8.40 (spread)';
+    } else if (value <= 5) {
+      // CFD
+      typeLabel.textContent = 'CFD';
+      typeDesc.textContent = 'Overnight fee applies daily';
+      pill.className = 'flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-etoro-blue/15 border border-etoro-blue/30';
+      typeLabel.className = 'text-[10px] font-medium text-etoro-blue';
+      if (holdingCostRow) {
+        holdingCostRow.style.display = 'flex';
+        holdingCostRow.querySelector('.text-etoro-light-text').textContent = 
+          value === 2 ? '~$1.65/day (overnight fee)' : '~$4.12/day (overnight fee)';
+      }
+      if (liqRow) liqRow.style.display = 'flex';
+      if (spreadRow) spreadRow.querySelector('.text-etoro-light-text').textContent = 
+        value === 2 ? '$18.50 (0.093%)' : '$46.25 (0.093%)';
+    } else {
+      // Perp
+      typeLabel.textContent = 'Perpetual Contract';
+      typeDesc.textContent = 'Funding rate applies every 8h';
+      pill.className = 'flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-purple-500/15 border border-purple-500/30';
+      typeLabel.className = 'text-[10px] font-medium text-purple-300';
+      if (holdingCostRow) {
+        holdingCostRow.style.display = 'flex';
+        holdingCostRow.querySelector('.text-etoro-light-text').textContent = '~$2.31/day (funding rate)';
+      }
+      if (liqRow) liqRow.style.display = 'flex';
+      if (spreadRow) spreadRow.querySelector('.text-etoro-light-text').textContent = '$12.50 (0.015%)';
+    }
+
+    // Update summary values
+    updateSummary(value, amount);
+  }
+
+  function updateSummary(leverage, amount) {
+    const exposure = amount * leverage;
+    const summaryItems = document.querySelectorAll('#order-summary .summary-row');
+    // Position size
+    if (summaryItems[0]) summaryItems[0].querySelector('.value').textContent = '$' + exposure.toLocaleString() + '.00';
+    // Required margin
+    if (summaryItems[1]) summaryItems[1].querySelector('.value').textContent = '$' + amount.toLocaleString() + '.00';
+    // Liquidation
+    if (leverage === 1) {
+      if (summaryItems[2]) summaryItems[2].querySelector('.value').textContent = 'N/A';
+    } else {
+      const liqPrice = Math.round(84231.50 * (1 - 0.9/leverage));
+      if (summaryItems[2]) summaryItems[2].querySelector('.value').textContent = '$' + liqPrice.toLocaleString() + '.00';
+    }
+  }
+
+  // SL/TP toggle
+  function toggleSLTP(el) {
+    const fields = document.getElementById('sltp-fields');
+    const thumb = el.querySelector('.toggle-thumb');
+    if (fields.classList.contains('hidden')) {
+      fields.classList.remove('hidden');
+      el.classList.add('bg-etoro-blue');
+      thumb.style.transform = 'translateX(14px)';
+      thumb.classList.add('bg-white');
+      thumb.classList.remove('bg-etoro-gray-text');
+    } else {
+      fields.classList.add('hidden');
+      el.classList.remove('bg-etoro-blue');
+      thumb.style.transform = 'translateX(0)';
+      thumb.classList.remove('bg-white');
+      thumb.classList.add('bg-etoro-gray-text');
+    }
+  }
+
+  // Cost breakdown toggle
+  function toggleCostBreakdown() {
+    const breakdown = document.getElementById('cost-breakdown');
+    const chevron = document.getElementById('cost-chevron');
+    breakdown.classList.toggle('hidden');
+    chevron.style.transform = breakdown.classList.contains('hidden') ? '' : 'rotate(180deg)';
+  }
+</script>
+
+</body>
+</html>
