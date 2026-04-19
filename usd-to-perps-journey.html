@@ -5,84 +5,231 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>eToro Perps — User Journey Mockup</title>
 <script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script>
+/* eToro New Design System v1.0.0 — tokens mapped into Tailwind.
+   Legacy `et-*` class names kept working via the palette below. */
 tailwind.config = {
   theme: {
     extend: {
-      fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+      fontFamily: { sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'] },
       colors: {
         et: {
-          bg: '#f5f7fa',
-          white: '#ffffff',
-          card: '#ffffff',
-          border: '#e5e9f0',
-          'border-light': '#f0f2f5',
-          green: '#00b67a',
-          'green-light': '#e6f9f1',
-          'green-dark': '#009966',
-          red: '#e2574c',
-          'red-light': '#fdf0ef',
-          blue: '#0086e6',
-          'blue-light': '#e8f4fd',
-          text: '#1a2233',
-          'text-secondary': '#6b7b8d',
-          'text-muted': '#97a5b3',
-          accent: '#0086e6',
+          bg: '#F5F7FA',              /* Background secondary */
+          white: '#FFFFFF',
+          card: '#FFFFFF',             /* Surface */
+          border: '#E4E7F0',           /* Border */
+          'border-light': '#F0F2F5',
+          green: '#0EB12E',            /* Primary brand */
+          'green-light': '#E7F7EB',
+          'green-dark': '#0A9824',
+          red: '#F23D40',              /* Negative */
+          'red-light': '#FDECEC',
+          blue: '#2A84F7',             /* Accent blue */
+          'blue-light': '#E8F1FE',
+          text: '#242628',             /* Text primary */
+          'text-secondary': '#6B7280',
+          'text-muted': '#9CA3AF',
+          accent: '#2A84F7',
         }
+      },
+      borderRadius: {
+        'x1': '4px',
+        'x2': '8px',
+        'x6': '24px',
       }
     }
   }
 }
 </script>
 <style>
+  /* ============================================================
+     eToro New DS v1.0.0 — semantic tokens (light theme default,
+     dark variant toggleable)
+     ============================================================ */
+  :root {
+    --color-bg: #FFFFFF;
+    --color-bg-secondary: #F5F7FA;
+    --color-surface: #FFFFFF;
+    --color-surface-elevated: #FFFFFF;
+
+    --color-text-primary: #242628;
+    --color-text-secondary: #6B7280;
+    --color-text-muted: #9CA3AF;
+
+    --color-border: #E4E7F0;
+    --color-border-strong: #D1D5DB;
+
+    --color-brand-primary: #0EB12E;
+    --color-brand-primary-hover: #0A9824;
+    --color-brand-primary-bg: #E7F7EB;
+    --color-negative: #F23D40;
+    --color-negative-bg: #FDECEC;
+    --color-accent-blue: #2A84F7;
+    --color-accent-blue-bg: #E8F1FE;
+
+    --x1: 4px;  --x2: 8px;  --x3: 12px; --x4: 16px;
+    --x5: 20px; --x6: 24px;
+
+    --radius-x1: 4px;
+    --radius-x2: 8px;
+    --radius-x6: 24px;
+    --radius-full: 9999px;
+
+    --elevation-1: 0 1px 2px rgba(16, 24, 40, 0.06), 0 1px 3px rgba(16, 24, 40, 0.04);
+    --elevation-2: 0 4px 8px -2px rgba(16, 24, 40, 0.08), 0 2px 4px -2px rgba(16, 24, 40, 0.04);
+    --elevation-3: 0 12px 20px -4px rgba(16, 24, 40, 0.10), 0 4px 8px -2px rgba(16, 24, 40, 0.06);
+  }
+
   * { box-sizing: border-box; }
-  body { background: #f5f7fa; color: #1a2233; font-family: 'Inter', -apple-system, system-ui, sans-serif; }
+  body {
+    background: var(--color-bg-secondary);
+    color: var(--color-text-primary);
+    font-family: 'Inter', -apple-system, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
   ::-webkit-scrollbar { width: 4px; }
   ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 4px; }
+  ::-webkit-scrollbar-thumb { background: var(--color-border-strong); border-radius: var(--radius-x1); }
 
   .screen { display: none; }
   .screen.active { display: block; }
 
-  .screen-nav { display: flex; gap: 6px; justify-content: center; padding: 8px; }
-  .screen-dot { width: 8px; height: 8px; border-radius: 50%; background: #d1d5db; cursor: pointer; transition: all 0.2s; }
-  .screen-dot.active { background: #0086e6; width: 24px; border-radius: 4px; }
+  .screen-nav { display: flex; gap: 6px; justify-content: center; padding: var(--x2); }
+  .screen-dot {
+    width: 8px; height: 8px; border-radius: var(--radius-full);
+    background: var(--color-border-strong); cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .screen-dot.active {
+    background: var(--color-brand-primary);
+    width: 24px;
+    border-radius: var(--radius-x1);
+  }
 
   .journey-bar {
     position: fixed; top: 0; left: 50%; transform: translateX(-50%);
-    z-index: 100; background: rgba(255,255,255,0.97); backdrop-filter: blur(8px);
-    border-bottom: 1px solid #e5e9f0; padding: 8px 16px; width: 100%; max-width: 430px;
+    z-index: 100;
+    background: color-mix(in srgb, var(--color-bg) 97%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--color-border);
+    padding: var(--x2) var(--x4);
+    width: 100%; max-width: 430px;
   }
 
-  @keyframes pricePulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+  @keyframes pricePulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.75; } }
   .price-live { animation: pricePulse 2s ease-in-out infinite; }
 
-  input:focus { outline: none; border-color: #0086e6; }
-  input[type="range"] { -webkit-appearance: none; background: #e5e9f0; height: 4px; border-radius: 2px; }
-  input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%; background: #0086e6; cursor: pointer; border: 3px solid white; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+  input:focus { outline: none; border-color: var(--color-accent-blue); }
+  input[type="range"] {
+    -webkit-appearance: none;
+    background: var(--color-border);
+    height: 4px;
+    border-radius: var(--radius-full);
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px; height: 20px;
+    border-radius: var(--radius-full);
+    background: var(--color-brand-primary);
+    cursor: pointer;
+    border: 3px solid #FFFFFF;
+    box-shadow: var(--elevation-1);
+  }
 
-  .lev-pill { transition: all 0.15s ease; }
-  .lev-pill.active { background: #0086e6; color: white; }
+  /* Leverage pill — new DS shape */
+  .lev-pill { transition: all 0.15s ease; border-radius: var(--radius-x2); }
+  .lev-pill.active {
+    background: var(--color-brand-primary);
+    color: #FFFFFF;
+    border-color: var(--color-brand-primary) !important;
+  }
 
   .tooltip-trigger:hover .tooltip-content { display: block; }
   .tooltip-content { display: none; }
 
-  /* eToro-style green promo banner */
+  /* Promo banner — brand green gradient */
   .promo-banner {
-    background: linear-gradient(135deg, #00b67a 0%, #009966 100%);
-    color: white;
+    background: linear-gradient(135deg, var(--color-brand-primary) 0%, var(--color-brand-primary-hover) 100%);
+    color: #FFFFFF;
+    border-radius: var(--radius-x2);
+    box-shadow: var(--elevation-1);
   }
 
-  /* Subtle card shadow — eToro style */
+  /* Card — new DS Surface with X2 radius, 1px border, Elevation 1 */
   .et-card {
-    background: white;
-    border-radius: 12px;
-    border: 1px solid #e5e9f0;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    background: var(--color-surface);
+    border-radius: var(--radius-x2);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--elevation-1);
   }
 
-  .status-bar { color: #1a2233; }
+  .status-bar { color: var(--color-text-primary); }
+
+  /* Trading Buy/Sell fixed buttons — new DS dark-bg pattern (#1B1D21) */
+  .trade-btn-dark {
+    flex: 1;
+    display: flex; align-items: center; justify-content: center;
+    gap: var(--x2);
+    padding: 12px 20px;
+    background: #1B1D21;
+    border-radius: var(--radius-full);
+    color: #FFFFFF;
+    font-weight: 700;
+    font-size: 15px;
+    transition: all 0.15s ease;
+    border: 2px solid transparent;
+  }
+  .trade-btn-dark.buy:hover { border-color: var(--color-brand-primary); }
+  .trade-btn-dark.sell:hover { border-color: var(--color-negative); }
+  .trade-btn-dark .indicator {
+    width: 22px; height: 22px;
+    border-radius: var(--radius-full);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 13px;
+  }
+  .trade-btn-dark.buy .indicator { background: var(--color-brand-primary); color: #FFFFFF; }
+  .trade-btn-dark.sell .indicator { background: var(--color-negative); color: #FFFFFF; }
+
+  /* Primary pill button (used for CTAs) */
+  .btn-pill-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--x2);
+    padding: 16px 24px;
+    border-radius: 48px;
+    background: var(--color-brand-primary);
+    color: #FFFFFF;
+    font-weight: 700;
+    font-size: 16px;
+    transition: all 0.15s ease;
+    box-shadow: var(--elevation-1);
+  }
+  .btn-pill-primary:hover { background: var(--color-brand-primary-hover); }
+  .btn-pill-primary:active { transform: scale(0.98); }
+
+  .btn-pill-primary.negative { background: var(--color-negative); }
+  .btn-pill-primary.negative:hover { background: #D8353A; }
+  .btn-pill-primary.blue { background: var(--color-accent-blue); }
+
+  /* Secondary (outlined) button */
+  .btn-pill-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    border-radius: 44px;
+    background: transparent;
+    color: var(--color-text-primary);
+    border: 1px solid var(--color-border-strong);
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.15s ease;
+  }
+  .btn-pill-secondary:hover { background: var(--color-bg-secondary); }
 </style>
 </head>
 <body class="font-sans min-h-screen">
@@ -262,8 +409,8 @@ tailwind.config = {
 
   <!-- Bottom Trade Buttons — eToro style -->
   <div class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] bg-white border-t border-et-border p-4 flex gap-3 z-40">
-    <button class="flex-1 py-3.5 rounded-xl bg-et-red font-semibold text-white text-sm">SELL</button>
-    <button class="flex-1 py-3.5 rounded-xl bg-et-green font-semibold text-white text-sm">BUY</button>
+    <button class="trade-btn-dark sell"><span class="indicator">S</span>Sell<span class="opacity-70 text-xs font-semibold">$84,232</span></button>
+    <button class="trade-btn-dark buy"><span class="indicator">B</span>Buy<span class="opacity-70 text-xs font-semibold">$84,238</span></button>
   </div>
 </div>
 
@@ -395,8 +542,8 @@ tailwind.config = {
 
   <div class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] bg-white border-t border-et-border p-4 z-40">
     <div class="flex gap-3">
-      <button onclick="goToScreen(3); setOrderDir('sell')" class="flex-1 py-3.5 rounded-xl bg-et-red font-semibold text-white text-sm">SHORT</button>
-      <button onclick="goToScreen(3); setOrderDir('buy')" class="flex-1 py-3.5 rounded-xl bg-et-green font-semibold text-white text-sm">LONG</button>
+      <button onclick="goToScreen(3); setOrderDir('sell')" class="trade-btn-dark sell"><span class="indicator">S</span>Short<span class="opacity-70 text-xs font-semibold">$84,232</span></button>
+      <button onclick="goToScreen(3); setOrderDir('buy')" class="trade-btn-dark buy"><span class="indicator">B</span>Long<span class="opacity-70 text-xs font-semibold">$84,238</span></button>
     </div>
   </div>
 </div>
@@ -547,7 +694,7 @@ tailwind.config = {
 
   <!-- Submit -->
   <div class="px-4 pb-6">
-    <button id="s3-submit" onclick="goToScreen(4)" class="w-full py-4 rounded-xl bg-et-green font-bold text-white text-base active:scale-[0.98] transition-all shadow-sm">
+    <button id="s3-submit" onclick="goToScreen(4)" class="btn-pill-primary w-full">
       Open LONG Position
     </button>
     <p class="text-[10px] text-et-text-muted text-center mt-3 leading-relaxed">
@@ -646,8 +793,8 @@ tailwind.config = {
 
       <!-- Actions -->
       <div class="px-4 pb-4 flex gap-3">
-        <button class="flex-1 py-3 rounded-xl border border-et-border text-et-text-secondary font-medium text-sm">Edit SL/TP</button>
-        <button class="flex-1 py-3 rounded-xl bg-et-red font-semibold text-white text-sm">Close Position</button>
+        <button class="btn-pill-secondary flex-1">Edit SL/TP</button>
+        <button class="btn-pill-primary negative flex-1" style="padding: 12px 24px; font-size: 14px;">Close Position</button>
       </div>
     </div>
   </div>
@@ -678,7 +825,7 @@ tailwind.config = {
 
   <!-- Nav -->
   <div class="px-4 pb-4">
-    <button onclick="goToScreen(5)" class="w-full py-3 rounded-xl bg-et-blue font-semibold text-white text-sm">
+    <button onclick="goToScreen(5)" class="btn-pill-primary blue w-full">
       View in Portfolio
     </button>
   </div>
@@ -891,12 +1038,12 @@ function setOrderDir(dir) {
   if (dir === 'buy') {
     longBtn.className = 'flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all bg-et-green text-white';
     shortBtn.className = 'flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all text-et-text-muted';
-    submitBtn.className = 'w-full py-4 rounded-xl bg-et-green font-bold text-white text-base active:scale-[0.98] transition-all shadow-sm';
+    submitBtn.className = 'btn-pill-primary w-full';
     submitBtn.textContent = 'Open LONG Position';
   } else {
     shortBtn.className = 'flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all bg-et-red text-white';
     longBtn.className = 'flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all text-et-text-muted';
-    submitBtn.className = 'w-full py-4 rounded-xl bg-et-red font-bold text-white text-base active:scale-[0.98] transition-all shadow-sm';
+    submitBtn.className = 'btn-pill-primary negative w-full';
     submitBtn.textContent = 'Open SHORT Position';
   }
 }

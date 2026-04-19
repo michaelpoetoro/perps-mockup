@@ -5,48 +5,247 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Perps Competitive Analysis — eToro</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script>
+/* eToro New Design System v1.0.0 — mapped into Tailwind
+   Palette aliases kept so existing `etoro-*` classes keep working
+   while visually resolving to the new DS tokens. */
 tailwind.config = {
   theme: {
     extend: {
-      fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+      fontFamily: { sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'] },
       colors: {
         etoro: {
-          green: '#6cca98',
-          red: '#e2574c',
-          blue: '#1997f6',
-          dark: '#0b1426',
-          'dark-card': '#131d33',
-          'dark-surface': '#1a2744',
-          'dark-border': '#2a3a5c',
-          'gray-text': '#8c98b1',
-          'light-text': '#d1d9e8',
+          green: '#30CF4F',       /* Primary / brand (dark-mode bright) */
+          red: '#E9544C',         /* Negative (dark-mode) */
+          blue: '#5AA3FF',        /* Accent blue (dark-mode) */
+          dark: '#13151C',        /* Carbon/Neutral/900 (bg) */
+          'dark-card': '#1C1F29', /* Surface */
+          'dark-surface': '#242834', /* Surface elevated */
+          'dark-border': '#2E323F',  /* Border */
+          'gray-text': '#999FB2',    /* Text secondary */
+          'light-text': '#C7CBD6',   /* Text primary (dark mode) */
         }
+      },
+      borderRadius: {
+        'x1': '4px',
+        'x2': '8px',
+        'x6': '24px',
       }
     }
   }
 }
 </script>
 <style>
-  body { background: #0b1426; color: #d1d9e8; }
+  /* ============================================================
+     eToro New DS v1.0.0 — semantic tokens (analysis.html uses
+     dark theme as default, with light variant available)
+     ============================================================ */
+  :root {
+    --color-bg: #13151C;
+    --color-bg-secondary: #0E1014;
+    --color-surface: #1C1F29;
+    --color-surface-elevated: #242834;
+
+    --color-text-primary: #FFFFFF;
+    --color-text-secondary: #C7CBD6;
+    --color-text-muted: #999FB2;
+
+    --color-border: #2E323F;
+    --color-border-strong: #5A6178;
+
+    --color-brand-primary: #30CF4F;
+    --color-brand-primary-bg: rgba(48, 207, 79, 0.14);
+    --color-negative: #E9544C;
+    --color-negative-bg: rgba(233, 84, 76, 0.14);
+
+    --color-accent-blue: #5AA3FF;
+    --color-accent-blue-bg: rgba(90, 163, 255, 0.14);
+    --color-accent-purple: #A78BFA;
+    --color-accent-purple-bg: rgba(167, 139, 250, 0.14);
+    --color-accent-yellow: #F4B400;
+    --color-accent-yellow-bg: rgba(244, 180, 0, 0.14);
+    --color-accent-orange: #FF8A3D;
+    --color-accent-orange-bg: rgba(255, 138, 61, 0.14);
+
+    /* Spacing (4px base) */
+    --x1: 4px;  --x2: 8px;  --x3: 12px; --x4: 16px;
+    --x5: 20px; --x6: 24px; --x8: 32px;
+
+    /* Radius */
+    --radius-x1: 4px;
+    --radius-x2: 8px;
+    --radius-x6: 24px;
+    --radius-full: 9999px;
+
+    /* Elevation */
+    --elevation-1: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --elevation-2: 0 4px 8px rgba(0, 0, 0, 0.35);
+    --elevation-3: 0 12px 20px rgba(0, 0, 0, 0.5);
+  }
+
+  [data-theme="light"] {
+    --color-bg: #FFFFFF;
+    --color-bg-secondary: #F5F7FA;
+    --color-surface: #FFFFFF;
+    --color-surface-elevated: #FFFFFF;
+
+    --color-text-primary: #242628;
+    --color-text-secondary: #6B7280;
+    --color-text-muted: #9CA3AF;
+
+    --color-border: #E4E7F0;
+    --color-border-strong: #D1D5DB;
+
+    --color-brand-primary: #0EB12E;
+    --color-brand-primary-bg: #E7F7EB;
+    --color-negative: #F23D40;
+    --color-negative-bg: #FDECEC;
+
+    --color-accent-blue: #2A84F7;
+    --color-accent-blue-bg: #E8F1FE;
+    --color-accent-purple: #8B5CF6;
+    --color-accent-purple-bg: #F0EBFE;
+    --color-accent-yellow: #F4B400;
+    --color-accent-yellow-bg: rgba(244, 180, 0, 0.12);
+
+    --elevation-1: 0 1px 2px rgba(16, 24, 40, 0.06), 0 1px 3px rgba(16, 24, 40, 0.04);
+    --elevation-2: 0 4px 8px -2px rgba(16, 24, 40, 0.08), 0 2px 4px -2px rgba(16, 24, 40, 0.04);
+    --elevation-3: 0 12px 20px -4px rgba(16, 24, 40, 0.10), 0 4px 8px -2px rgba(16, 24, 40, 0.06);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--color-bg);
+    color: var(--color-text-secondary);
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
   ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: #0b1426; }
-  ::-webkit-scrollbar-thumb { background: #2a3a5c; border-radius: 3px; }
-  .section-card { background: #131d33; border: 1px solid #2a3a5c; border-radius: 16px; }
-  .table-row:nth-child(even) { background: rgba(26, 39, 68, 0.5); }
-  .tag { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 6px; font-size: 11px; font-weight: 600; }
-  .tag-green { background: rgba(108,202,152,0.15); color: #6cca98; }
-  .tag-red { background: rgba(226,87,76,0.15); color: #e2574c; }
-  .tag-blue { background: rgba(25,151,246,0.15); color: #1997f6; }
-  .tag-purple { background: rgba(168,85,247,0.15); color: #a855f7; }
-  .tag-yellow { background: rgba(234,179,8,0.15); color: #eab308; }
-  .tag-gray { background: rgba(140,152,177,0.15); color: #8c98b1; }
-  .bar { height: 8px; border-radius: 4px; transition: width 0.6s ease; }
-  .stat-number { font-size: 2rem; font-weight: 800; line-height: 1; }
-  .nav-pill { transition: all 0.15s; }
-  .nav-pill:hover { background: #1a2744; }
-  .nav-pill.active { background: #1997f6; color: white; }
+  ::-webkit-scrollbar-track { background: var(--color-bg); }
+  ::-webkit-scrollbar-thumb { background: var(--color-border-strong); border-radius: var(--radius-x1); }
+
+  /* Re-skin existing Tailwind-like utility hooks using DS tokens */
+  .bg-etoro-dark { background: var(--color-bg) !important; }
+  .bg-etoro-dark-card { background: var(--color-surface) !important; }
+  .bg-etoro-dark-surface { background: var(--color-surface-elevated) !important; }
+  .border-etoro-dark-border { border-color: var(--color-border) !important; }
+  .text-etoro-gray-text { color: var(--color-text-muted) !important; }
+  .text-etoro-light-text { color: var(--color-text-secondary) !important; }
+  .text-etoro-green { color: var(--color-brand-primary) !important; }
+  .text-etoro-red { color: var(--color-negative) !important; }
+  .text-etoro-blue { color: var(--color-accent-blue) !important; }
+  .text-white { color: var(--color-text-primary) !important; }
+  .bg-etoro-green { background: var(--color-brand-primary) !important; }
+  .bg-etoro-red { background: var(--color-negative) !important; }
+  .bg-etoro-blue { background: var(--color-accent-blue) !important; }
+
+  /* Card — elevated surface with border, 8px radius (X2) */
+  .section-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-x2);
+    box-shadow: var(--elevation-1);
+    transition: box-shadow 0.2s ease;
+  }
+  .section-card:hover { box-shadow: var(--elevation-2); }
+
+  .table-row:nth-child(even) { background: var(--color-surface-elevated); }
+
+  /* Chip / Tag — pill-shaped (Filter Chip pattern) */
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--x1);
+    padding: 3px var(--x2);
+    border-radius: var(--radius-full);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+  }
+  .tag-green  { background: var(--color-brand-primary-bg); color: var(--color-brand-primary); }
+  .tag-red    { background: var(--color-negative-bg);      color: var(--color-negative); }
+  .tag-blue   { background: var(--color-accent-blue-bg);   color: var(--color-accent-blue); }
+  .tag-purple { background: var(--color-accent-purple-bg); color: var(--color-accent-purple); }
+  .tag-yellow { background: var(--color-accent-yellow-bg); color: var(--color-accent-yellow); }
+  .tag-gray   { background: rgba(153, 159, 178, 0.15);     color: var(--color-text-muted); }
+
+  /* Progress bars */
+  .bar { height: 8px; border-radius: var(--radius-full); transition: width 0.6s ease; }
+
+  /* Stat number — Display typography from new DS */
+  .stat-number {
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.5px;
+    color: var(--color-text-primary);
+  }
+
+  /* Pill-shaped nav buttons */
+  .nav-pill {
+    transition: all 0.15s ease;
+    border-radius: var(--radius-full);
+  }
+  .nav-pill:hover { background: var(--color-surface-elevated); }
+  .nav-pill.active { background: var(--color-accent-blue); color: #FFFFFF; }
+
+  /* Primary "View Mockup" button — pill, M size (8/20/36) */
+  .btn-primary-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--x2);
+    padding: 8px 20px;
+    border-radius: 36px;
+    background: var(--color-brand-primary);
+    color: #FFFFFF;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.15s ease;
+  }
+  .btn-primary-pill:hover { filter: brightness(0.92); }
+
+  /* Theme toggle */
+  .theme-toggle {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 60;
+    width: 40px; height: 40px;
+    border-radius: var(--radius-full);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: var(--elevation-2);
+    color: var(--color-text-primary);
+    cursor: pointer;
+  }
+  .theme-toggle svg { width: 18px; height: 18px; }
+  .theme-toggle .icon-moon { display: none; }
+  .theme-toggle .icon-sun { display: block; }
+  [data-theme="light"] .theme-toggle .icon-moon { display: block; }
+  [data-theme="light"] .theme-toggle .icon-sun { display: none; }
+
+  /* Insight callouts */
+  .callout {
+    margin-top: var(--x5);
+    padding: var(--x3) var(--x4);
+    border-radius: var(--radius-x2);
+    font-size: 13px;
+  }
+  .callout-blue { background: var(--color-accent-blue-bg); }
+  .callout-green { background: var(--color-brand-primary-bg); }
+  .callout-purple { background: var(--color-accent-purple-bg); }
+  .callout-title {
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    letter-spacing: 0.2px;
+  }
+  .callout-body { color: var(--color-text-secondary); line-height: 1.55; }
+
   @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
   .fade-in { animation: fadeIn 0.4s ease-out forwards; }
   .fade-in-delay-1 { animation-delay: 0.1s; opacity: 0; }
@@ -56,27 +255,36 @@ tailwind.config = {
 </head>
 <body class="font-sans min-h-screen">
 
+<!-- Theme toggle (floating) -->
+<button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+  <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+</button>
+
 <!-- Navigation -->
-<nav class="sticky top-0 z-50 bg-etoro-dark/90 backdrop-blur-md border-b border-etoro-dark-border">
-  <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+<nav class="sticky top-0 z-50 backdrop-blur-md border-b" style="background: color-mix(in srgb, var(--color-bg) 90%, transparent); border-color: var(--color-border);">
+  <div class="max-w-5xl mx-auto px-6 py-3 flex items-center justify-between">
     <div class="flex items-center gap-3">
-      <div class="w-8 h-8 rounded-lg bg-etoro-blue flex items-center justify-center text-white font-bold text-sm">e</div>
+      <div class="w-9 h-9 rounded-full flex items-center justify-center font-bold text-sm" style="background: var(--color-brand-primary); color: #FFFFFF;">e</div>
       <div>
-        <div class="text-white font-semibold text-sm">Perps Competitive Analysis</div>
-        <div class="text-etoro-gray-text text-[10px]">April 2026 • Live API Data</div>
+        <div class="font-semibold text-sm" style="color: var(--color-text-primary);">Perps Competitive Analysis</div>
+        <div class="text-[11px]" style="color: var(--color-text-muted);">April 2026 · Live API Data</div>
       </div>
     </div>
-    <a href="index.html" class="text-etoro-blue text-xs font-medium hover:underline">← Mockup</a>
+    <a href="index.html" class="nav-pill inline-flex items-center gap-1.5 px-4 py-1.5 text-xs font-semibold" style="color: var(--color-text-primary); border: 1px solid var(--color-border);">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Mockup
+    </a>
   </div>
 </nav>
 
 <!-- Hero -->
-<header class="max-w-5xl mx-auto px-4 pt-10 pb-8">
-  <h1 class="text-3xl md:text-4xl font-extrabold text-white leading-tight fade-in">
+<header class="max-w-5xl mx-auto px-6 pt-10 pb-8">
+  <h1 class="leading-tight fade-in" style="font-size: 36px; font-weight: 700; letter-spacing: -0.5px; color: var(--color-text-primary);">
     Perpetual Futures<br>
-    <span class="text-etoro-blue">Competitive Landscape</span>
+    <span style="color: var(--color-brand-primary);">Competitive Landscape</span>
   </h1>
-  <p class="text-etoro-gray-text mt-3 text-base max-w-2xl fade-in fade-in-delay-1">
+  <p class="mt-3 max-w-2xl fade-in fade-in-delay-1" style="font-size: 16px; color: var(--color-text-secondary); line-height: 1.55;">
     Who offers perps, how they compare on cost, UX, and breadth — and where eToro can win.
     Data pulled from live exchange APIs on April 16, 2026.
   </p>
@@ -209,9 +417,9 @@ tailwind.config = {
       </div>
     </div>
 
-    <div class="mt-5 p-3 rounded-xl bg-etoro-blue/10 border border-etoro-blue/20">
-      <div class="text-xs text-etoro-blue font-semibold">💡 Key Insight</div>
-      <div class="text-xs text-etoro-light-text mt-1">eToro doesn't need 600 pairs. Launching with <strong>20-50 of the most liquid pairs</strong> covers 95%+ of retail demand. Quality and UX over quantity.</div>
+    <div class="callout callout-blue">
+      <div class="callout-title" style="color: var(--color-accent-blue);">💡 Key Insight</div>
+      <div class="callout-body">eToro doesn't need 600 pairs. Launching with <strong style="color: var(--color-text-primary);">20–50 of the most liquid pairs</strong> covers 95%+ of retail demand. Quality and UX over quantity.</div>
     </div>
   </div>
 </section>
@@ -286,9 +494,9 @@ tailwind.config = {
       </table>
     </div>
 
-    <div class="mt-5 p-3 rounded-xl bg-etoro-green/10 border border-etoro-green/20">
-      <div class="text-xs text-etoro-green font-semibold">💰 eToro Pricing Strategy</div>
-      <div class="text-xs text-etoro-light-text mt-1">Don't compete with Binance on maker fees. Use spread-based pricing at <strong>~0.10-0.15% all-in</strong>. Frame as "no commissions." Still a <strong>massive improvement</strong> over current eToro crypto CFD costs (0.75-2%).</div>
+    <div class="callout callout-green">
+      <div class="callout-title" style="color: var(--color-brand-primary);">💰 eToro Pricing Strategy</div>
+      <div class="callout-body">Don't compete with Binance on maker fees. Use spread-based pricing at <strong style="color: var(--color-text-primary);">~0.10–0.15% all-in</strong>. Frame as "no commissions." Still a <strong style="color: var(--color-text-primary);">massive improvement</strong> over current eToro crypto CFD costs (0.75–2%).</div>
     </div>
   </div>
 </section>
@@ -425,9 +633,9 @@ tailwind.config = {
       </div>
     </div>
 
-    <div class="mt-5 p-3 rounded-xl bg-purple-500/10 border border-purple-500/20">
-      <div class="text-xs text-purple-300 font-semibold">📸 Note on screenshots</div>
-      <div class="text-xs text-etoro-light-text mt-1">Bybit, Bitget, and OKX trading views require auth or are geo-restricted. The team can access these directly via Mobbin (mobbin.com) or by logging in. Binance, Hyperliquid, and dYdX trading interfaces were captured directly.</div>
+    <div class="callout callout-purple">
+      <div class="callout-title" style="color: var(--color-accent-purple);">📸 Note on screenshots</div>
+      <div class="callout-body">Bybit, Bitget, and OKX trading views require auth or are geo-restricted. The team can access these directly via Mobbin (mobbin.com) or by logging in. Binance, Hyperliquid, and dYdX trading interfaces were captured directly.</div>
     </div>
   </div>
 </section>
@@ -666,17 +874,31 @@ tailwind.config = {
 </section>
 
 <!-- Footer -->
-<footer class="max-w-5xl mx-auto px-4 py-8 border-t border-etoro-dark-border">
+<footer class="max-w-5xl mx-auto px-6 py-8 border-t" style="border-color: var(--color-border);">
   <div class="flex flex-col md:flex-row items-center justify-between gap-4">
     <div class="text-center md:text-left">
-      <div class="text-xs text-etoro-gray-text">Data sourced from live exchange APIs — Binance, Bybit, OKX, Bitget, dYdX, Hyperliquid, Coinbase International</div>
-      <div class="text-[10px] text-etoro-gray-text mt-1">CoreClaw 🦀 • April 16, 2026</div>
+      <div class="text-xs" style="color: var(--color-text-secondary);">Data sourced from live exchange APIs — Binance, Bybit, OKX, Bitget, dYdX, Hyperliquid, Coinbase International</div>
+      <div class="text-[11px] mt-1" style="color: var(--color-text-muted);">CoreClaw · April 16, 2026 · eToro New DS v1.0.0</div>
     </div>
-    <a href="index.html" class="px-4 py-2 rounded-lg bg-etoro-blue text-white text-xs font-semibold hover:bg-blue-600 transition-colors">
-      View Mockup →
+    <a href="index.html" class="btn-primary-pill">
+      View Mockup
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
     </a>
   </div>
 </footer>
+
+<script>
+function toggleTheme() {
+  const cur = document.documentElement.getAttribute('data-theme');
+  const next = cur === 'light' ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('perps-theme', next);
+}
+(function initTheme() {
+  const saved = localStorage.getItem('perps-theme');
+  if (saved) document.documentElement.setAttribute('data-theme', saved);
+})();
+</script>
 
 </body>
 </html>

@@ -4,679 +4,1473 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>eToro Perps — Execution Mockup</title>
-<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-<script>
-tailwind.config = {
-  theme: {
-    extend: {
-      fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
-      colors: {
-        etoro: {
-          green: '#6cca98',
-          'green-dark': '#4eb87d',
-          'green-bg': '#e8f7ef',
-          red: '#e2574c',
-          'red-dark': '#cc3f34',
-          'red-bg': '#fce8e6',
-          blue: '#1997f6',
-          dark: '#0b1426',
-          'dark-card': '#131d33',
-          'dark-surface': '#1a2744',
-          'dark-border': '#2a3a5c',
-          'gray-text': '#8c98b1',
-          'light-text': '#d1d9e8',
-        }
-      }
-    }
-  }
-}
-</script>
 <style>
-  * { box-sizing: border-box; }
-  body { background: #0b1426; color: #d1d9e8; }
+/* ============================================================
+   eToro New Design System v1.0.0 — semantic tokens
+   ============================================================ */
+:root {
+  /* Neutral / background */
+  --color-bg: #FFFFFF;
+  --color-bg-secondary: #F5F7FA;
+  --color-surface: #FFFFFF;
+  --color-surface-elevated: #FFFFFF;
 
-  /* Custom scrollbar */
-  ::-webkit-scrollbar { width: 4px; }
-  ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: #2a3a5c; border-radius: 4px; }
+  /* Text */
+  --color-text-primary: #242628;
+  --color-text-secondary: #6B7280;
+  --color-text-muted: #9CA3AF;
+  --color-text-inverse: #FFFFFF;
 
-  /* Toggle switch */
-  .toggle-track { transition: background 0.2s; }
-  .toggle-thumb { transition: transform 0.2s; }
+  /* Borders */
+  --color-border: #E4E7F0;
+  --color-border-strong: #D1D5DB;
 
-  /* Leverage pill active state */
-  .lev-pill { transition: all 0.15s ease; }
-  .lev-pill.active { background: #1997f6; color: white; }
-  .lev-pill:not(.active):hover { background: #1a2744; }
+  /* Brand + Verdict */
+  --color-brand-primary: #0EB12E;        /* Primary / green */
+  --color-brand-primary-hover: #0A9824;
+  --color-brand-primary-bg: #E7F7EB;     /* light tint for ghost/tag backgrounds */
+  --color-negative: #F23D40;
+  --color-negative-hover: #D8353A;
+  --color-negative-bg: #FDECEC;
 
-  /* Order type tabs */
-  .order-tab { transition: all 0.15s; }
-  .order-tab.active { color: #fff; border-bottom: 2px solid #1997f6; }
+  /* Accents */
+  --color-accent-blue: #2A84F7;
+  --color-accent-blue-bg: #E8F1FE;
+  --color-accent-orange: #FF8A3D;
+  --color-accent-purple: #8B5CF6;
+  --color-accent-purple-bg: #F0EBFE;
+  --color-accent-yellow: #F4B400;
 
-  /* Animated price chart placeholder */
-  .chart-area {
-    background: linear-gradient(180deg, rgba(108,202,152,0.08) 0%, transparent 100%);
-  }
+  /* Trading Buy/Sell button background (spec: #1B1D21) */
+  --color-trade-bg: #1B1D21;
+  --color-trade-bg-hover: #2A2D33;
 
-  /* Slide-up animation */
-  @keyframes slideUp {
-    from { transform: translateY(100%); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-  }
-  .slide-up { animation: slideUp 0.3s ease-out; }
+  /* Spacing (4px base) */
+  --x1: 4px;  --x2: 8px;  --x3: 12px; --x4: 16px;
+  --x5: 20px; --x6: 24px; --x7: 28px; --x8: 32px;
+  --x9: 36px; --x10: 40px; --x12: 48px; --x14: 56px;
+  --x16: 64px; --x20: 80px; --x24: 96px;
 
-  /* Subtle pulse for live price */
-  @keyframes pricePulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.7; }
-  }
-  .price-live { animation: pricePulse 2s ease-in-out infinite; }
+  /* Radius */
+  --radius-x1: 4px;
+  --radius-x2: 8px;
+  --radius-x6: 24px;
+  --radius-full: 9999px;
 
-  /* Input focus */
-  input:focus { outline: none; border-color: #1997f6; }
+  /* Shadows — Elevation scale */
+  --elevation-1: 0 1px 2px rgba(16, 24, 40, 0.06), 0 1px 3px rgba(16, 24, 40, 0.04);
+  --elevation-2: 0 4px 8px -2px rgba(16, 24, 40, 0.08), 0 2px 4px -2px rgba(16, 24, 40, 0.04);
+  --elevation-3: 0 12px 20px -4px rgba(16, 24, 40, 0.10), 0 4px 8px -2px rgba(16, 24, 40, 0.06);
 
-  /* Tooltip */
-  .tooltip-trigger:hover .tooltip-content { display: block; }
-  .tooltip-content { display: none; }
+  /* Typography sizes (new DS scale) */
+  --type-display: 36px;
+  --type-h1: 30px;
+  --type-h2: 24px;
+  --type-h3: 20px;
+  --type-h4: 18px;
+  --type-body-lg: 16px;
+  --type-body: 15px;
+  --type-body-sm: 13px;
+  --type-caption: 11px;
+}
 
-  /* Tab navigation */
-  .nav-tab { position: relative; }
-  .nav-tab.active::after {
-    content: '';
-    position: absolute;
-    bottom: -1px;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: #1997f6;
-  }
+[data-theme="dark"] {
+  --color-bg: #13151C;
+  --color-bg-secondary: #0E1014;
+  --color-surface: #1C1F29;
+  --color-surface-elevated: #242834;
+
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #C7CBD6;
+  --color-text-muted: #999FB2;
+  --color-text-inverse: #13151C;
+
+  --color-border: #2E323F;
+  --color-border-strong: #5A6178;
+
+  --color-brand-primary: #30CF4F;
+  --color-brand-primary-hover: #25B842;
+  --color-brand-primary-bg: rgba(48, 207, 79, 0.14);
+  --color-negative: #E9544C;
+  --color-negative-hover: #D24A44;
+  --color-negative-bg: rgba(233, 84, 76, 0.14);
+
+  --color-accent-blue: #5AA3FF;
+  --color-accent-blue-bg: rgba(90, 163, 255, 0.14);
+  --color-accent-purple: #A78BFA;
+  --color-accent-purple-bg: rgba(167, 139, 250, 0.14);
+
+  --color-trade-bg: #0F1116;
+  --color-trade-bg-hover: #1B1D21;
+
+  --elevation-1: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --elevation-2: 0 4px 8px rgba(0, 0, 0, 0.35);
+  --elevation-3: 0 12px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* ============================================================
+   Base
+   ============================================================ */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: var(--type-body);
+  line-height: 1.5;
+  color: var(--color-text-primary);
+  background: var(--color-bg-secondary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button { font-family: inherit; border: none; background: none; cursor: pointer; color: inherit; }
+input { font-family: inherit; }
+input:focus { outline: none; border-color: var(--color-accent-blue); }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--color-border-strong); border-radius: var(--radius-x1); }
+
+/* ============================================================
+   Phone frame + Top Bar (iOS — 24px horizontal padding)
+   ============================================================ */
+.phone {
+  max-width: 430px;
+  margin: 0 auto;
+  background: var(--color-bg);
+  min-height: 100vh;
+  position: relative;
+  border-left: 1px solid var(--color-border);
+  border-right: 1px solid var(--color-border);
+}
+
+.status-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--x2) var(--x6);
+  font-size: var(--type-caption);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  letter-spacing: -0.1px;
+}
+.status-right { display: flex; gap: var(--x1); align-items: center; }
+.status-right svg { width: 14px; height: 14px; }
+
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--x3) var(--x6);
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+}
+.top-bar-left { display: flex; align-items: center; gap: var(--x3); }
+.top-bar-icon {
+  width: 24px;
+  height: 24px;
+  color: var(--color-text-primary);
+  cursor: pointer;
+}
+.top-bar-actions { display: flex; gap: var(--x4); align-items: center; }
+.top-bar-actions svg { width: 22px; height: 22px; color: var(--color-text-primary); cursor: pointer; }
+
+.instrument-info { display: flex; align-items: center; gap: var(--x2); }
+.instrument-avatar {
+  width: 32px; height: 32px; border-radius: var(--radius-full);
+  background: #F7931A;
+  display: flex; align-items: center; justify-content: center;
+  color: #FFFFFF; font-weight: 700; font-size: var(--type-body-sm);
+}
+.instrument-title {
+  font-size: var(--type-body-lg);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  line-height: 1.2;
+}
+.instrument-subtitle {
+  font-size: var(--type-caption);
+  color: var(--color-text-secondary);
+  margin-top: 2px;
+}
+
+/* ============================================================
+   Typography helpers
+   ============================================================ */
+.text-display { font-size: var(--type-display); font-weight: 700; letter-spacing: -0.5px; }
+.text-h1 { font-size: var(--type-h1); font-weight: 700; letter-spacing: -0.4px; }
+.text-h2 { font-size: var(--type-h2); font-weight: 600; letter-spacing: -0.3px; }
+.text-h3 { font-size: var(--type-h3); font-weight: 600; }
+.text-h4 { font-size: var(--type-h4); font-weight: 600; }
+.text-body-lg { font-size: var(--type-body-lg); font-weight: 400; }
+.text-body { font-size: var(--type-body); font-weight: 400; }
+.text-body-sm { font-size: var(--type-body-sm); font-weight: 400; }
+.text-caption { font-size: var(--type-caption); font-weight: 400; }
+
+.text-muted { color: var(--color-text-secondary); }
+.text-subtle { color: var(--color-text-muted); }
+.text-positive { color: var(--color-brand-primary); }
+.text-negative { color: var(--color-negative); }
+
+/* ============================================================
+   Price Header
+   ============================================================ */
+.price-header { padding: var(--x4) var(--x6) var(--x3); }
+.price-main { display: flex; align-items: baseline; gap: var(--x2); }
+.price-value {
+  font-size: var(--type-h1);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  letter-spacing: -0.5px;
+  animation: pricePulse 2s ease-in-out infinite;
+}
+.price-change {
+  font-size: var(--type-body-sm);
+  font-weight: 600;
+}
+.price-meta {
+  display: flex;
+  gap: var(--x4);
+  margin-top: var(--x2);
+  font-size: var(--type-caption);
+  color: var(--color-text-secondary);
+  flex-wrap: wrap;
+}
+.price-meta-item { display: flex; align-items: center; gap: var(--x1); }
+.price-meta-item strong { color: var(--color-text-primary); font-weight: 500; }
+
+@keyframes pricePulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.75; }
+}
+
+/* ============================================================
+   Period Chip (time ranges)
+   ============================================================ */
+.period-chips {
+  display: flex;
+  gap: var(--x1);
+  padding: 0 var(--x6) var(--x2);
+}
+.period-chip {
+  padding: 6px var(--x3);
+  font-size: var(--type-caption);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  background: transparent;
+  border-radius: var(--radius-full);
+  transition: all 0.15s ease;
+}
+.period-chip:hover { background: var(--color-bg-secondary); }
+.period-chip.active {
+  background: var(--color-text-primary);
+  color: var(--color-bg);
+}
+
+/* ============================================================
+   Chart Area
+   ============================================================ */
+.chart-area {
+  margin: 0 var(--x6);
+  height: 220px;
+  border-radius: var(--radius-x2);
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(14, 177, 46, 0.04) 0%, transparent 100%);
+}
+.chart-price-tag {
+  position: absolute;
+  right: var(--x2);
+  top: 18%;
+  background: var(--color-brand-primary);
+  color: #FFFFFF;
+  font-size: var(--type-caption);
+  font-weight: 600;
+  padding: 2px var(--x2);
+  border-radius: var(--radius-x1);
+}
+
+/* ============================================================
+   Tabs (Overview / Stats / Feed)
+   ============================================================ */
+.tabs {
+  display: flex;
+  gap: var(--x6);
+  padding: 0 var(--x6);
+  margin-top: var(--x4);
+  border-bottom: 1px solid var(--color-border);
+}
+.tab {
+  padding: var(--x3) 0;
+  font-size: var(--type-body-sm);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  position: relative;
+}
+.tab.active { color: var(--color-text-primary); font-weight: 600; }
+.tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; left: 0; right: 0;
+  height: 2px;
+  background: var(--color-brand-primary);
+}
+
+/* ============================================================
+   Metric Cards
+   ============================================================ */
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--x3);
+  padding: var(--x4) var(--x6);
+}
+.metric-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-x2);
+  padding: var(--x3);
+}
+.metric-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+.metric-value {
+  font-size: var(--type-body-sm);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-top: var(--x1);
+}
+.metric-value.positive { color: var(--color-brand-primary); }
+.metric-value.negative { color: var(--color-negative); }
+.metric-sublabel {
+  font-size: 10px;
+  color: var(--color-text-muted);
+  margin-top: 2px;
+}
+
+/* ============================================================
+   Buttons — new DS spec
+   Sizes: S / M / L / XL (pill-shaped)
+   Types: Primary (filled), Secondary (outlined), Ghost
+   ============================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--x2);
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+.btn-s { padding: var(--x2) var(--x4); border-radius: 36px; font-size: var(--type-body-sm); }
+.btn-m { padding: var(--x2) var(--x5); border-radius: 36px; font-size: var(--type-body-sm); }
+.btn-l { padding: var(--x3) var(--x6); border-radius: 44px; font-size: var(--type-body); }
+.btn-xl { padding: var(--x4) var(--x6); border-radius: 48px; font-size: var(--type-body-lg); }
+
+/* Primary filled */
+.btn-primary {
+  background: var(--color-brand-primary);
+  color: #FFFFFF;
+}
+.btn-primary:hover { background: var(--color-brand-primary-hover); }
+
+.btn-negative {
+  background: var(--color-negative);
+  color: #FFFFFF;
+}
+.btn-negative:hover { background: var(--color-negative-hover); }
+
+.btn-carbon {
+  background: var(--color-text-primary);
+  color: var(--color-bg);
+}
+
+/* Secondary outlined */
+.btn-secondary {
+  background: transparent;
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border-strong);
+}
+.btn-secondary:hover {
+  background: var(--color-bg-secondary);
+}
+
+/* Ghost */
+.btn-ghost { background: transparent; color: var(--color-text-primary); }
+.btn-ghost:hover { background: var(--color-bg-secondary); }
+
+.btn-block { width: 100%; }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.btn:active { transform: scale(0.98); }
+
+/* ============================================================
+   Buy / Sell trading buttons (dark bg #1B1D21)
+   ============================================================ */
+.buy-sell-row {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 430px;
+  background: var(--color-bg);
+  border-top: 1px solid var(--color-border);
+  padding: var(--x4) var(--x6) calc(var(--x4) + env(safe-area-inset-bottom));
+  display: flex;
+  gap: var(--x3);
+  z-index: 40;
+}
+.trade-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--x2);
+  padding: var(--x3) var(--x5);
+  background: var(--color-trade-bg);
+  border-radius: var(--radius-full);
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: var(--type-body-lg);
+  transition: all 0.15s ease;
+  border: 2px solid transparent;
+}
+.trade-btn:hover { background: var(--color-trade-bg-hover); }
+
+.trade-indicator {
+  width: 24px; height: 24px;
+  border-radius: var(--radius-full);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700;
+  font-size: var(--type-body-sm);
+}
+.trade-btn.buy .trade-indicator { background: var(--color-brand-primary); color: #FFFFFF; }
+.trade-btn.buy:hover { border-color: var(--color-brand-primary); }
+.trade-btn.sell .trade-indicator { background: var(--color-negative); color: #FFFFFF; }
+.trade-btn.sell:hover { border-color: var(--color-negative); }
+
+.trade-btn-label { display: flex; flex-direction: column; align-items: flex-start; }
+.trade-btn-price { font-size: var(--type-caption); font-weight: 500; opacity: 0.7; }
+
+/* ============================================================
+   Bottom Sheet (mobile modal)
+   ============================================================ */
+.sheet-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 50;
+  display: none;
+}
+.sheet-overlay.open { display: block; }
+.sheet {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 430px;
+  background: var(--color-bg);
+  border-top-left-radius: var(--radius-x6);
+  border-top-right-radius: var(--radius-x6);
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  animation: sheetUp 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+  box-shadow: var(--elevation-3);
+}
+@keyframes sheetUp {
+  from { transform: translate(-50%, 100%); }
+  to { transform: translate(-50%, 0); }
+}
+.sheet-handle {
+  padding: var(--x3) 0 var(--x2);
+  display: flex;
+  justify-content: center;
+}
+.sheet-handle::after {
+  content: '';
+  width: 40px; height: 4px;
+  border-radius: var(--radius-full);
+  background: var(--color-border-strong);
+}
+.sheet-content {
+  padding: 0 var(--x6) var(--x6);
+  overflow-y: auto;
+  flex: 1;
+}
+
+/* ============================================================
+   Sheet header + segmented control
+   ============================================================ */
+.sheet-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--x4);
+}
+.sheet-close {
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--color-text-secondary);
+  border-radius: var(--radius-full);
+}
+.sheet-close:hover { background: var(--color-bg-secondary); }
+
+.segmented {
+  display: flex;
+  background: var(--color-bg-secondary);
+  padding: 4px;
+  border-radius: var(--radius-x2);
+  margin-bottom: var(--x4);
+}
+.segmented button {
+  flex: 1;
+  padding: var(--x2) var(--x4);
+  border-radius: 6px;
+  font-size: var(--type-body-sm);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  transition: all 0.2s ease;
+}
+.segmented button.active {
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+  box-shadow: var(--elevation-1);
+}
+.segmented.buy button.active.buy-active { color: var(--color-brand-primary); }
+.segmented.buy button.active.sell-active { color: var(--color-negative); }
+
+/* Order type tabs */
+.order-type-tabs {
+  display: flex;
+  gap: var(--x5);
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: var(--x4);
+}
+.order-type-tab {
+  padding: var(--x2) 0;
+  font-size: var(--type-body-sm);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  position: relative;
+}
+.order-type-tab.active { color: var(--color-text-primary); font-weight: 600; }
+.order-type-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; left: 0; right: 0;
+  height: 2px;
+  background: var(--color-brand-primary);
+}
+
+/* ============================================================
+   Form inputs
+   ============================================================ */
+.form-group { margin-bottom: var(--x4); }
+.form-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--x2);
+}
+.form-label {
+  font-size: var(--type-caption);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+.form-hint { font-size: var(--type-caption); color: var(--color-text-muted); }
+.form-hint strong { color: var(--color-text-primary); font-weight: 500; }
+
+.input-wrapper {
+  position: relative;
+}
+.input-prefix {
+  position: absolute;
+  left: var(--x4);
+  top: 50%;
+  transform: translateY(-50%);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+.input {
+  width: 100%;
+  padding: var(--x3) var(--x4) var(--x3) var(--x8);
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-x2);
+  font-size: var(--type-h4);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  transition: border-color 0.15s;
+}
+.input:focus { border-color: var(--color-accent-blue); }
+.input-sm {
+  padding: 10px var(--x3) 10px var(--x7);
+  font-size: var(--type-body-sm);
+}
+.input-sm .input-prefix { font-size: var(--type-body-sm); left: var(--x3); }
+
+/* Quick amount chips (Filter Chip pattern) */
+.quick-chips {
+  display: flex;
+  gap: var(--x2);
+  margin-top: var(--x2);
+  flex-wrap: wrap;
+}
+.filter-chip {
+  padding: 6px var(--x3);
+  font-size: var(--type-caption);
+  font-weight: 500;
+  background: transparent;
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  transition: all 0.15s ease;
+}
+.filter-chip:hover { background: var(--color-bg-secondary); }
+.filter-chip.selected {
+  background: var(--color-brand-primary-bg);
+  color: var(--color-brand-primary);
+  border-color: transparent;
+}
+
+/* Leverage pill row */
+.lev-row {
+  display: flex;
+  gap: var(--x2);
+}
+.lev-pill {
+  flex: 1;
+  padding: var(--x2) 0;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-x2);
+  text-align: center;
+  color: var(--color-text-secondary);
+  transition: all 0.15s ease;
+}
+.lev-pill .lev-num { font-size: var(--type-body-sm); font-weight: 600; }
+.lev-pill .lev-tag { font-size: 10px; margin-top: 2px; opacity: 0.75; }
+.lev-pill:hover { background: var(--color-bg-secondary); }
+.lev-pill.active {
+  background: var(--color-brand-primary);
+  color: #FFFFFF;
+  border-color: var(--color-brand-primary);
+}
+
+/* Instrument type badge */
+.inst-type-row {
+  margin-top: var(--x3);
+  display: flex;
+  align-items: center;
+  gap: var(--x2);
+  flex-wrap: wrap;
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--x1);
+  padding: 3px var(--x2);
+  border-radius: var(--radius-full);
+  font-size: 10px;
+  font-weight: 600;
+}
+.badge-dot {
+  width: 6px; height: 6px; border-radius: var(--radius-full);
+}
+.badge-positive { background: var(--color-brand-primary-bg); color: var(--color-brand-primary); }
+.badge-positive .badge-dot { background: var(--color-brand-primary); }
+.badge-blue { background: var(--color-accent-blue-bg); color: var(--color-accent-blue); }
+.badge-blue .badge-dot { background: var(--color-accent-blue); }
+.badge-purple { background: var(--color-accent-purple-bg); color: var(--color-accent-purple); }
+.badge-purple .badge-dot { background: var(--color-accent-purple); }
+.badge-negative { background: var(--color-negative-bg); color: var(--color-negative); }
+.badge-negative .badge-dot { background: var(--color-negative); }
+
+/* Toggle switch */
+.toggle {
+  width: 36px; height: 20px;
+  border-radius: var(--radius-full);
+  background: var(--color-border);
+  position: relative;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  flex-shrink: 0;
+}
+.toggle::after {
+  content: '';
+  position: absolute;
+  top: 2px; left: 2px;
+  width: 16px; height: 16px;
+  border-radius: var(--radius-full);
+  background: #FFFFFF;
+  box-shadow: var(--elevation-1);
+  transition: transform 0.2s ease;
+}
+.toggle.on { background: var(--color-brand-primary); }
+.toggle.on::after { transform: translateX(16px); }
+
+/* SL/TP grid */
+.sltp-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--x3);
+}
+.sltp-label {
+  font-size: 10px;
+  font-weight: 600;
+  margin-bottom: var(--x1);
+}
+.sltp-label.sl { color: var(--color-negative); }
+.sltp-label.tp { color: var(--color-brand-primary); }
+
+/* Summary rows */
+.summary { margin: var(--x4) 0; }
+.summary-divider { height: 1px; background: var(--color-border); margin-bottom: var(--x4); }
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  font-size: var(--type-body-sm);
+}
+.summary-row .label { color: var(--color-text-secondary); display: flex; align-items: center; gap: var(--x1); }
+.summary-row .value { color: var(--color-text-primary); font-weight: 500; }
+
+/* Info icon + tooltip */
+.info-icon {
+  width: 14px; height: 14px;
+  color: var(--color-text-muted);
+  cursor: help;
+}
+.tooltip-wrap { position: relative; cursor: help; }
+.tooltip-wrap:hover .tooltip { display: block; }
+.tooltip {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 0;
+  background: var(--color-surface-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-x2);
+  padding: var(--x3);
+  font-size: var(--type-caption);
+  width: 224px;
+  z-index: 60;
+  box-shadow: var(--elevation-3);
+  color: var(--color-text-primary);
+}
+.tooltip strong { font-weight: 600; display: block; margin-bottom: 2px; }
+.tooltip .row { color: var(--color-text-secondary); margin-top: 2px; }
+
+/* Risk disclaimer */
+.disclaimer {
+  font-size: 10px;
+  color: var(--color-text-muted);
+  text-align: center;
+  margin-top: var(--x3);
+  line-height: 1.5;
+}
+.disclaimer a { color: var(--color-accent-blue); text-decoration: none; }
+.disclaimer a:hover { text-decoration: underline; }
+
+/* ============================================================
+   Position Card (Screen 3)
+   ============================================================ */
+.position-section {
+  max-width: 430px;
+  margin: var(--x8) auto 0;
+  padding: 0 var(--x6) var(--x8);
+}
+.section-eyebrow {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--color-text-muted);
+  font-weight: 600;
+  margin-bottom: var(--x3);
+}
+
+.position-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-x2);
+  overflow: hidden;
+  box-shadow: var(--elevation-1);
+}
+
+.position-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--x4);
+}
+.position-id { display: flex; align-items: center; gap: var(--x3); }
+.position-id .avatar {
+  width: 40px; height: 40px;
+  border-radius: var(--radius-full);
+  background: #F7931A;
+  display: flex; align-items: center; justify-content: center;
+  color: #FFFFFF; font-weight: 700; font-size: var(--type-body);
+}
+.position-name-row {
+  display: flex; align-items: center; gap: var(--x2); flex-wrap: wrap;
+}
+.position-name { font-weight: 600; color: var(--color-text-primary); }
+.position-meta { font-size: var(--type-caption); color: var(--color-text-secondary); margin-top: 2px; }
+
+.position-pnl { padding: 0 var(--x4) var(--x3); }
+.pnl-main {
+  display: flex; align-items: baseline; gap: var(--x2);
+}
+.pnl-value { font-size: var(--type-h2); font-weight: 700; letter-spacing: -0.3px; }
+.pnl-pct { font-size: var(--type-body-sm); font-weight: 600; }
+
+.position-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--x3) var(--x4);
+  padding: 0 var(--x4) var(--x4);
+}
+.detail-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+.detail-value {
+  font-size: var(--type-body-sm);
+  font-weight: 500;
+  color: var(--color-text-primary);
+  margin-top: 2px;
+  display: flex; align-items: center; gap: var(--x1);
+}
+.detail-sub { font-size: 10px; color: var(--color-text-muted); }
+
+.sltp-pair {
+  display: flex;
+  gap: var(--x3);
+  padding: 0 var(--x4) var(--x4);
+}
+.sltp-slot {
+  flex: 1;
+  padding: var(--x3);
+  border-radius: var(--radius-x2);
+}
+.sltp-slot.sl { background: var(--color-negative-bg); }
+.sltp-slot.tp { background: var(--color-brand-primary-bg); }
+.sltp-slot-label { font-size: 10px; font-weight: 600; }
+.sltp-slot.sl .sltp-slot-label { color: var(--color-negative); }
+.sltp-slot.tp .sltp-slot-label { color: var(--color-brand-primary); }
+.sltp-slot-value {
+  font-size: var(--type-body-sm);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-top: var(--x1);
+}
+.sltp-slot-sub { font-size: 10px; color: var(--color-text-muted); margin-top: 2px; }
+
+.position-actions {
+  display: flex;
+  gap: var(--x3);
+  padding: 0 var(--x4) var(--x4);
+}
+
+.breakdown-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-x2);
+  padding: var(--x4);
+  margin-top: var(--x3);
+}
+.breakdown-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+.breakdown-header-left { display: flex; align-items: center; gap: var(--x2); color: var(--color-text-secondary); font-size: var(--type-caption); font-weight: 500; }
+.breakdown-header-left svg { width: 16px; height: 16px; }
+.chevron { width: 16px; height: 16px; color: var(--color-text-secondary); transition: transform 0.2s ease; }
+.chevron.open { transform: rotate(180deg); }
+.breakdown-body { display: none; margin-top: var(--x3); }
+.breakdown-body.open { display: block; }
+.breakdown-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--type-caption);
+  padding: var(--x1) 0;
+}
+.breakdown-row .b-label { color: var(--color-text-secondary); }
+.breakdown-row .b-value { color: var(--color-text-secondary); }
+.breakdown-row.total {
+  border-top: 1px solid var(--color-border);
+  margin-top: var(--x2); padding-top: var(--x2);
+  font-weight: 600;
+}
+.breakdown-row.total .b-label,
+.breakdown-row.total .b-value { color: var(--color-text-primary); }
+
+/* ============================================================
+   Footer / Page caption
+   ============================================================ */
+.page-footer {
+  max-width: 430px;
+  margin: 0 auto;
+  padding: var(--x6) var(--x6) var(--x10);
+  border-top: 1px solid var(--color-border);
+  text-align: center;
+}
+.page-footer .eyebrow {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--color-brand-primary);
+  font-weight: 700;
+  margin-bottom: var(--x2);
+}
+.page-footer p { font-size: var(--type-caption); color: var(--color-text-secondary); line-height: 1.6; }
+.page-footer a {
+  display: inline-block;
+  margin-top: var(--x3);
+  font-size: var(--type-caption);
+  color: var(--color-accent-blue);
+  font-weight: 500;
+  text-decoration: none;
+}
+.page-footer a:hover { text-decoration: underline; }
+
+/* ============================================================
+   Theme toggle (top-right floating)
+   ============================================================ */
+.theme-toggle {
+  position: fixed;
+  top: var(--x4);
+  right: var(--x4);
+  z-index: 100;
+  width: 40px; height: 40px;
+  border-radius: var(--radius-full);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: var(--elevation-2);
+  color: var(--color-text-primary);
+}
+.theme-toggle svg { width: 20px; height: 20px; }
+.theme-toggle .icon-moon { display: block; }
+.theme-toggle .icon-sun { display: none; }
+[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+
+/* spacer above bottom fixed buttons */
+.bottom-spacer { height: var(--x20); }
 </style>
 </head>
-<body class="font-sans min-h-screen">
+<body>
+
+<!-- ==================== Theme Toggle ==================== -->
+<button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+  <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+</button>
 
 <!-- ==================== SCREEN 1: INSTRUMENT PAGE ==================== -->
-<div id="screen-instrument" class="max-w-[430px] mx-auto relative">
+<div class="phone" id="screen-instrument">
 
-  <!-- Status Bar (Mobile) -->
-  <div class="flex items-center justify-between px-4 py-2 text-xs text-etoro-gray-text">
+  <!-- Status Bar -->
+  <div class="status-bar">
     <span>20:15</span>
-    <div class="flex items-center gap-1">
-      <i data-lucide="signal" class="w-3 h-3"></i>
-      <i data-lucide="wifi" class="w-3 h-3"></i>
-      <i data-lucide="battery" class="w-3 h-3"></i>
+    <div class="status-right">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M2 22h2v-2H2v2zm4 0h2v-6H6v6zm4 0h2v-10h-2v10zm4 0h2V8h-2v14zm4 0h2V4h-2v18z"/></svg>
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 4C7 4 2.73 6.11 0 9.27l12 14.54 12-14.54C21.27 6.11 17 4 12 4z"/></svg>
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 5H5c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-3h2v-4h-2V7c0-1.1-.9-2-2-2zm-2 10H5V9h10v6z"/></svg>
     </div>
   </div>
 
-  <!-- Top Nav -->
-  <div class="flex items-center justify-between px-4 py-3">
-    <div class="flex items-center gap-3">
-      <i data-lucide="arrow-left" class="w-5 h-5 text-etoro-light-text cursor-pointer"></i>
-      <div class="flex items-center gap-2">
-        <div class="w-8 h-8 rounded-full bg-[#f7931a] flex items-center justify-center text-white font-bold text-xs">₿</div>
+  <!-- Top Bar (iOS — 24px horizontal padding) -->
+  <div class="top-bar">
+    <div class="top-bar-left">
+      <svg class="top-bar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      <div class="instrument-info">
+        <div class="instrument-avatar">₿</div>
         <div>
-          <div class="text-white font-semibold text-sm">Bitcoin</div>
-          <div class="text-etoro-gray-text text-xs">BTC/USD • <span class="text-purple-300">Real</span> • <span class="text-etoro-blue">CFD</span> • <span class="text-purple-300">Perp</span></div>
+          <div class="instrument-title">Bitcoin</div>
+          <div class="instrument-subtitle">BTC/USD · <span style="color: var(--color-accent-purple);">Real</span> · <span style="color: var(--color-accent-blue);">CFD</span> · <span style="color: var(--color-accent-purple);">Perp</span></div>
         </div>
       </div>
     </div>
-    <div class="flex items-center gap-3">
-      <i data-lucide="bell" class="w-5 h-5 text-etoro-gray-text"></i>
-      <i data-lucide="star" class="w-5 h-5 text-etoro-gray-text"></i>
+    <div class="top-bar-actions">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
     </div>
   </div>
 
   <!-- Price Header -->
-  <div class="px-4 pb-3">
-    <div class="flex items-baseline gap-2">
-      <span class="text-2xl font-bold text-white price-live">$84,231.50</span>
-      <span class="text-sm font-medium text-etoro-green">+2.34%</span>
-      <span class="text-xs text-etoro-gray-text">24h</span>
+  <div class="price-header">
+    <div class="price-main">
+      <span class="price-value">$84,231.50</span>
+      <span class="price-change text-positive">+2.34%</span>
+      <span class="text-caption text-subtle">24h</span>
     </div>
-    <div class="flex items-center gap-4 mt-1 text-xs text-etoro-gray-text">
-      <span>H: $85,100.00</span>
-      <span>L: $81,443.20</span>
-      <div class="flex items-center gap-1 tooltip-trigger relative">
-        <span>Holding cost: </span>
-        <span class="text-etoro-light-text font-medium">~$2.31/day</span>
-        <i data-lucide="info" class="w-3 h-3 text-etoro-gray-text"></i>
-        <div class="tooltip-content absolute bottom-full left-0 mb-2 p-3 bg-etoro-dark-surface border border-etoro-dark-border rounded-lg text-xs w-56 z-50 shadow-xl">
-          <div class="font-semibold text-white mb-1">Funding Rate</div>
-          <div class="text-etoro-gray-text">Current: <span class="text-etoro-green">+0.0100%</span></div>
-          <div class="text-etoro-gray-text">Next in: 5h 23m</div>
-          <div class="text-etoro-gray-text mt-1">Based on a $1,000 position. Longs pay shorts when positive.</div>
+    <div class="price-meta">
+      <span>H: <strong>$85,100.00</strong></span>
+      <span>L: <strong>$81,443.20</strong></span>
+      <div class="tooltip-wrap price-meta-item">
+        <span>Holding cost: <strong>~$2.31/day</strong></span>
+        <svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+        <div class="tooltip">
+          <strong>Funding Rate</strong>
+          <div class="row">Current: <span class="text-positive">+0.0100%</span></div>
+          <div class="row">Next in: 5h 23m</div>
+          <div class="row" style="margin-top: 4px;">Based on a $1,000 position. Longs pay shorts when positive.</div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Chart Timeframe Tabs -->
-  <div class="flex items-center gap-1 px-4 pb-2">
-    <button class="px-3 py-1 text-xs rounded-full bg-etoro-dark-surface text-etoro-gray-text">1H</button>
-    <button class="px-3 py-1 text-xs rounded-full bg-etoro-blue text-white">1D</button>
-    <button class="px-3 py-1 text-xs rounded-full bg-etoro-dark-surface text-etoro-gray-text">1W</button>
-    <button class="px-3 py-1 text-xs rounded-full bg-etoro-dark-surface text-etoro-gray-text">1M</button>
-    <button class="px-3 py-1 text-xs rounded-full bg-etoro-dark-surface text-etoro-gray-text">YTD</button>
+  <!-- Period Chips -->
+  <div class="period-chips">
+    <button class="period-chip">1H</button>
+    <button class="period-chip active">1D</button>
+    <button class="period-chip">1W</button>
+    <button class="period-chip">1M</button>
+    <button class="period-chip">YTD</button>
   </div>
 
-  <!-- Chart Area (Placeholder) -->
-  <div class="chart-area mx-4 rounded-xl h-56 relative overflow-hidden border border-etoro-dark-border/30">
-    <svg viewBox="0 0 400 200" class="w-full h-full" preserveAspectRatio="none">
+  <!-- Chart -->
+  <div class="chart-area">
+    <svg viewBox="0 0 400 220" preserveAspectRatio="none" style="width: 100%; height: 100%;">
       <defs>
         <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#6cca98" stop-opacity="0.3"/>
-          <stop offset="100%" stop-color="#6cca98" stop-opacity="0"/>
+          <stop offset="0%" stop-color="#0EB12E" stop-opacity="0.25"/>
+          <stop offset="100%" stop-color="#0EB12E" stop-opacity="0"/>
         </linearGradient>
       </defs>
-      <path d="M0,160 Q20,150 40,140 T80,120 T120,130 T160,100 T200,90 T240,95 T280,70 T320,60 T360,50 T400,40" 
-            fill="none" stroke="#6cca98" stroke-width="2"/>
-      <path d="M0,160 Q20,150 40,140 T80,120 T120,130 T160,100 T200,90 T240,95 T280,70 T320,60 T360,50 T400,40 L400,200 L0,200 Z" 
+      <path d="M0,170 Q20,160 40,150 T80,130 T120,140 T160,110 T200,100 T240,105 T280,80 T320,70 T360,60 T400,50"
+            fill="none" stroke="#0EB12E" stroke-width="2"/>
+      <path d="M0,170 Q20,160 40,150 T80,130 T120,140 T160,110 T200,100 T240,105 T280,80 T320,70 T360,60 T400,50 L400,220 L0,220 Z"
             fill="url(#chartGrad)"/>
     </svg>
-    <!-- Price line label -->
-    <div class="absolute right-2 top-[18%] bg-etoro-green text-white text-[10px] px-2 py-0.5 rounded font-medium">
-      84,231.50
+    <div class="chart-price-tag">84,231.50</div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab active">Overview</button>
+    <button class="tab">Stats</button>
+    <button class="tab">Feed</button>
+  </div>
+
+  <!-- Metric Cards -->
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-label">24h Volume</div>
+      <div class="metric-value">$48.2B</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Open Interest</div>
+      <div class="metric-value">$18.7B</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Funding</div>
+      <div class="metric-value positive">+0.010%</div>
+      <div class="metric-sublabel">in 5h 23m</div>
     </div>
   </div>
 
-  <!-- Info Tabs -->
-  <div class="flex items-center gap-6 px-4 mt-4 border-b border-etoro-dark-border text-sm">
-    <button class="nav-tab active pb-3 text-white font-medium">Overview</button>
-    <button class="nav-tab pb-3 text-etoro-gray-text">Stats</button>
-    <button class="nav-tab pb-3 text-etoro-gray-text">Feed</button>
-  </div>
+  <div class="bottom-spacer"></div>
 
-  <!-- Quick Stats Row -->
-  <div class="grid grid-cols-3 gap-3 p-4">
-    <div class="bg-etoro-dark-card rounded-xl p-3">
-      <div class="text-[10px] text-etoro-gray-text uppercase tracking-wider">24h Volume</div>
-      <div class="text-sm font-semibold text-white mt-1">$48.2B</div>
-    </div>
-    <div class="bg-etoro-dark-card rounded-xl p-3">
-      <div class="text-[10px] text-etoro-gray-text uppercase tracking-wider">Open Interest</div>
-      <div class="text-sm font-semibold text-white mt-1">$18.7B</div>
-    </div>
-    <div class="bg-etoro-dark-card rounded-xl p-3">
-      <div class="text-[10px] text-etoro-gray-text uppercase tracking-wider">Funding</div>
-      <div class="text-sm font-semibold text-etoro-green mt-1">+0.010%</div>
-      <div class="text-[10px] text-etoro-gray-text">in 5h 23m</div>
-    </div>
-  </div>
-
-  <!-- Spacer for bottom buttons -->
-  <div class="h-24"></div>
-
-  <!-- Trade Buttons (Fixed Bottom) -->
-  <div class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] bg-etoro-dark/95 backdrop-blur-sm border-t border-etoro-dark-border p-4 flex gap-3">
-    <button onclick="openTradeSheet('sell')" class="flex-1 py-3.5 rounded-xl bg-etoro-red font-semibold text-white text-sm hover:bg-etoro-red-dark transition-colors">
-      SELL
+  <!-- Buy / Sell Fixed Row (dark bg pattern) -->
+  <div class="buy-sell-row">
+    <button class="trade-btn sell" onclick="openTradeSheet('sell')">
+      <span class="trade-indicator">S</span>
+      <span class="trade-btn-label">
+        <span>SELL</span>
+        <span class="trade-btn-price">$84,229.00</span>
+      </span>
     </button>
-    <button onclick="openTradeSheet('buy')" class="flex-1 py-3.5 rounded-xl bg-etoro-green font-semibold text-white text-sm hover:bg-etoro-green-dark transition-colors">
-      BUY
+    <button class="trade-btn buy" onclick="openTradeSheet('buy')">
+      <span class="trade-indicator">B</span>
+      <span class="trade-btn-label">
+        <span>BUY</span>
+        <span class="trade-btn-price">$84,234.00</span>
+      </span>
     </button>
   </div>
 </div>
 
 <!-- ==================== SCREEN 2: ORDER ENTRY BOTTOM SHEET ==================== -->
-<div id="trade-sheet" class="fixed inset-0 z-50 hidden">
-  <!-- Backdrop -->
-  <div class="absolute inset-0 bg-black/60" onclick="closeTradeSheet()"></div>
-  
-  <!-- Sheet -->
-  <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] bg-etoro-dark-card rounded-t-3xl slide-up" style="max-height: 85vh;">
-    
-    <!-- Handle -->
-    <div class="flex justify-center pt-3 pb-2">
-      <div class="w-10 h-1 rounded-full bg-etoro-dark-border"></div>
-    </div>
+<div id="trade-sheet" class="sheet-overlay">
+  <div style="position: absolute; inset: 0;" onclick="closeTradeSheet()"></div>
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-content">
 
-    <div class="px-5 pb-6 overflow-y-auto" style="max-height: calc(85vh - 24px);">
-      
       <!-- Header -->
-      <div class="flex items-center justify-between mb-4">
-        <div class="flex items-center gap-2">
-          <div class="w-7 h-7 rounded-full bg-[#f7931a] flex items-center justify-center text-white font-bold text-[10px]">₿</div>
+      <div class="sheet-header">
+        <div class="instrument-info">
+          <div class="instrument-avatar" style="width: 28px; height: 28px; font-size: 11px;">₿</div>
           <div>
-            <span class="text-white font-semibold text-sm">BTC/USD</span>
-            <span class="text-etoro-gray-text text-xs ml-1">Perp</span>
+            <span class="text-body-sm" style="font-weight: 600;">BTC/USD</span>
+            <span class="text-caption text-muted" style="margin-left: 4px;">Perp</span>
           </div>
         </div>
-        <button onclick="closeTradeSheet()" class="text-etoro-gray-text">
-          <i data-lucide="x" class="w-5 h-5"></i>
+        <button class="sheet-close" onclick="closeTradeSheet()" aria-label="Close">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
         </button>
       </div>
 
-      <!-- BUY / SELL Toggle -->
-      <div class="flex rounded-xl bg-etoro-dark-surface p-1 mb-4">
-        <button id="btn-buy" onclick="setDirection('buy')" class="flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all bg-etoro-green text-white">
-          BUY
-        </button>
-        <button id="btn-sell" onclick="setDirection('sell')" class="flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all text-etoro-gray-text">
-          SELL
-        </button>
+      <!-- Buy/Sell segmented -->
+      <div class="segmented buy" id="seg-dir">
+        <button id="btn-buy" class="active buy-active" onclick="setDirection('buy')">BUY</button>
+        <button id="btn-sell" onclick="setDirection('sell')">SELL</button>
       </div>
 
-      <!-- Order Type Tabs -->
-      <div class="flex gap-4 mb-4 border-b border-etoro-dark-border">
-        <button class="order-tab active pb-2 text-sm font-medium text-white">Market</button>
-        <button class="order-tab pb-2 text-sm font-medium text-etoro-gray-text">Limit</button>
+      <!-- Order type tabs -->
+      <div class="order-type-tabs">
+        <button class="order-type-tab active">Market</button>
+        <button class="order-type-tab">Limit</button>
       </div>
 
-      <!-- Amount Input -->
-      <div class="mb-4">
-        <div class="flex items-center justify-between mb-2">
-          <label class="text-xs text-etoro-gray-text">Amount (USD)</label>
-          <span class="text-xs text-etoro-gray-text">Available: <span class="text-etoro-light-text">$12,450.00</span></span>
+      <!-- Amount -->
+      <div class="form-group">
+        <div class="form-label-row">
+          <label class="form-label">Amount (USD)</label>
+          <span class="form-hint">Available: <strong>$12,450.00</strong></span>
         </div>
-        <div class="relative">
-          <span class="absolute left-4 top-1/2 -translate-y-1/2 text-etoro-gray-text font-medium">$</span>
-          <input type="text" value="1,000" 
-                 class="w-full bg-etoro-dark-surface border border-etoro-dark-border rounded-xl py-3.5 pl-8 pr-4 text-white font-semibold text-lg focus:border-etoro-blue transition-colors">
+        <div class="input-wrapper">
+          <span class="input-prefix">$</span>
+          <input type="text" class="input" value="1,000">
         </div>
-        <!-- Quick amount pills -->
-        <div class="flex gap-2 mt-2">
-          <button class="px-3 py-1.5 text-xs rounded-lg bg-etoro-dark-surface text-etoro-gray-text hover:bg-etoro-dark-border transition-colors">$100</button>
-          <button class="px-3 py-1.5 text-xs rounded-lg bg-etoro-dark-surface text-etoro-gray-text hover:bg-etoro-dark-border transition-colors">$500</button>
-          <button class="px-3 py-1.5 text-xs rounded-lg bg-etoro-blue/20 text-etoro-blue border border-etoro-blue/30">$1,000</button>
-          <button class="px-3 py-1.5 text-xs rounded-lg bg-etoro-dark-surface text-etoro-gray-text hover:bg-etoro-dark-border transition-colors">$5,000</button>
+        <div class="quick-chips">
+          <button class="filter-chip" onclick="selectChip(this)">$100</button>
+          <button class="filter-chip" onclick="selectChip(this)">$500</button>
+          <button class="filter-chip selected" onclick="selectChip(this)">$1,000</button>
+          <button class="filter-chip" onclick="selectChip(this)">$5,000</button>
         </div>
       </div>
 
-      <!-- Leverage Selector -->
-      <div class="mb-4">
-        <div class="flex items-center justify-between mb-2">
-          <label class="text-xs text-etoro-gray-text">Leverage</label>
-          <span class="text-xs text-etoro-light-text font-medium" id="exposure-label">Exposure: $10,000</span>
+      <!-- Leverage -->
+      <div class="form-group">
+        <div class="form-label-row">
+          <label class="form-label">Leverage</label>
+          <span class="form-hint" id="exposure-label">Exposure: <strong>$10,000</strong></span>
         </div>
-        <div class="flex gap-2">
-          <button class="lev-pill flex-1 py-2 rounded-lg text-center bg-etoro-dark-surface text-etoro-gray-text" onclick="setLeverage(this, 1)">
-            <div class="text-sm font-medium">×1</div>
-            <div class="text-[9px] opacity-70 mt-0.5">Real</div>
+        <div class="lev-row">
+          <button class="lev-pill" onclick="setLeverage(this, 1)">
+            <div class="lev-num">×1</div><div class="lev-tag">Real</div>
           </button>
-          <button class="lev-pill flex-1 py-2 rounded-lg text-center bg-etoro-dark-surface text-etoro-gray-text" onclick="setLeverage(this, 2)">
-            <div class="text-sm font-medium">×2</div>
-            <div class="text-[9px] opacity-70 mt-0.5">CFD</div>
+          <button class="lev-pill" onclick="setLeverage(this, 2)">
+            <div class="lev-num">×2</div><div class="lev-tag">CFD</div>
           </button>
-          <button class="lev-pill flex-1 py-2 rounded-lg text-center bg-etoro-dark-surface text-etoro-gray-text" onclick="setLeverage(this, 5)">
-            <div class="text-sm font-medium">×5</div>
-            <div class="text-[9px] opacity-70 mt-0.5">CFD</div>
+          <button class="lev-pill" onclick="setLeverage(this, 5)">
+            <div class="lev-num">×5</div><div class="lev-tag">CFD</div>
           </button>
-          <button class="lev-pill active flex-1 py-2 rounded-lg text-center" onclick="setLeverage(this, 10)">
-            <div class="text-sm font-medium">×10</div>
-            <div class="text-[9px] opacity-70 mt-0.5">Perp</div>
+          <button class="lev-pill active" onclick="setLeverage(this, 10)">
+            <div class="lev-num">×10</div><div class="lev-tag">Perp</div>
           </button>
         </div>
-        <!-- Instrument type indicator -->
-        <div id="instrument-badge" class="mt-2 flex items-center gap-2">
-          <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-purple-500/15 border border-purple-500/30">
-            <div class="w-1.5 h-1.5 rounded-full bg-purple-400"></div>
-            <span class="text-[10px] font-medium text-purple-300" id="instrument-type-label">Perpetual Contract</span>
-          </div>
-          <span class="text-[10px] text-etoro-gray-text" id="instrument-type-desc">Funding rate applies every 8h</span>
+        <div class="inst-type-row">
+          <span class="badge badge-purple" id="inst-badge">
+            <span class="badge-dot"></span>
+            <span id="inst-label">Perpetual Contract</span>
+          </span>
+          <span class="text-caption text-subtle" id="inst-desc">Funding rate applies every 8h</span>
         </div>
       </div>
 
-      <!-- Stop Loss / Take Profit -->
-      <div class="mb-4">
-        <div class="flex items-center justify-between mb-2">
-          <label class="text-xs text-etoro-gray-text">Stop Loss & Take Profit</label>
-          <div class="flex items-center gap-1.5">
-            <span class="text-xs text-etoro-gray-text">Optional</span>
-            <div class="w-8 h-[18px] rounded-full bg-etoro-dark-surface toggle-track cursor-pointer flex items-center px-0.5" onclick="toggleSLTP(this)">
-              <div class="w-3.5 h-3.5 rounded-full bg-etoro-gray-text toggle-thumb transition-transform"></div>
-            </div>
+      <!-- SL/TP -->
+      <div class="form-group">
+        <div class="form-label-row">
+          <label class="form-label">Stop Loss &amp; Take Profit</label>
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span class="text-caption text-subtle">Optional</span>
+            <div class="toggle" id="sltp-toggle" onclick="toggleSLTP()"></div>
           </div>
         </div>
-        
-        <!-- SL/TP Fields (collapsed by default) -->
-        <div id="sltp-fields" class="hidden">
-          <div class="grid grid-cols-2 gap-3">
+        <div id="sltp-fields" style="display: none;">
+          <div class="sltp-grid">
             <div>
-              <div class="text-[10px] text-etoro-red mb-1 font-medium">Stop Loss</div>
-              <div class="relative">
-                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-etoro-gray-text">$</span>
-                <input type="text" placeholder="—" class="w-full bg-etoro-dark-surface border border-etoro-dark-border rounded-lg py-2.5 pl-7 pr-3 text-white text-sm">
+              <div class="sltp-label sl">Stop Loss</div>
+              <div class="input-wrapper">
+                <span class="input-prefix">$</span>
+                <input type="text" class="input input-sm" placeholder="—">
               </div>
             </div>
             <div>
-              <div class="text-[10px] text-etoro-green mb-1 font-medium">Take Profit</div>
-              <div class="relative">
-                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-etoro-gray-text">$</span>
-                <input type="text" placeholder="—" class="w-full bg-etoro-dark-surface border border-etoro-dark-border rounded-lg py-2.5 pl-7 pr-3 text-white text-sm">
+              <div class="sltp-label tp">Take Profit</div>
+              <div class="input-wrapper">
+                <span class="input-prefix">$</span>
+                <input type="text" class="input input-sm" placeholder="—">
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Divider -->
-      <div class="border-t border-etoro-dark-border my-4"></div>
-
-      <!-- Order Summary -->
-      <div id="order-summary" class="space-y-2.5 mb-5">
-        <div class="flex justify-between text-xs summary-row">
-          <span class="text-etoro-gray-text">Position size</span>
-          <span class="text-white font-medium value">$10,000.00</span>
+      <!-- Summary -->
+      <div class="summary">
+        <div class="summary-divider"></div>
+        <div class="summary-row">
+          <span class="label">Position size</span>
+          <span class="value" id="sum-size">$10,000.00</span>
         </div>
-        <div class="flex justify-between text-xs summary-row">
-          <span class="text-etoro-gray-text">Required margin</span>
-          <span class="text-white font-medium value">$1,000.00</span>
+        <div class="summary-row">
+          <span class="label">Required margin</span>
+          <span class="value" id="sum-margin">$1,000.00</span>
         </div>
-
-        <div class="flex justify-between text-xs items-center" id="holding-cost-row">
-          <div class="flex items-center gap-1 tooltip-trigger relative">
-            <span class="text-etoro-gray-text">Holding cost</span>
-            <i data-lucide="info" class="w-3 h-3 text-etoro-gray-text"></i>
-            <div class="tooltip-content absolute bottom-full left-0 mb-2 p-3 bg-etoro-dark-surface border border-etoro-dark-border rounded-lg text-xs w-52 z-50 shadow-xl">
-              <div class="text-etoro-gray-text" id="holding-cost-tooltip">This position accrues a funding fee every 8 hours based on market conditions. Current rate: +0.010%</div>
-            </div>
-          </div>
-          <span class="text-etoro-light-text font-medium">~$2.31/day (funding rate)</span>
+        <div class="summary-row" id="holding-cost-row">
+          <span class="label tooltip-wrap">
+            Holding cost
+            <svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            <span class="tooltip">
+              <strong>Funding fee</strong>
+              <span class="row" id="holding-tooltip">Accrued every 8 hours based on market conditions. Current rate: +0.010%</span>
+            </span>
+          </span>
+          <span class="value" id="sum-holding">~$2.31/day (funding)</span>
         </div>
-        <div class="flex justify-between text-xs" id="spread-row">
-          <span class="text-etoro-gray-text">Spread</span>
-          <span class="text-etoro-light-text font-medium">$12.50 (0.015%)</span>
+        <div class="summary-row" id="spread-row">
+          <span class="label">Spread</span>
+          <span class="value" id="sum-spread">$12.50 (0.015%)</span>
         </div>
       </div>
 
-      <!-- Submit Button -->
-      <button id="submit-btn" class="w-full py-4 rounded-xl bg-etoro-green font-bold text-white text-base transition-all hover:bg-etoro-green-dark active:scale-[0.98]">
+      <!-- Submit -->
+      <button id="submit-btn" class="btn btn-xl btn-primary btn-block">
         Open BUY Position
       </button>
 
-      <!-- Risk Warning -->
-      <p class="text-[10px] text-etoro-gray-text text-center mt-3 leading-relaxed">
-        Perpetual contracts involve significant risk. You may lose more than your invested amount. 
-        <a href="#" class="text-etoro-blue underline">Learn more</a>
+      <p class="disclaimer">
+        Perpetual contracts involve significant risk. You may lose more than your invested amount.
+        <a href="#">Learn more</a>
       </p>
     </div>
   </div>
 </div>
 
 <!-- ==================== SCREEN 3: OPEN POSITION CARD ==================== -->
-<div class="max-w-[430px] mx-auto mt-8 px-4 pb-8">
-  
-  <div class="text-xs text-etoro-gray-text uppercase tracking-wider mb-3 font-medium">Open Position</div>
-  
-  <div class="bg-etoro-dark-card rounded-2xl border border-etoro-dark-border overflow-hidden">
-    <!-- Position Header -->
-    <div class="p-4 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-full bg-[#f7931a] flex items-center justify-center text-white font-bold text-sm">₿</div>
+<div class="position-section">
+  <div class="section-eyebrow">Open Position</div>
+
+  <div class="position-card">
+    <div class="position-header">
+      <div class="position-id">
+        <div class="avatar">₿</div>
         <div>
-          <div class="flex items-center gap-2">
-            <span class="text-white font-semibold">BTC/USD</span>
-            <span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-etoro-green/20 text-etoro-green">LONG</span>
-            <span class="text-etoro-gray-text text-xs">×10</span>
+          <div class="position-name-row">
+            <span class="position-name">BTC/USD</span>
+            <span class="badge badge-positive">LONG</span>
+            <span class="text-caption text-subtle">×10</span>
           </div>
-          <div class="text-xs text-etoro-gray-text mt-0.5">Opened Apr 16, 2026 • 20:15</div>
+          <div class="position-meta">Opened Apr 16, 2026 · 20:15</div>
         </div>
       </div>
     </div>
 
-    <!-- P&L Section -->
-    <div class="px-4 pb-3">
-      <div class="flex items-baseline gap-2">
-        <span class="text-xl font-bold text-etoro-green">+$234.50</span>
-        <span class="text-sm text-etoro-green font-medium">(+23.45%)</span>
+    <div class="position-pnl">
+      <div class="pnl-main">
+        <span class="pnl-value text-positive">+$234.50</span>
+        <span class="pnl-pct text-positive">(+23.45%)</span>
       </div>
     </div>
 
-    <!-- Position Details -->
-    <div class="px-4 pb-4">
-      <div class="grid grid-cols-2 gap-y-3 gap-x-4">
-        <div>
-          <div class="text-[10px] text-etoro-gray-text uppercase tracking-wider">Invested</div>
-          <div class="text-sm text-white font-medium mt-0.5">$1,000.00</div>
-        </div>
-        <div>
-          <div class="text-[10px] text-etoro-gray-text uppercase tracking-wider">Exposure</div>
-          <div class="text-sm text-white font-medium mt-0.5">$10,000.00</div>
-        </div>
-        <div>
-          <div class="text-[10px] text-etoro-gray-text uppercase tracking-wider">Open rate</div>
-          <div class="text-sm text-white font-medium mt-0.5">$84,231.50</div>
-        </div>
-        <div>
-          <div class="text-[10px] text-etoro-gray-text uppercase tracking-wider">Current</div>
-          <div class="text-sm text-white font-medium mt-0.5">$84,466.00</div>
-        </div>
-        <div>
-          <div class="text-[10px] text-etoro-gray-text uppercase tracking-wider">Holding cost</div>
-          <div class="text-sm text-etoro-light-text font-medium mt-0.5 flex items-center gap-1">
-            -$4.62 <span class="text-[10px] text-etoro-gray-text">(2 days)</span>
-          </div>
-        </div>
-
+    <div class="position-details">
+      <div>
+        <div class="detail-label">Invested</div>
+        <div class="detail-value">$1,000.00</div>
       </div>
-    </div>
-
-    <!-- SL/TP Indicators -->
-    <div class="px-4 pb-4">
-      <div class="flex gap-3">
-        <div class="flex-1 bg-etoro-red/10 rounded-lg p-2.5 border border-etoro-red/20">
-          <div class="text-[10px] text-etoro-red font-medium">Stop Loss</div>
-          <div class="text-sm text-white font-medium mt-0.5">$82,000.00</div>
-          <div class="text-[10px] text-etoro-gray-text">-$265.10</div>
-        </div>
-        <div class="flex-1 bg-etoro-green/10 rounded-lg p-2.5 border border-etoro-green/20">
-          <div class="text-[10px] text-etoro-green font-medium">Take Profit</div>
-          <div class="text-sm text-white font-medium mt-0.5">$88,000.00</div>
-          <div class="text-[10px] text-etoro-gray-text">+$447.30</div>
+      <div>
+        <div class="detail-label">Exposure</div>
+        <div class="detail-value">$10,000.00</div>
+      </div>
+      <div>
+        <div class="detail-label">Open rate</div>
+        <div class="detail-value">$84,231.50</div>
+      </div>
+      <div>
+        <div class="detail-label">Current</div>
+        <div class="detail-value">$84,466.00</div>
+      </div>
+      <div>
+        <div class="detail-label">Holding cost</div>
+        <div class="detail-value">
+          -$4.62 <span class="detail-sub">(2 days)</span>
         </div>
       </div>
     </div>
 
-    <!-- Action Buttons -->
-    <div class="px-4 pb-4 flex gap-3">
-      <button class="flex-1 py-3 rounded-xl border border-etoro-dark-border text-etoro-light-text font-medium text-sm hover:bg-etoro-dark-surface transition-colors">
-        Edit SL/TP
-      </button>
-      <button class="flex-1 py-3 rounded-xl bg-etoro-red font-semibold text-white text-sm hover:bg-etoro-red-dark transition-colors">
-        Close Position
-      </button>
+    <div class="sltp-pair">
+      <div class="sltp-slot sl">
+        <div class="sltp-slot-label">Stop Loss</div>
+        <div class="sltp-slot-value">$82,000.00</div>
+        <div class="sltp-slot-sub">-$265.10</div>
+      </div>
+      <div class="sltp-slot tp">
+        <div class="sltp-slot-label">Take Profit</div>
+        <div class="sltp-slot-value">$88,000.00</div>
+        <div class="sltp-slot-sub">+$447.30</div>
+      </div>
+    </div>
+
+    <div class="position-actions">
+      <button class="btn btn-l btn-secondary btn-block">Edit SL/TP</button>
+      <button class="btn btn-l btn-negative btn-block">Close Position</button>
     </div>
   </div>
 
-  <!-- Holding Cost Breakdown (Expandable) -->
-  <div class="mt-3 bg-etoro-dark-card rounded-xl border border-etoro-dark-border p-4">
-    <div class="flex items-center justify-between cursor-pointer" onclick="toggleCostBreakdown()">
-      <div class="flex items-center gap-2">
-        <i data-lucide="clock" class="w-4 h-4 text-etoro-gray-text"></i>
-        <span class="text-xs text-etoro-gray-text">Holding cost breakdown</span>
+  <!-- Holding cost breakdown -->
+  <div class="breakdown-card">
+    <div class="breakdown-header" onclick="toggleBreakdown()">
+      <div class="breakdown-header-left">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        <span>Holding cost breakdown</span>
       </div>
-      <i data-lucide="chevron-down" id="cost-chevron" class="w-4 h-4 text-etoro-gray-text transition-transform"></i>
+      <svg class="chevron" id="bd-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
     </div>
-    <div id="cost-breakdown" class="hidden mt-3 space-y-2">
-      <div class="flex justify-between text-xs">
-        <span class="text-etoro-gray-text">Apr 16, 04:00 UTC</span>
-        <span class="text-etoro-light-text">-$0.77</span>
-      </div>
-      <div class="flex justify-between text-xs">
-        <span class="text-etoro-gray-text">Apr 16, 12:00 UTC</span>
-        <span class="text-etoro-light-text">-$0.82</span>
-      </div>
-      <div class="flex justify-between text-xs">
-        <span class="text-etoro-gray-text">Apr 16, 20:00 UTC</span>
-        <span class="text-etoro-light-text">-$0.71</span>
-      </div>
-      <div class="flex justify-between text-xs">
-        <span class="text-etoro-gray-text">Apr 17, 04:00 UTC</span>
-        <span class="text-etoro-light-text">-$0.69</span>
-      </div>
-      <div class="flex justify-between text-xs">
-        <span class="text-etoro-gray-text">Apr 17, 12:00 UTC</span>
-        <span class="text-etoro-light-text">-$0.81</span>
-      </div>
-      <div class="flex justify-between text-xs">
-        <span class="text-etoro-gray-text">Apr 17, 20:00 UTC</span>
-        <span class="text-etoro-light-text">-$0.82</span>
-      </div>
-      <div class="flex justify-between text-xs border-t border-etoro-dark-border pt-2 mt-2">
-        <span class="text-etoro-gray-text font-medium">Total</span>
-        <span class="text-white font-medium">-$4.62</span>
-      </div>
+    <div class="breakdown-body" id="bd-body">
+      <div class="breakdown-row"><span class="b-label">Apr 16, 04:00 UTC</span><span class="b-value">-$0.77</span></div>
+      <div class="breakdown-row"><span class="b-label">Apr 16, 12:00 UTC</span><span class="b-value">-$0.82</span></div>
+      <div class="breakdown-row"><span class="b-label">Apr 16, 20:00 UTC</span><span class="b-value">-$0.71</span></div>
+      <div class="breakdown-row"><span class="b-label">Apr 17, 04:00 UTC</span><span class="b-value">-$0.69</span></div>
+      <div class="breakdown-row"><span class="b-label">Apr 17, 12:00 UTC</span><span class="b-value">-$0.81</span></div>
+      <div class="breakdown-row"><span class="b-label">Apr 17, 20:00 UTC</span><span class="b-value">-$0.82</span></div>
+      <div class="breakdown-row total"><span class="b-label">Total</span><span class="b-value">-$4.62</span></div>
     </div>
   </div>
 </div>
 
-<!-- ==================== SCREEN LABELS ==================== -->
-<div class="max-w-[430px] mx-auto px-4 py-6 border-t border-etoro-dark-border mt-4">
-  <div class="text-center">
-    <div class="text-etoro-blue text-xs font-medium uppercase tracking-wider mb-2">eToro Perps Mockup</div>
-    <div class="text-etoro-gray-text text-xs">3 views: Instrument Page → Order Entry (tap Buy/Sell) → Open Position</div>
-    <div class="text-etoro-gray-text text-[10px] mt-1">CoreClaw • April 2026</div>
-    <a href="/PERPS-COMPETITIVE-ANALYSIS.md" class="inline-block mt-3 text-etoro-blue text-xs underline">📊 Full Competitive Analysis Report</a>
+<!-- ==================== Footer ==================== -->
+<div class="page-footer">
+  <div class="eyebrow">eToro Perps Mockup</div>
+  <p>3 views: Instrument Page → Order Entry (tap Buy/Sell) → Open Position</p>
+  <p style="margin-top: 4px; color: var(--color-text-muted);">New DS v1.0.0 · Inter · 4px grid · CoreClaw · April 2026</p>
+  <a href="/PERPS-COMPETITIVE-ANALYSIS.md">Full Competitive Analysis Report →</a>
+  <div style="margin-top: 8px;">
+    <a href="analysis.html">Competitive Analysis Dashboard</a>
+    <span style="color: var(--color-text-muted); margin: 0 8px;">·</span>
+    <a href="usd-to-perps-journey.html">USD → Perps Journey</a>
   </div>
 </div>
 
 <script>
-  // Initialize Lucide icons
-  lucide.createIcons();
+/* ----------------------- Theme toggle ----------------------- */
+function toggleTheme() {
+  const cur = document.documentElement.getAttribute('data-theme');
+  document.documentElement.setAttribute('data-theme', cur === 'dark' ? 'light' : 'dark');
+  localStorage.setItem('perps-theme', cur === 'dark' ? 'light' : 'dark');
+}
+(function initTheme() {
+  const saved = localStorage.getItem('perps-theme');
+  if (saved) document.documentElement.setAttribute('data-theme', saved);
+})();
 
-  // Trade sheet
-  function openTradeSheet(direction) {
-    document.getElementById('trade-sheet').classList.remove('hidden');
-    setDirection(direction);
-    document.body.style.overflow = 'hidden';
+/* ----------------------- Trade sheet ----------------------- */
+function openTradeSheet(direction) {
+  document.getElementById('trade-sheet').classList.add('open');
+  setDirection(direction);
+  document.body.style.overflow = 'hidden';
+}
+function closeTradeSheet() {
+  document.getElementById('trade-sheet').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+/* ----------------------- Direction ----------------------- */
+function setDirection(dir) {
+  const buyBtn = document.getElementById('btn-buy');
+  const sellBtn = document.getElementById('btn-sell');
+  const submit = document.getElementById('submit-btn');
+
+  buyBtn.classList.toggle('active', dir === 'buy');
+  buyBtn.classList.toggle('buy-active', dir === 'buy');
+  buyBtn.classList.toggle('sell-active', false);
+  sellBtn.classList.toggle('active', dir === 'sell');
+  sellBtn.classList.toggle('sell-active', dir === 'sell');
+  sellBtn.classList.toggle('buy-active', false);
+
+  if (dir === 'buy') {
+    submit.className = 'btn btn-xl btn-primary btn-block';
+    submit.textContent = 'Open BUY Position';
+  } else {
+    submit.className = 'btn btn-xl btn-negative btn-block';
+    submit.textContent = 'Open SELL Position';
+  }
+}
+
+/* ----------------------- Chip select ----------------------- */
+function selectChip(el) {
+  el.parentElement.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+/* ----------------------- Leverage ----------------------- */
+function setLeverage(el, value) {
+  document.querySelectorAll('.lev-pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+
+  const amount = 1000;
+  const exposure = amount * value;
+  document.getElementById('exposure-label').innerHTML =
+    'Exposure: <strong>$' + exposure.toLocaleString() + '</strong>';
+
+  const badge = document.getElementById('inst-badge');
+  const label = document.getElementById('inst-label');
+  const desc = document.getElementById('inst-desc');
+  const holdingRow = document.getElementById('holding-cost-row');
+  const spread = document.getElementById('sum-spread');
+  const holding = document.getElementById('sum-holding');
+
+  badge.className = 'badge';
+  if (value === 1) {
+    badge.classList.add('badge-positive');
+    label.textContent = 'Real Crypto';
+    desc.textContent = 'You own the underlying asset';
+    holdingRow.style.display = 'none';
+    spread.textContent = '$8.40 (spread)';
+  } else if (value <= 5) {
+    badge.classList.add('badge-blue');
+    label.textContent = 'CFD';
+    desc.textContent = 'Overnight fee applies daily';
+    holdingRow.style.display = 'flex';
+    holding.textContent = value === 2 ? '~$1.65/day (overnight)' : '~$4.12/day (overnight)';
+    spread.textContent = value === 2 ? '$18.50 (0.093%)' : '$46.25 (0.093%)';
+  } else {
+    badge.classList.add('badge-purple');
+    label.textContent = 'Perpetual Contract';
+    desc.textContent = 'Funding rate applies every 8h';
+    holdingRow.style.display = 'flex';
+    holding.textContent = '~$2.31/day (funding)';
+    spread.textContent = '$12.50 (0.015%)';
   }
 
-  function closeTradeSheet() {
-    document.getElementById('trade-sheet').classList.add('hidden');
-    document.body.style.overflow = '';
-  }
+  document.getElementById('sum-size').textContent = '$' + exposure.toLocaleString() + '.00';
+  document.getElementById('sum-margin').textContent = '$' + amount.toLocaleString() + '.00';
+}
 
-  // Direction toggle
-  function setDirection(dir) {
-    const buyBtn = document.getElementById('btn-buy');
-    const sellBtn = document.getElementById('btn-sell');
-    const submitBtn = document.getElementById('submit-btn');
+/* ----------------------- SL/TP toggle ----------------------- */
+function toggleSLTP() {
+  const toggle = document.getElementById('sltp-toggle');
+  const fields = document.getElementById('sltp-fields');
+  const isOn = toggle.classList.toggle('on');
+  fields.style.display = isOn ? 'block' : 'none';
+}
 
-    if (dir === 'buy') {
-      buyBtn.className = 'flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all bg-etoro-green text-white';
-      sellBtn.className = 'flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all text-etoro-gray-text';
-      submitBtn.className = 'w-full py-4 rounded-xl bg-etoro-green font-bold text-white text-base transition-all hover:bg-etoro-green-dark active:scale-[0.98]';
-      submitBtn.textContent = 'Open BUY Position';
-    } else {
-      sellBtn.className = 'flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all bg-etoro-red text-white';
-      buyBtn.className = 'flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all text-etoro-gray-text';
-      submitBtn.className = 'w-full py-4 rounded-xl bg-etoro-red font-bold text-white text-base transition-all hover:bg-etoro-red-dark active:scale-[0.98]';
-      submitBtn.textContent = 'Open SELL Position';
-    }
-  }
-
-  // Leverage + Instrument Type
-  function setLeverage(el, value) {
-    document.querySelectorAll('.lev-pill').forEach(p => {
-      p.classList.remove('active');
-      p.classList.add('bg-etoro-dark-surface', 'text-etoro-gray-text');
-    });
-    el.classList.add('active');
-    el.classList.remove('bg-etoro-dark-surface', 'text-etoro-gray-text');
-    
-    // Update exposure
-    const amount = 1000;
-    const exposure = amount * value;
-    document.getElementById('exposure-label').textContent = 
-      'Exposure: $' + exposure.toLocaleString();
-
-    // Update instrument type badge
-    const badge = document.getElementById('instrument-badge');
-    const typeLabel = document.getElementById('instrument-type-label');
-    const typeDesc = document.getElementById('instrument-type-desc');
-    const dot = badge.querySelector('.w-1\\.5');
-    const pill = badge.querySelector('.rounded-full');
-
-    // Update holding cost row visibility
-    const holdingCostRow = document.getElementById('holding-cost-row');
-    const spreadRow = document.getElementById('spread-row');
-    const liqRow = document.getElementById('liq-row');
-
-    if (value === 1) {
-      // Real crypto — no derivative
-      typeLabel.textContent = 'Real Crypto';
-      typeDesc.textContent = 'You own the underlying asset';
-      pill.className = 'flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-etoro-green/15 border border-etoro-green/30';
-      typeLabel.className = 'text-[10px] font-medium text-etoro-green';
-      if (holdingCostRow) holdingCostRow.style.display = 'none';
-      if (liqRow) liqRow.style.display = 'none';
-      if (spreadRow) spreadRow.querySelector('.text-etoro-light-text').textContent = '$8.40 (spread)';
-    } else if (value <= 5) {
-      // CFD
-      typeLabel.textContent = 'CFD';
-      typeDesc.textContent = 'Overnight fee applies daily';
-      pill.className = 'flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-etoro-blue/15 border border-etoro-blue/30';
-      typeLabel.className = 'text-[10px] font-medium text-etoro-blue';
-      if (holdingCostRow) {
-        holdingCostRow.style.display = 'flex';
-        holdingCostRow.querySelector('.text-etoro-light-text').textContent = 
-          value === 2 ? '~$1.65/day (overnight fee)' : '~$4.12/day (overnight fee)';
-      }
-      if (liqRow) liqRow.style.display = 'flex';
-      if (spreadRow) spreadRow.querySelector('.text-etoro-light-text').textContent = 
-        value === 2 ? '$18.50 (0.093%)' : '$46.25 (0.093%)';
-    } else {
-      // Perp
-      typeLabel.textContent = 'Perpetual Contract';
-      typeDesc.textContent = 'Funding rate applies every 8h';
-      pill.className = 'flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-purple-500/15 border border-purple-500/30';
-      typeLabel.className = 'text-[10px] font-medium text-purple-300';
-      if (holdingCostRow) {
-        holdingCostRow.style.display = 'flex';
-        holdingCostRow.querySelector('.text-etoro-light-text').textContent = '~$2.31/day (funding rate)';
-      }
-      if (liqRow) liqRow.style.display = 'flex';
-      if (spreadRow) spreadRow.querySelector('.text-etoro-light-text').textContent = '$12.50 (0.015%)';
-    }
-
-    // Update summary values
-    updateSummary(value, amount);
-  }
-
-  function updateSummary(leverage, amount) {
-    const exposure = amount * leverage;
-    const summaryItems = document.querySelectorAll('#order-summary .summary-row');
-    // Position size
-    if (summaryItems[0]) summaryItems[0].querySelector('.value').textContent = '$' + exposure.toLocaleString() + '.00';
-    // Required margin
-    if (summaryItems[1]) summaryItems[1].querySelector('.value').textContent = '$' + amount.toLocaleString() + '.00';
-    // Liquidation
-    if (leverage === 1) {
-      if (summaryItems[2]) summaryItems[2].querySelector('.value').textContent = 'N/A';
-    } else {
-      const liqPrice = Math.round(84231.50 * (1 - 0.9/leverage));
-      if (summaryItems[2]) summaryItems[2].querySelector('.value').textContent = '$' + liqPrice.toLocaleString() + '.00';
-    }
-  }
-
-  // SL/TP toggle
-  function toggleSLTP(el) {
-    const fields = document.getElementById('sltp-fields');
-    const thumb = el.querySelector('.toggle-thumb');
-    if (fields.classList.contains('hidden')) {
-      fields.classList.remove('hidden');
-      el.classList.add('bg-etoro-blue');
-      thumb.style.transform = 'translateX(14px)';
-      thumb.classList.add('bg-white');
-      thumb.classList.remove('bg-etoro-gray-text');
-    } else {
-      fields.classList.add('hidden');
-      el.classList.remove('bg-etoro-blue');
-      thumb.style.transform = 'translateX(0)';
-      thumb.classList.remove('bg-white');
-      thumb.classList.add('bg-etoro-gray-text');
-    }
-  }
-
-  // Cost breakdown toggle
-  function toggleCostBreakdown() {
-    const breakdown = document.getElementById('cost-breakdown');
-    const chevron = document.getElementById('cost-chevron');
-    breakdown.classList.toggle('hidden');
-    chevron.style.transform = breakdown.classList.contains('hidden') ? '' : 'rotate(180deg)';
-  }
+/* ----------------------- Breakdown ----------------------- */
+function toggleBreakdown() {
+  document.getElementById('bd-body').classList.toggle('open');
+  document.getElementById('bd-chevron').classList.toggle('open');
+}
 </script>
-
 </body>
 </html>
