@@ -165,10 +165,11 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--x3) var(--x6);
+  padding: var(--x3) var(--x6); /* iOS: 24px horizontal */
   background: var(--color-bg);
   border-bottom: 1px solid var(--color-border);
 }
+.top-bar[data-platform="android"] { padding: var(--x3) var(--x4); } /* Android: 16px */
 .top-bar-left { display: flex; align-items: center; gap: var(--x3); }
 .top-bar-icon {
   width: 24px;
@@ -460,6 +461,77 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
 
 .trade-btn-label { display: flex; flex-direction: column; align-items: flex-start; }
 .trade-btn-price { font-size: var(--type-caption); font-weight: 500; opacity: 0.7; }
+
+/* ============================================================
+   DS Button System — 3 types × 3 colors × 4 sizes
+   Per DS spec: S (8px 16px / 36r), M (8px 20px / 36r),
+                L (12px 24px / 44r), XL (16px 24px / 48r)
+   ============================================================ */
+.ds-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--x2);
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  line-height: 1.25;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+  text-decoration: none;
+}
+.ds-btn:disabled, .ds-btn[aria-disabled="true"] { opacity: 0.4; cursor: not-allowed; }
+.ds-btn--s  { padding: 8px 16px;  border-radius: 36px; font-size: 13px; }
+.ds-btn--m  { padding: 8px 20px;  border-radius: 36px; font-size: 14px; }
+.ds-btn--l  { padding: 12px 24px; border-radius: 44px; font-size: 15px; }
+.ds-btn--xl { padding: 16px 24px; border-radius: 48px; font-size: 16px; font-weight: 700; }
+
+.ds-btn--primary.ds-btn--green  { background: var(--color-brand-primary); color: #FFFFFF; box-shadow: var(--elevation-1); }
+.ds-btn--primary.ds-btn--green:hover { background: var(--color-brand-primary-hover); }
+.ds-btn--primary.ds-btn--red    { background: var(--color-negative); color: #FFFFFF; box-shadow: var(--elevation-1); }
+.ds-btn--primary.ds-btn--carbon { background: var(--color-text-primary); color: var(--color-bg); box-shadow: var(--elevation-1); }
+
+.ds-btn--secondary.ds-btn--green  { border-color: var(--color-brand-primary); color: var(--color-brand-primary); background: transparent; }
+.ds-btn--secondary.ds-btn--green:hover { background: var(--color-brand-primary-bg); }
+.ds-btn--secondary.ds-btn--red    { border-color: var(--color-negative); color: var(--color-negative); background: transparent; }
+.ds-btn--secondary.ds-btn--carbon { border-color: var(--color-border-strong); color: var(--color-text-primary); background: transparent; }
+.ds-btn--secondary.ds-btn--carbon:hover { background: var(--color-bg-secondary); }
+
+.ds-btn--ghost { background: transparent; border-color: transparent; }
+.ds-btn--ghost.ds-btn--green { color: var(--color-brand-primary); }
+.ds-btn--ghost.ds-btn--red   { color: var(--color-negative); }
+.ds-btn--ghost.ds-btn--carbon { color: var(--color-text-primary); }
+.ds-btn--ghost:hover { background: var(--color-bg-secondary); }
+
+/* ============================================================
+   DS Tile (Single / Multi Select) — available for reuse
+   ============================================================ */
+.ds-tile {
+  display: flex; align-items: center; gap: var(--x3);
+  padding: var(--x4);
+  border-radius: var(--radius-x2);
+  border: 1.5px solid var(--color-border);
+  background: var(--color-surface);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.ds-tile:hover { border-color: var(--color-border-strong); box-shadow: var(--elevation-1); }
+.ds-tile.is-selected {
+  border-color: var(--color-brand-primary);
+  background: var(--color-brand-primary-bg);
+}
+.ds-tile__radio {
+  flex-shrink: 0;
+  width: 20px; height: 20px;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--color-border-strong);
+  display: flex; align-items: center; justify-content: center;
+}
+.ds-tile.is-selected .ds-tile__radio { border-color: var(--color-brand-primary); background: var(--color-brand-primary); }
+.ds-tile.is-selected .ds-tile__radio::after {
+  content: ""; width: 8px; height: 8px; border-radius: var(--radius-full); background: #FFFFFF;
+}
 
 /* ============================================================
    Bottom Sheet (mobile modal)
@@ -998,9 +1070,10 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
   </div>
 
   <!-- Top Bar (iOS — 24px horizontal padding) -->
-  <div class="top-bar">
+  <!-- Top Bar — iOS variant (24px horizontal padding, per DS spec) -->
+  <div class="top-bar" data-platform="ios">
     <div class="top-bar-left">
-      <svg class="top-bar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      <svg class="top-bar-icon" data-icon="arrow-left-Line" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
       <div class="instrument-info">
         <div class="instrument-avatar">₿</div>
         <div>
@@ -1010,8 +1083,8 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
       </div>
     </div>
     <div class="top-bar-actions">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <svg data-icon="bell-ring-Line" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      <svg data-icon="star-Line" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
     </div>
   </div>
 

@@ -207,6 +207,61 @@ tailwind.config = {
   }
   .btn-primary-pill:hover { filter: brightness(0.92); }
 
+  /* ============================================================
+     DS Button System — 3 types × 3 colors × 4 sizes
+     ============================================================ */
+  .ds-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--x2);
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    line-height: 1.25;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+    text-decoration: none;
+  }
+  .ds-btn:disabled, .ds-btn[aria-disabled="true"] { opacity: 0.4; cursor: not-allowed; }
+  .ds-btn--s  { padding: 8px 16px;  border-radius: 36px; font-size: 13px; }
+  .ds-btn--m  { padding: 8px 20px;  border-radius: 36px; font-size: 14px; }
+  .ds-btn--l  { padding: 12px 24px; border-radius: 44px; font-size: 15px; }
+  .ds-btn--xl { padding: 16px 24px; border-radius: 48px; font-size: 16px; font-weight: 700; }
+
+  .ds-btn--primary.ds-btn--green  { background: var(--color-brand-primary); color: #FFFFFF; box-shadow: var(--elevation-1); }
+  .ds-btn--primary.ds-btn--green:hover { filter: brightness(0.92); }
+  .ds-btn--primary.ds-btn--red    { background: var(--color-negative); color: #FFFFFF; box-shadow: var(--elevation-1); }
+  .ds-btn--primary.ds-btn--carbon { background: var(--color-text-primary); color: var(--color-bg); box-shadow: var(--elevation-1); }
+
+  .ds-btn--secondary.ds-btn--green  { border-color: var(--color-brand-primary); color: var(--color-brand-primary); background: transparent; }
+  .ds-btn--secondary.ds-btn--green:hover { background: var(--color-brand-primary-bg); }
+  .ds-btn--secondary.ds-btn--red    { border-color: var(--color-negative); color: var(--color-negative); background: transparent; }
+  .ds-btn--secondary.ds-btn--carbon { border-color: var(--color-border-strong); color: var(--color-text-primary); background: transparent; }
+  .ds-btn--secondary.ds-btn--carbon:hover { background: var(--color-surface-elevated); }
+
+  .ds-btn--ghost { background: transparent; border-color: transparent; }
+  .ds-btn--ghost.ds-btn--green  { color: var(--color-brand-primary); }
+  .ds-btn--ghost.ds-btn--red    { color: var(--color-negative); }
+  .ds-btn--ghost.ds-btn--carbon { color: var(--color-text-primary); }
+  .ds-btn--ghost:hover { background: var(--color-surface-elevated); }
+
+  /* ============================================================
+     Elevation hierarchy — applied by depth class
+     Elevation 1: resting cards (section-card default)
+     Elevation 2: emphasized cards, sticky nav
+     Elevation 3: modals, overlays, primary CTAs at rest
+     ============================================================ */
+  .elev-1 { box-shadow: var(--elevation-1); }
+  .elev-2 { box-shadow: var(--elevation-2); }
+  .elev-3 { box-shadow: var(--elevation-3); }
+
+  /* Map Tailwind radius utilities onto DS scale (X1 4, X2 8, X6 24, Full) */
+  .rounded-lg  { border-radius: var(--radius-x2) !important; }
+  .rounded-xl  { border-radius: var(--radius-x2) !important; } /* snap 12→8 (X2) */
+  .rounded-2xl { border-radius: var(--radius-x6) !important; } /* snap 16→24 (X6) */
+
   /* Theme toggle */
   .theme-toggle {
     position: fixed;
@@ -262,7 +317,7 @@ tailwind.config = {
 </button>
 
 <!-- Navigation -->
-<nav class="sticky top-0 z-50 backdrop-blur-md border-b" style="background: color-mix(in srgb, var(--color-bg) 90%, transparent); border-color: var(--color-border);">
+<nav class="sticky top-0 z-50 backdrop-blur-md border-b elev-2" style="background: color-mix(in srgb, var(--color-bg) 90%, transparent); border-color: var(--color-border);">
   <div class="max-w-5xl mx-auto px-6 py-3 flex items-center justify-between">
     <div class="flex items-center gap-3">
       <div class="w-9 h-9 rounded-full flex items-center justify-center font-bold text-sm" style="background: var(--color-brand-primary); color: #FFFFFF;">e</div>
@@ -271,8 +326,8 @@ tailwind.config = {
         <div class="text-[11px]" style="color: var(--color-text-muted);">April 2026 · Live API Data</div>
       </div>
     </div>
-    <a href="index.html" class="nav-pill inline-flex items-center gap-1.5 px-4 py-1.5 text-xs font-semibold" style="color: var(--color-text-primary); border: 1px solid var(--color-border);">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    <a href="index.html" class="ds-btn ds-btn--secondary ds-btn--carbon ds-btn--s">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-icon="arrow-left-Line"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
       Mockup
     </a>
   </div>
@@ -880,9 +935,9 @@ tailwind.config = {
       <div class="text-xs" style="color: var(--color-text-secondary);">Data sourced from live exchange APIs — Binance, Bybit, OKX, Bitget, dYdX, Hyperliquid, Coinbase International</div>
       <div class="text-[11px] mt-1" style="color: var(--color-text-muted);">CoreClaw · April 16, 2026 · eToro New DS v1.0.0</div>
     </div>
-    <a href="index.html" class="btn-primary-pill">
+    <a href="index.html" class="ds-btn ds-btn--primary ds-btn--green ds-btn--m elev-2">
       View Mockup
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-icon="arrow-right-Line"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
     </a>
   </div>
 </footer>
