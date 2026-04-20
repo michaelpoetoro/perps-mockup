@@ -29,9 +29,9 @@
   --color-border-strong: #D1D5DB;
 
   /* Brand + Verdict */
-  --color-brand-primary: #0EB12E;        /* Primary / green */
+  --color-brand-primary: #0EB12E;
   --color-brand-primary-hover: #0A9824;
-  --color-brand-primary-bg: #E7F7EB;     /* light tint for ghost/tag backgrounds */
+  --color-brand-primary-bg: #E7F7EB;
   --color-negative: #F23D40;
   --color-negative-hover: #D8353A;
   --color-negative-bg: #FDECEC;
@@ -44,7 +44,7 @@
   --color-accent-purple-bg: #F0EBFE;
   --color-accent-yellow: #F4B400;
 
-  /* Trading Buy/Sell button background (spec: #1B1D21) */
+  /* Trading Buy/Sell button background */
   --color-trade-bg: #1B1D21;
   --color-trade-bg-hover: #2A2D33;
 
@@ -60,12 +60,12 @@
   --radius-x6: 24px;
   --radius-full: 9999px;
 
-  /* Shadows — Elevation scale */
+  /* Shadows */
   --elevation-1: 0 1px 2px rgba(16, 24, 40, 0.06), 0 1px 3px rgba(16, 24, 40, 0.04);
   --elevation-2: 0 4px 8px -2px rgba(16, 24, 40, 0.08), 0 2px 4px -2px rgba(16, 24, 40, 0.04);
   --elevation-3: 0 12px 20px -4px rgba(16, 24, 40, 0.10), 0 4px 8px -2px rgba(16, 24, 40, 0.06);
 
-  /* Typography sizes (new DS scale) */
+  /* Typography */
   --type-display: 36px;
   --type-h1: 30px;
   --type-h2: 24px;
@@ -82,30 +82,24 @@
   --color-bg-secondary: #0E1014;
   --color-surface: #1C1F29;
   --color-surface-elevated: #242834;
-
   --color-text-primary: #FFFFFF;
   --color-text-secondary: #C7CBD6;
   --color-text-muted: #999FB2;
   --color-text-inverse: #13151C;
-
   --color-border: #2E323F;
   --color-border-strong: #5A6178;
-
   --color-brand-primary: #30CF4F;
   --color-brand-primary-hover: #25B842;
   --color-brand-primary-bg: rgba(48, 207, 79, 0.14);
   --color-negative: #E9544C;
   --color-negative-hover: #D24A44;
   --color-negative-bg: rgba(233, 84, 76, 0.14);
-
   --color-accent-blue: #5AA3FF;
   --color-accent-blue-bg: rgba(90, 163, 255, 0.14);
   --color-accent-purple: #A78BFA;
   --color-accent-purple-bg: rgba(167, 139, 250, 0.14);
-
   --color-trade-bg: #0F1116;
   --color-trade-bg-hover: #1B1D21;
-
   --elevation-1: 0 1px 2px rgba(0, 0, 0, 0.4);
   --elevation-2: 0 4px 8px rgba(0, 0, 0, 0.35);
   --elevation-3: 0 12px 20px rgba(0, 0, 0, 0.5);
@@ -130,13 +124,12 @@ button { font-family: inherit; border: none; background: none; cursor: pointer; 
 input { font-family: inherit; }
 input:focus { outline: none; border-color: var(--color-accent-blue); }
 
-/* Scrollbar */
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--color-border-strong); border-radius: var(--radius-x1); }
 
 /* ============================================================
-   Phone frame + Top Bar (iOS — 24px horizontal padding)
+   Phone frame + Top Bar
    ============================================================ */
 .phone {
   max-width: 430px;
@@ -165,15 +158,13 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--x3) var(--x6); /* iOS: 24px horizontal */
+  padding: var(--x3) var(--x6);
   background: var(--color-bg);
   border-bottom: 1px solid var(--color-border);
 }
-.top-bar[data-platform="android"] { padding: var(--x3) var(--x4); } /* Android: 16px */
 .top-bar-left { display: flex; align-items: center; gap: var(--x3); }
 .top-bar-icon {
-  width: 24px;
-  height: 24px;
+  width: 24px; height: 24px;
   color: var(--color-text-primary);
   cursor: pointer;
 }
@@ -183,7 +174,6 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
 .instrument-info { display: flex; align-items: center; gap: var(--x2); }
 .instrument-avatar {
   width: 32px; height: 32px; border-radius: var(--radius-full);
-  background: #F7931A;
   display: flex; align-items: center; justify-content: center;
   color: #FFFFFF; font-weight: 700; font-size: var(--type-body-sm);
 }
@@ -199,9 +189,7 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
   margin-top: 2px;
 }
 
-/* ============================================================
-   Typography helpers
-   ============================================================ */
+/* Typography helpers */
 .text-display { font-size: var(--type-display); font-weight: 700; letter-spacing: -0.5px; }
 .text-h1 { font-size: var(--type-h1); font-weight: 700; letter-spacing: -0.4px; }
 .text-h2 { font-size: var(--type-h2); font-weight: 600; letter-spacing: -0.3px; }
@@ -229,10 +217,7 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
   letter-spacing: -0.5px;
   animation: pricePulse 2s ease-in-out infinite;
 }
-.price-change {
-  font-size: var(--type-body-sm);
-  font-weight: 600;
-}
+.price-change { font-size: var(--type-body-sm); font-weight: 600; }
 .price-meta {
   display: flex;
   gap: var(--x4);
@@ -249,14 +234,8 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
   50% { opacity: 0.75; }
 }
 
-/* ============================================================
-   Period Chip (time ranges)
-   ============================================================ */
-.period-chips {
-  display: flex;
-  gap: var(--x1);
-  padding: 0 var(--x6) var(--x2);
-}
+/* Period chips */
+.period-chips { display: flex; gap: var(--x1); padding: 0 var(--x6) var(--x2); }
 .period-chip {
   padding: 6px var(--x3);
   font-size: var(--type-caption);
@@ -267,14 +246,9 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
   transition: all 0.15s ease;
 }
 .period-chip:hover { background: var(--color-bg-secondary); }
-.period-chip.active {
-  background: var(--color-text-primary);
-  color: var(--color-bg);
-}
+.period-chip.active { background: var(--color-text-primary); color: var(--color-bg); }
 
-/* ============================================================
-   Chart Area
-   ============================================================ */
+/* Chart */
 .chart-area {
   margin: 0 var(--x6);
   height: 220px;
@@ -295,91 +269,53 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
   border-radius: var(--radius-x1);
 }
 
-/* ============================================================
-   Tabs (Overview / Stats / Feed) — segmented-control style
-   ============================================================ */
+/* Tabs */
 .tabs {
-  display: flex;
-  gap: var(--x1);
-  padding: var(--x1);
+  display: flex; gap: var(--x1); padding: var(--x1);
   margin: var(--x4) var(--x6) 0;
   background: var(--color-bg-secondary);
   border-radius: var(--radius-full);
 }
 .tab {
-  flex: 1;
-  padding: 8px var(--x3);
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--color-text-secondary);
-  border-radius: var(--radius-full);
-  transition: all 0.15s ease;
-  text-align: center;
+  flex: 1; padding: 8px var(--x3); font-size: 13px; font-weight: 500;
+  color: var(--color-text-secondary); border-radius: var(--radius-full);
+  transition: all 0.15s ease; text-align: center;
 }
 .tab:hover { color: var(--color-text-primary); }
 .tab.active {
-  color: var(--color-text-primary);
-  font-weight: 600;
-  background: var(--color-surface);
-  box-shadow: var(--elevation-1);
+  color: var(--color-text-primary); font-weight: 600;
+  background: var(--color-surface); box-shadow: var(--elevation-1);
 }
 
-/* ============================================================
-   Metric Cards — with sparklines and delta pills
-   ============================================================ */
+/* Metric cards */
 .metric-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--x2);
-  padding: var(--x4) var(--x6) var(--x2);
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: var(--x2); padding: var(--x4) var(--x6) var(--x2);
 }
 .metric-card {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-x2);
   padding: var(--x3);
-  display: flex;
-  flex-direction: column;
-  gap: var(--x2);
+  display: flex; flex-direction: column; gap: var(--x2);
   transition: box-shadow 0.15s ease, transform 0.15s ease;
 }
-.metric-card:hover {
-  box-shadow: var(--elevation-1);
-  transform: translateY(-1px);
-}
-.metric-label {
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--color-text-muted);
-  font-weight: 500;
-}
-.metric-value {
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--color-text-primary);
-  letter-spacing: -0.2px;
-}
+.metric-card:hover { box-shadow: var(--elevation-1); transform: translateY(-1px); }
+.metric-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--color-text-muted); font-weight: 500; }
+.metric-value { font-size: 15px; font-weight: 700; color: var(--color-text-primary); letter-spacing: -0.2px; }
 .metric-value.positive { color: var(--color-brand-primary); }
 .metric-value.negative { color: var(--color-negative); }
 .metric-delta {
-  display: inline-flex;
-  align-items: center;
-  gap: 2px;
-  font-size: 10px;
-  font-weight: 600;
-  padding: 2px var(--x2);
+  display: inline-flex; align-items: center; gap: 2px;
+  font-size: 10px; font-weight: 600; padding: 2px var(--x2);
   border-radius: var(--radius-full);
-  background: var(--color-brand-primary-bg);
-  color: var(--color-brand-primary);
+  background: var(--color-brand-primary-bg); color: var(--color-brand-primary);
   align-self: flex-start;
 }
 .metric-delta.negative { background: var(--color-negative-bg); color: var(--color-negative); }
 .metric-spark { width: 100%; height: 24px; display: block; }
 
-/* ============================================================
-   Market Overview Panels — sentiment, funding, trades
-   ============================================================ */
+/* Overview panels */
 .overview-stack { padding: 0 var(--x6) var(--x4); display: flex; flex-direction: column; gap: var(--x3); }
 
 .panel {
@@ -392,44 +328,21 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
   display: flex; align-items: center; justify-content: space-between;
   margin-bottom: var(--x3);
 }
-.panel-title {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--color-text-primary);
-  text-transform: uppercase;
-  letter-spacing: 0.4px;
-}
+.panel-title { font-size: 12px; font-weight: 600; color: var(--color-text-primary); text-transform: uppercase; letter-spacing: 0.4px; }
 .panel-meta { font-size: 11px; color: var(--color-text-muted); font-weight: 500; }
 
-/* Sentiment bar */
-.sentiment-row {
-  display: flex; align-items: baseline; justify-content: space-between;
-  margin-bottom: var(--x2);
-  font-size: var(--type-body-sm);
-  font-weight: 600;
-}
+/* Sentiment */
+.sentiment-row { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: var(--x2); font-size: var(--type-body-sm); font-weight: 600; }
 .sentiment-row .long  { color: var(--color-brand-primary); }
 .sentiment-row .short { color: var(--color-negative); }
-.sentiment-bar {
-  display: flex; height: 6px;
-  border-radius: var(--radius-full);
-  overflow: hidden;
-  background: var(--color-bg-secondary);
-}
+.sentiment-bar { display: flex; height: 6px; border-radius: var(--radius-full); overflow: hidden; background: var(--color-bg-secondary); }
 .sentiment-bar__long  { background: var(--color-brand-primary); }
 .sentiment-bar__short { background: var(--color-negative); }
-.sentiment-footer {
-  display: flex; justify-content: space-between;
-  margin-top: var(--x2);
-  font-size: 11px;
-  color: var(--color-text-secondary);
-}
+.sentiment-footer { display: flex; justify-content: space-between; margin-top: var(--x2); font-size: 11px; color: var(--color-text-secondary); }
 .sentiment-footer strong { color: var(--color-text-primary); font-weight: 600; }
 
-/* Funding countdown with progress ring */
-.funding-row {
-  display: flex; align-items: center; gap: var(--x4);
-}
+/* Funding countdown */
+.funding-row { display: flex; align-items: center; gap: var(--x4); }
 .funding-ring { flex-shrink: 0; position: relative; width: 56px; height: 56px; }
 .funding-ring svg { transform: rotate(-90deg); }
 .funding-ring__track { stroke: var(--color-border); }
@@ -438,34 +351,24 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
   position: absolute; inset: 0;
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
-  font-size: 10px; font-weight: 600; color: var(--color-text-primary);
-  line-height: 1;
+  font-size: 10px; font-weight: 600; color: var(--color-text-primary); line-height: 1;
 }
 .funding-ring__label .h { font-size: 13px; }
 .funding-body { flex: 1; min-width: 0; }
-.funding-rate {
-  font-size: 18px; font-weight: 700;
-  color: var(--color-brand-primary);
-  letter-spacing: -0.3px;
-}
+.funding-rate { font-size: 18px; font-weight: 700; color: var(--color-brand-primary); letter-spacing: -0.3px; }
 .funding-rate.negative { color: var(--color-negative); }
 .funding-hint { font-size: 11px; color: var(--color-text-secondary); margin-top: 2px; line-height: 1.4; }
 
-/* Recent trades feed */
+/* Recent trades */
 .trades-feed { display: flex; flex-direction: column; gap: var(--x2); }
 .trade-row {
-  display: grid;
-  grid-template-columns: 20px 1fr auto auto;
-  align-items: center;
-  gap: var(--x3);
-  padding: var(--x2) 0;
-  font-size: 12px;
-  border-bottom: 1px solid var(--color-border);
+  display: grid; grid-template-columns: 20px 1fr auto auto;
+  align-items: center; gap: var(--x3); padding: var(--x2) 0;
+  font-size: 12px; border-bottom: 1px solid var(--color-border);
 }
 .trade-row:last-child { border-bottom: none; }
 .trade-marker {
-  width: 16px; height: 16px;
-  border-radius: var(--radius-full);
+  width: 16px; height: 16px; border-radius: var(--radius-full);
   display: flex; align-items: center; justify-content: center;
   font-size: 9px; font-weight: 700; color: #FFFFFF;
 }
@@ -474,211 +377,166 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
 .trade-size  { color: var(--color-text-primary); font-weight: 600; }
 .trade-price { color: var(--color-text-primary); font-weight: 600; font-variant-numeric: tabular-nums; }
 .trade-time  { color: var(--color-text-muted); font-size: 11px; font-variant-numeric: tabular-nums; }
-.metric-sublabel {
-  font-size: 10px;
-  color: var(--color-text-muted);
-  margin-top: 2px;
-}
 
 /* ============================================================
-   Buttons — new DS spec
-   Sizes: S / M / L / XL (pill-shaped)
-   Types: Primary (filled), Secondary (outlined), Ghost
+   Instrument Picker
+   ============================================================ */
+.instrument-picker {
+  padding: var(--x3) var(--x6);
+  border-bottom: 1px solid var(--color-border);
+}
+.instrument-picker-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--color-text-muted);
+  font-weight: 600;
+  margin-bottom: var(--x2);
+}
+.instrument-chips {
+  display: flex;
+  gap: var(--x2);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.instrument-chips::-webkit-scrollbar { display: none; }
+.instrument-chip {
+  display: flex;
+  align-items: center;
+  gap: var(--x2);
+  padding: var(--x2) var(--x3);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-full);
+  font-size: var(--type-body-sm);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+  transition: all 0.15s ease;
+  cursor: pointer;
+}
+.instrument-chip:hover { border-color: var(--color-border-strong); background: var(--color-bg-secondary); }
+.instrument-chip.active {
+  border-color: var(--color-brand-primary);
+  background: var(--color-brand-primary-bg);
+  color: var(--color-brand-primary);
+}
+.instrument-chip .chip-icon {
+  width: 20px; height: 20px; border-radius: var(--radius-full);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700; color: #FFF;
+}
+.instrument-chip .chip-change { font-size: 10px; font-weight: 500; margin-left: var(--x1); }
+.chip-change.positive { color: var(--color-brand-primary); }
+.chip-change.negative { color: var(--color-negative); }
+
+/* ============================================================
+   Volume Tier Table
+   ============================================================ */
+.volume-tiers {
+  margin-top: var(--x3);
+}
+.volume-tier-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--type-caption);
+}
+.volume-tier-table th {
+  text-align: left;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-text-muted);
+  font-weight: 600;
+  padding: var(--x2) var(--x2);
+  border-bottom: 1px solid var(--color-border);
+}
+.volume-tier-table td {
+  padding: var(--x2) var(--x2);
+  color: var(--color-text-secondary);
+  border-bottom: 1px solid var(--color-border);
+}
+.volume-tier-table tr:last-child td { border-bottom: none; }
+.volume-tier-table .tier-active {
+  background: var(--color-brand-primary-bg);
+  color: var(--color-text-primary);
+  font-weight: 600;
+}
+.volume-tier-table .tier-active td:first-child { border-radius: var(--radius-x1) 0 0 var(--radius-x1); }
+.volume-tier-table .tier-active td:last-child { border-radius: 0 var(--radius-x1) var(--radius-x1) 0; }
+
+/* ============================================================
+   Buy / Sell buttons
+   ============================================================ */
+.buy-sell-row {
+  position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 100%; max-width: 430px;
+  background: var(--color-bg);
+  border-top: 1px solid var(--color-border);
+  padding: var(--x4) var(--x6) calc(var(--x4) + env(safe-area-inset-bottom));
+  display: flex; gap: var(--x3); z-index: 40;
+}
+.trade-btn {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  gap: var(--x2); padding: var(--x3) var(--x5);
+  background: var(--color-trade-bg); border-radius: var(--radius-full);
+  color: #FFFFFF; font-weight: 700; font-size: var(--type-body-lg);
+  transition: all 0.15s ease; border: 2px solid transparent;
+}
+.trade-btn:hover { background: var(--color-trade-bg-hover); }
+.trade-indicator {
+  width: 24px; height: 24px; border-radius: var(--radius-full);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: var(--type-body-sm);
+}
+.trade-btn.buy .trade-indicator { background: var(--color-brand-primary); color: #FFFFFF; }
+.trade-btn.buy:hover { border-color: var(--color-brand-primary); }
+.trade-btn.sell .trade-indicator { background: var(--color-negative); color: #FFFFFF; }
+.trade-btn.sell:hover { border-color: var(--color-negative); }
+.trade-btn-label { display: flex; flex-direction: column; align-items: flex-start; }
+.trade-btn-price { font-size: var(--type-caption); font-weight: 500; opacity: 0.7; }
+
+/* ============================================================
+   Buttons
    ============================================================ */
 .btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--x2);
-  font-family: 'Inter', sans-serif;
-  font-weight: 600;
-  transition: all 0.15s ease;
-  white-space: nowrap;
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: var(--x2); font-family: 'Inter', sans-serif; font-weight: 600;
+  transition: all 0.15s ease; white-space: nowrap;
 }
 .btn-s { padding: var(--x2) var(--x4); border-radius: 36px; font-size: var(--type-body-sm); }
 .btn-m { padding: var(--x2) var(--x5); border-radius: 36px; font-size: var(--type-body-sm); }
 .btn-l { padding: var(--x3) var(--x6); border-radius: 44px; font-size: var(--type-body); }
 .btn-xl { padding: var(--x4) var(--x6); border-radius: 48px; font-size: var(--type-body-lg); }
 
-/* Primary filled */
-.btn-primary {
-  background: var(--color-brand-primary);
-  color: #FFFFFF;
-}
+.btn-primary { background: var(--color-brand-primary); color: #FFFFFF; }
 .btn-primary:hover { background: var(--color-brand-primary-hover); }
-
-.btn-negative {
-  background: var(--color-negative);
-  color: #FFFFFF;
-}
+.btn-negative { background: var(--color-negative); color: #FFFFFF; }
 .btn-negative:hover { background: var(--color-negative-hover); }
-
-.btn-carbon {
-  background: var(--color-text-primary);
-  color: var(--color-bg);
-}
-
-/* Secondary outlined */
-.btn-secondary {
-  background: transparent;
-  color: var(--color-text-primary);
-  border: 1px solid var(--color-border-strong);
-}
-.btn-secondary:hover {
-  background: var(--color-bg-secondary);
-}
-
-/* Ghost */
+.btn-secondary { background: transparent; color: var(--color-text-primary); border: 1px solid var(--color-border-strong); }
+.btn-secondary:hover { background: var(--color-bg-secondary); }
 .btn-ghost { background: transparent; color: var(--color-text-primary); }
 .btn-ghost:hover { background: var(--color-bg-secondary); }
-
 .btn-block { width: 100%; }
 .btn:disabled { opacity: 0.4; cursor: not-allowed; }
 .btn:active { transform: scale(0.98); }
 
 /* ============================================================
-   Buy / Sell trading buttons (dark bg #1B1D21)
-   ============================================================ */
-.buy-sell-row {
-  position: fixed;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  max-width: 430px;
-  background: var(--color-bg);
-  border-top: 1px solid var(--color-border);
-  padding: var(--x4) var(--x6) calc(var(--x4) + env(safe-area-inset-bottom));
-  display: flex;
-  gap: var(--x3);
-  z-index: 40;
-}
-.trade-btn {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--x2);
-  padding: var(--x3) var(--x5);
-  background: var(--color-trade-bg);
-  border-radius: var(--radius-full);
-  color: #FFFFFF;
-  font-weight: 700;
-  font-size: var(--type-body-lg);
-  transition: all 0.15s ease;
-  border: 2px solid transparent;
-}
-.trade-btn:hover { background: var(--color-trade-bg-hover); }
-
-.trade-indicator {
-  width: 24px; height: 24px;
-  border-radius: var(--radius-full);
-  display: flex; align-items: center; justify-content: center;
-  font-weight: 700;
-  font-size: var(--type-body-sm);
-}
-.trade-btn.buy .trade-indicator { background: var(--color-brand-primary); color: #FFFFFF; }
-.trade-btn.buy:hover { border-color: var(--color-brand-primary); }
-.trade-btn.sell .trade-indicator { background: var(--color-negative); color: #FFFFFF; }
-.trade-btn.sell:hover { border-color: var(--color-negative); }
-
-.trade-btn-label { display: flex; flex-direction: column; align-items: flex-start; }
-.trade-btn-price { font-size: var(--type-caption); font-weight: 500; opacity: 0.7; }
-
-/* ============================================================
-   DS Button System — 3 types × 3 colors × 4 sizes
-   Per DS spec: S (8px 16px / 36r), M (8px 20px / 36r),
-                L (12px 24px / 44r), XL (16px 24px / 48r)
-   ============================================================ */
-.ds-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--x2);
-  font-family: 'Inter', sans-serif;
-  font-weight: 600;
-  line-height: 1.25;
-  border: 1px solid transparent;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  white-space: nowrap;
-  text-decoration: none;
-}
-.ds-btn:disabled, .ds-btn[aria-disabled="true"] { opacity: 0.4; cursor: not-allowed; }
-.ds-btn--s  { padding: 8px 16px;  border-radius: 36px; font-size: 13px; }
-.ds-btn--m  { padding: 8px 20px;  border-radius: 36px; font-size: 14px; }
-.ds-btn--l  { padding: 12px 24px; border-radius: 44px; font-size: 15px; }
-.ds-btn--xl { padding: 16px 24px; border-radius: 48px; font-size: 16px; font-weight: 700; }
-
-.ds-btn--primary.ds-btn--green  { background: var(--color-brand-primary); color: #FFFFFF; box-shadow: var(--elevation-1); }
-.ds-btn--primary.ds-btn--green:hover { background: var(--color-brand-primary-hover); }
-.ds-btn--primary.ds-btn--red    { background: var(--color-negative); color: #FFFFFF; box-shadow: var(--elevation-1); }
-.ds-btn--primary.ds-btn--carbon { background: var(--color-text-primary); color: var(--color-bg); box-shadow: var(--elevation-1); }
-
-.ds-btn--secondary.ds-btn--green  { border-color: var(--color-brand-primary); color: var(--color-brand-primary); background: transparent; }
-.ds-btn--secondary.ds-btn--green:hover { background: var(--color-brand-primary-bg); }
-.ds-btn--secondary.ds-btn--red    { border-color: var(--color-negative); color: var(--color-negative); background: transparent; }
-.ds-btn--secondary.ds-btn--carbon { border-color: var(--color-border-strong); color: var(--color-text-primary); background: transparent; }
-.ds-btn--secondary.ds-btn--carbon:hover { background: var(--color-bg-secondary); }
-
-.ds-btn--ghost { background: transparent; border-color: transparent; }
-.ds-btn--ghost.ds-btn--green { color: var(--color-brand-primary); }
-.ds-btn--ghost.ds-btn--red   { color: var(--color-negative); }
-.ds-btn--ghost.ds-btn--carbon { color: var(--color-text-primary); }
-.ds-btn--ghost:hover { background: var(--color-bg-secondary); }
-
-/* ============================================================
-   DS Tile (Single / Multi Select) — available for reuse
-   ============================================================ */
-.ds-tile {
-  display: flex; align-items: center; gap: var(--x3);
-  padding: var(--x4);
-  border-radius: var(--radius-x2);
-  border: 1.5px solid var(--color-border);
-  background: var(--color-surface);
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-.ds-tile:hover { border-color: var(--color-border-strong); box-shadow: var(--elevation-1); }
-.ds-tile.is-selected {
-  border-color: var(--color-brand-primary);
-  background: var(--color-brand-primary-bg);
-}
-.ds-tile__radio {
-  flex-shrink: 0;
-  width: 20px; height: 20px;
-  border-radius: var(--radius-full);
-  border: 2px solid var(--color-border-strong);
-  display: flex; align-items: center; justify-content: center;
-}
-.ds-tile.is-selected .ds-tile__radio { border-color: var(--color-brand-primary); background: var(--color-brand-primary); }
-.ds-tile.is-selected .ds-tile__radio::after {
-  content: ""; width: 8px; height: 8px; border-radius: var(--radius-full); background: #FFFFFF;
-}
-
-/* ============================================================
-   Bottom Sheet (mobile modal)
+   Bottom Sheet
    ============================================================ */
 .sheet-overlay {
   position: fixed; inset: 0;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 50;
-  display: none;
+  z-index: 50; display: none;
 }
 .sheet-overlay.open { display: block; }
 .sheet {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  max-width: 430px;
+  position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 100%; max-width: 430px;
   background: var(--color-bg);
   border-top-left-radius: var(--radius-x6);
   border-top-right-radius: var(--radius-x6);
   max-height: 90vh;
-  display: flex;
-  flex-direction: column;
+  display: flex; flex-direction: column;
   animation: sheetUp 0.3s cubic-bezier(0.32, 0.72, 0, 1);
   box-shadow: var(--elevation-3);
 }
@@ -686,435 +544,233 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
   from { transform: translate(-50%, 100%); }
   to { transform: translate(-50%, 0); }
 }
-.sheet-handle {
-  padding: var(--x3) 0 var(--x2);
-  display: flex;
-  justify-content: center;
-}
+.sheet-handle { padding: var(--x3) 0 var(--x2); display: flex; justify-content: center; }
 .sheet-handle::after {
-  content: '';
-  width: 40px; height: 4px;
-  border-radius: var(--radius-full);
-  background: var(--color-border-strong);
+  content: ''; width: 40px; height: 4px;
+  border-radius: var(--radius-full); background: var(--color-border-strong);
 }
-.sheet-content {
-  padding: 0 var(--x6) var(--x6);
-  overflow-y: auto;
-  flex: 1;
-}
+.sheet-content { padding: 0 var(--x6) var(--x6); overflow-y: auto; flex: 1; }
 
-/* ============================================================
-   Sheet header + segmented control
-   ============================================================ */
-.sheet-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: var(--x4);
-}
+.sheet-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--x4); }
 .sheet-close {
-  width: 32px; height: 32px;
-  display: flex; align-items: center; justify-content: center;
-  color: var(--color-text-secondary);
-  border-radius: var(--radius-full);
+  width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+  color: var(--color-text-secondary); border-radius: var(--radius-full);
 }
 .sheet-close:hover { background: var(--color-bg-secondary); }
 
 .segmented {
-  display: flex;
-  background: var(--color-bg-secondary);
-  padding: 4px;
-  border-radius: var(--radius-x2);
-  margin-bottom: var(--x4);
+  display: flex; background: var(--color-bg-secondary);
+  padding: 4px; border-radius: var(--radius-x2); margin-bottom: var(--x4);
 }
 .segmented button {
-  flex: 1;
-  padding: var(--x2) var(--x4);
-  border-radius: 6px;
-  font-size: var(--type-body-sm);
-  font-weight: 600;
-  color: var(--color-text-secondary);
-  transition: all 0.2s ease;
+  flex: 1; padding: var(--x2) var(--x4); border-radius: 6px;
+  font-size: var(--type-body-sm); font-weight: 600;
+  color: var(--color-text-secondary); transition: all 0.2s ease;
 }
 .segmented button.active {
-  background: var(--color-surface);
-  color: var(--color-text-primary);
-  box-shadow: var(--elevation-1);
+  background: var(--color-surface); color: var(--color-text-primary); box-shadow: var(--elevation-1);
 }
 .segmented.buy button.active.buy-active { color: var(--color-brand-primary); }
 .segmented.buy button.active.sell-active { color: var(--color-negative); }
 
-/* ============================================================
-   Form inputs
-   ============================================================ */
+/* Form inputs */
 .form-group { margin-bottom: var(--x4); }
-.form-label-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: var(--x2);
-}
-.form-label {
-  font-size: var(--type-caption);
-  font-weight: 500;
-  color: var(--color-text-secondary);
-}
+.form-label-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--x2); }
+.form-label { font-size: var(--type-caption); font-weight: 500; color: var(--color-text-secondary); }
 .form-hint { font-size: var(--type-caption); color: var(--color-text-muted); }
 .form-hint strong { color: var(--color-text-primary); font-weight: 500; }
 
-.input-wrapper {
-  position: relative;
-}
+.input-wrapper { position: relative; }
 .input-prefix {
-  position: absolute;
-  left: var(--x4);
-  top: 50%;
-  transform: translateY(-50%);
-  font-weight: 500;
-  color: var(--color-text-secondary);
+  position: absolute; left: var(--x4); top: 50%; transform: translateY(-50%);
+  font-weight: 500; color: var(--color-text-secondary);
 }
 .input {
-  width: 100%;
-  padding: var(--x3) var(--x4) var(--x3) var(--x8);
-  background: var(--color-bg-secondary);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-x2);
-  font-size: var(--type-h4);
-  font-weight: 600;
-  color: var(--color-text-primary);
-  transition: border-color 0.15s;
+  width: 100%; padding: var(--x3) var(--x4) var(--x3) var(--x8);
+  background: var(--color-bg-secondary); border: 1px solid var(--color-border);
+  border-radius: var(--radius-x2); font-size: var(--type-h4); font-weight: 600;
+  color: var(--color-text-primary); transition: border-color 0.15s;
 }
 .input:focus { border-color: var(--color-accent-blue); }
-.input-sm {
-  padding: 10px var(--x3) 10px var(--x7);
-  font-size: var(--type-body-sm);
-}
-.input-sm .input-prefix { font-size: var(--type-body-sm); left: var(--x3); }
+.input-sm { padding: 10px var(--x3) 10px var(--x7); font-size: var(--type-body-sm); }
 
-/* Quick amount chips (Filter Chip pattern) */
-.quick-chips {
-  display: flex;
-  gap: var(--x2);
-  margin-top: var(--x2);
-  flex-wrap: wrap;
-}
+.quick-chips { display: flex; gap: var(--x2); margin-top: var(--x2); flex-wrap: wrap; }
 .filter-chip {
-  padding: 6px var(--x3);
-  font-size: var(--type-caption);
-  font-weight: 500;
-  background: transparent;
-  color: var(--color-text-secondary);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-full);
+  padding: 6px var(--x3); font-size: var(--type-caption); font-weight: 500;
+  background: transparent; color: var(--color-text-secondary);
+  border: 1px solid var(--color-border); border-radius: var(--radius-full);
   transition: all 0.15s ease;
 }
 .filter-chip:hover { background: var(--color-bg-secondary); }
 .filter-chip.selected {
-  background: var(--color-brand-primary-bg);
-  color: var(--color-brand-primary);
+  background: var(--color-brand-primary-bg); color: var(--color-brand-primary);
   border-color: transparent;
 }
 
-/* Leverage pill row */
-.lev-row {
+/* Fixed leverage display */
+.leverage-fixed {
   display: flex;
-  gap: var(--x2);
-}
-.lev-pill {
-  flex: 1;
-  padding: var(--x2) 0;
-  background: transparent;
-  border: 1px solid var(--color-border);
+  align-items: center;
+  gap: var(--x3);
+  padding: var(--x3) var(--x4);
+  background: var(--color-accent-purple-bg);
+  border: 1.5px solid var(--color-accent-purple);
   border-radius: var(--radius-x2);
-  text-align: center;
+}
+.leverage-fixed-value {
+  font-size: var(--type-h3);
+  font-weight: 700;
+  color: var(--color-accent-purple);
+}
+.leverage-fixed-label {
+  font-size: var(--type-body-sm);
   color: var(--color-text-secondary);
-  transition: all 0.15s ease;
 }
-.lev-pill .lev-num { font-size: var(--type-body-sm); font-weight: 600; }
-.lev-pill .lev-tag { font-size: 10px; margin-top: 2px; opacity: 0.75; }
-.lev-pill:hover { background: var(--color-bg-secondary); }
-.lev-pill.active {
-  background: var(--color-brand-primary);
-  color: #FFFFFF;
-  border-color: var(--color-brand-primary);
-}
-
-/* Instrument type badge */
-.inst-type-row {
-  margin-top: var(--x3);
-  display: flex;
-  align-items: center;
-  gap: var(--x2);
-  flex-wrap: wrap;
-}
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--x1);
-  padding: 3px var(--x2);
-  border-radius: var(--radius-full);
-  font-size: 10px;
+.leverage-fixed-label strong {
+  color: var(--color-text-primary);
   font-weight: 600;
 }
-.badge-dot {
-  width: 6px; height: 6px; border-radius: var(--radius-full);
+
+/* Badges */
+.badge {
+  display: inline-flex; align-items: center; gap: var(--x1);
+  padding: 3px var(--x2); border-radius: var(--radius-full);
+  font-size: 10px; font-weight: 600;
 }
+.badge-dot { width: 6px; height: 6px; border-radius: var(--radius-full); }
 .badge-positive { background: var(--color-brand-primary-bg); color: var(--color-brand-primary); }
 .badge-positive .badge-dot { background: var(--color-brand-primary); }
 .badge-blue { background: var(--color-accent-blue-bg); color: var(--color-accent-blue); }
-.badge-blue .badge-dot { background: var(--color-accent-blue); }
 .badge-purple { background: var(--color-accent-purple-bg); color: var(--color-accent-purple); }
 .badge-purple .badge-dot { background: var(--color-accent-purple); }
 .badge-negative { background: var(--color-negative-bg); color: var(--color-negative); }
-.badge-negative .badge-dot { background: var(--color-negative); }
 
-/* Toggle switch */
+/* Toggle */
 .toggle {
-  width: 36px; height: 20px;
-  border-radius: var(--radius-full);
-  background: var(--color-border);
-  position: relative;
-  cursor: pointer;
-  transition: background 0.2s ease;
-  flex-shrink: 0;
+  width: 36px; height: 20px; border-radius: var(--radius-full);
+  background: var(--color-border); position: relative;
+  cursor: pointer; transition: background 0.2s ease; flex-shrink: 0;
 }
 .toggle::after {
-  content: '';
-  position: absolute;
-  top: 2px; left: 2px;
-  width: 16px; height: 16px;
-  border-radius: var(--radius-full);
-  background: #FFFFFF;
-  box-shadow: var(--elevation-1);
-  transition: transform 0.2s ease;
+  content: ''; position: absolute; top: 2px; left: 2px;
+  width: 16px; height: 16px; border-radius: var(--radius-full);
+  background: #FFFFFF; box-shadow: var(--elevation-1); transition: transform 0.2s ease;
 }
 .toggle.on { background: var(--color-brand-primary); }
 .toggle.on::after { transform: translateX(16px); }
 
 /* SL/TP grid */
-.sltp-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--x3);
-}
-.sltp-label {
-  font-size: 10px;
-  font-weight: 600;
-  margin-bottom: var(--x1);
-}
+.sltp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--x3); }
+.sltp-label { font-size: 10px; font-weight: 600; margin-bottom: var(--x1); }
 .sltp-label.sl { color: var(--color-negative); }
 .sltp-label.tp { color: var(--color-brand-primary); }
 
-/* Summary rows */
+/* Summary */
 .summary { margin: var(--x4) 0; }
 .summary-divider { height: 1px; background: var(--color-border); margin-bottom: var(--x4); }
 .summary-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 6px 0;
-  font-size: var(--type-body-sm);
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 6px 0; font-size: var(--type-body-sm);
 }
 .summary-row .label { color: var(--color-text-secondary); display: flex; align-items: center; gap: var(--x1); }
 .summary-row .value { color: var(--color-text-primary); font-weight: 500; }
 
 /* Info icon + tooltip */
-.info-icon {
-  width: 14px; height: 14px;
-  color: var(--color-text-muted);
-  cursor: help;
-}
+.info-icon { width: 14px; height: 14px; color: var(--color-text-muted); cursor: help; }
 .tooltip-wrap { position: relative; cursor: help; }
 .tooltip-wrap:hover .tooltip { display: block; }
 .tooltip {
-  display: none;
-  position: absolute;
-  bottom: calc(100% + 6px);
-  left: 0;
-  background: var(--color-surface-elevated);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-x2);
-  padding: var(--x3);
-  font-size: var(--type-caption);
-  width: 224px;
-  z-index: 60;
-  box-shadow: var(--elevation-3);
-  color: var(--color-text-primary);
+  display: none; position: absolute; bottom: calc(100% + 6px); left: 0;
+  background: var(--color-surface-elevated); border: 1px solid var(--color-border);
+  border-radius: var(--radius-x2); padding: var(--x3); font-size: var(--type-caption);
+  width: 224px; z-index: 60; box-shadow: var(--elevation-3); color: var(--color-text-primary);
 }
 .tooltip strong { font-weight: 600; display: block; margin-bottom: 2px; }
 .tooltip .row { color: var(--color-text-secondary); margin-top: 2px; }
 
-/* Risk disclaimer */
+/* Disclaimer */
 .disclaimer {
-  font-size: 10px;
-  color: var(--color-text-muted);
-  text-align: center;
-  margin-top: var(--x3);
-  line-height: 1.5;
+  font-size: 10px; color: var(--color-text-muted); text-align: center;
+  margin-top: var(--x3); line-height: 1.5;
 }
 .disclaimer a { color: var(--color-accent-blue); text-decoration: none; }
 .disclaimer a:hover { text-decoration: underline; }
 
 /* ============================================================
-   Portfolio Section (desktop-style, no longer phone-width)
+   Portfolio Section
    ============================================================ */
 .position-section {
-  max-width: 960px;
-  margin: var(--x8) auto 0;
+  max-width: 960px; margin: var(--x8) auto 0;
   padding: 0 var(--x6) var(--x8);
 }
-@media (max-width: 560px) {
-  .position-section { padding: 0 var(--x4) var(--x6); }
-}
+@media (max-width: 560px) { .position-section { padding: 0 var(--x4) var(--x6); } }
 
 .portfolio-header {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: var(--x4);
-  margin-bottom: var(--x5);
-  flex-wrap: wrap;
+  display: flex; align-items: flex-end; justify-content: space-between;
+  gap: var(--x4); margin-bottom: var(--x5); flex-wrap: wrap;
 }
-.portfolio-title {
-  font-size: 24px;
-  font-weight: 700;
-  letter-spacing: -0.3px;
-  color: var(--color-text-primary);
-}
-.portfolio-subtitle {
-  font-size: 13px;
-  color: var(--color-text-secondary);
-  margin-top: 2px;
-}
-.portfolio-summary {
-  display: flex;
-  gap: var(--x5);
-  align-items: flex-end;
-}
+.portfolio-title { font-size: 24px; font-weight: 700; letter-spacing: -0.3px; color: var(--color-text-primary); }
+.portfolio-subtitle { font-size: 13px; color: var(--color-text-secondary); margin-top: 2px; }
+.portfolio-summary { display: flex; gap: var(--x5); align-items: flex-end; }
 .portfolio-stat .k {
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--color-text-muted);
-  font-weight: 600;
+  font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--color-text-muted); font-weight: 600;
 }
-.portfolio-stat .v {
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--color-text-primary);
-  margin-top: 2px;
-}
+.portfolio-stat .v { font-size: 16px; font-weight: 700; color: var(--color-text-primary); margin-top: 2px; }
 .portfolio-stat .v.positive { color: var(--color-brand-primary); }
 
-.section-eyebrow {
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  color: var(--color-text-muted);
-  font-weight: 600;
-  margin-bottom: var(--x3);
-}
-
 .position-card {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-x2);
-  overflow: hidden;
-  box-shadow: var(--elevation-1);
+  background: var(--color-surface); border: 1px solid var(--color-border);
+  border-radius: var(--radius-x2); overflow: hidden; box-shadow: var(--elevation-1);
 }
-
 .position-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: var(--x5) var(--x5) var(--x4);
-  gap: var(--x4);
-  flex-wrap: wrap;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: var(--x5) var(--x5) var(--x4); gap: var(--x4); flex-wrap: wrap;
 }
 .position-id { display: flex; align-items: center; gap: var(--x3); }
 .position-id .avatar {
-  width: 40px; height: 40px;
-  border-radius: var(--radius-full);
-  background: #F7931A;
+  width: 40px; height: 40px; border-radius: var(--radius-full);
   display: flex; align-items: center; justify-content: center;
   color: #FFFFFF; font-weight: 700; font-size: var(--type-body);
 }
-.position-name-row {
-  display: flex; align-items: center; gap: var(--x2); flex-wrap: wrap;
-}
+.position-name-row { display: flex; align-items: center; gap: var(--x2); flex-wrap: wrap; }
 .position-name { font-weight: 600; color: var(--color-text-primary); }
 .position-meta { font-size: var(--type-caption); color: var(--color-text-secondary); margin-top: 2px; }
 
-.position-pnl {
-  text-align: right;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-}
-.pnl-main {
-  display: flex; align-items: baseline; gap: var(--x2);
-}
+.position-pnl { text-align: right; display: flex; flex-direction: column; align-items: flex-end; }
+.pnl-main { display: flex; align-items: baseline; gap: var(--x2); }
 .pnl-value { font-size: 28px; font-weight: 700; letter-spacing: -0.3px; line-height: 1.1; }
 .pnl-pct { font-size: var(--type-body-sm); font-weight: 600; }
 .pnl-caption { font-size: 11px; color: var(--color-text-muted); margin-top: 2px; }
 
 .position-details {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: var(--x4) var(--x5);
-  padding: var(--x4) var(--x5);
+  display: grid; grid-template-columns: repeat(5, 1fr);
+  gap: var(--x4) var(--x5); padding: var(--x4) var(--x5);
   border-top: 1px solid var(--color-border);
   border-bottom: 1px solid var(--color-border);
 }
-@media (max-width: 720px) {
-  .position-details { grid-template-columns: repeat(2, 1fr); }
-}
+@media (max-width: 720px) { .position-details { grid-template-columns: repeat(2, 1fr); } }
 .detail-label {
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--color-text-muted);
-  font-weight: 500;
+  font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--color-text-muted); font-weight: 500;
 }
 .detail-value {
-  font-size: var(--type-body-sm);
-  font-weight: 500;
-  color: var(--color-text-primary);
-  margin-top: 2px;
-  display: flex; align-items: center; gap: var(--x1);
+  font-size: var(--type-body-sm); font-weight: 500; color: var(--color-text-primary);
+  margin-top: 2px; display: flex; align-items: center; gap: var(--x1);
 }
 .detail-sub { font-size: 10px; color: var(--color-text-muted); }
 
-.sltp-pair {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--x3);
-  padding: var(--x4) var(--x5);
-}
-.sltp-slot {
-  flex: 1;
-  padding: var(--x3);
-  border-radius: var(--radius-x2);
-}
+.sltp-pair { display: grid; grid-template-columns: 1fr 1fr; gap: var(--x3); padding: var(--x4) var(--x5); }
+.sltp-slot { flex: 1; padding: var(--x3); border-radius: var(--radius-x2); }
 .sltp-slot.sl { background: var(--color-negative-bg); }
 .sltp-slot.tp { background: var(--color-brand-primary-bg); }
 .sltp-slot-label { font-size: 10px; font-weight: 600; }
 .sltp-slot.sl .sltp-slot-label { color: var(--color-negative); }
 .sltp-slot.tp .sltp-slot-label { color: var(--color-brand-primary); }
-.sltp-slot-value {
-  font-size: var(--type-body-sm);
-  font-weight: 600;
-  color: var(--color-text-primary);
-  margin-top: var(--x1);
-}
+.sltp-slot-value { font-size: var(--type-body-sm); font-weight: 600; color: var(--color-text-primary); margin-top: var(--x1); }
 .sltp-slot-sub { font-size: 10px; color: var(--color-text-muted); margin-top: 2px; }
 
-.position-actions {
-  display: flex;
-  gap: var(--x3);
-  padding: 0 var(--x5) var(--x5);
-  justify-content: flex-end;
-}
+.position-actions { display: flex; gap: var(--x3); padding: 0 var(--x5) var(--x5); justify-content: flex-end; }
 .position-actions .btn { flex: 0 0 auto; min-width: 180px; }
 @media (max-width: 560px) {
   .position-actions { flex-direction: column; }
@@ -1122,39 +778,38 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
 }
 
 .breakdown-card {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-x2);
-  padding: var(--x4);
-  margin-top: var(--x3);
+  background: var(--color-surface); border: 1px solid var(--color-border);
+  border-radius: var(--radius-x2); padding: var(--x4); margin-top: var(--x3);
 }
+.breakdown-header { display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+.breakdown-header-left { display: flex; align-items: center; gap: var(--x2); color: var(--color-text-secondary); font-size: var(--type-caption); font-weight: 500; }
+.breakdown-header-left svg { width: 16px; height: 16px; }
+.chevron { width: 16px; height: 16px; color: var(--color-text-secondary); transition: transform 0.2s ease; }
+.chevron.open { transform: rotate(180deg); }
+.breakdown-body { display: none; margin-top: var(--x3); }
+.breakdown-body.open { display: block; }
+.breakdown-row { display: flex; justify-content: space-between; font-size: var(--type-caption); padding: var(--x1) 0; }
+.breakdown-row .b-label { color: var(--color-text-secondary); }
+.breakdown-row .b-value { color: var(--color-text-secondary); }
+.breakdown-row.total { border-top: 1px solid var(--color-border); margin-top: var(--x2); padding-top: var(--x2); font-weight: 600; }
+.breakdown-row.total .b-label, .breakdown-row.total .b-value { color: var(--color-text-primary); }
 
 /* ============================================================
-   Portfolio modals (Edit SL/TP, Close confirm)
+   Portfolio modals
    ============================================================ */
 .pf-modal-overlay {
-  position: fixed; inset: 0;
-  background: rgba(10, 12, 16, 0.55);
-  z-index: 60;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: var(--x4);
-  animation: pfFade 0.15s ease-out;
+  position: fixed; inset: 0; background: rgba(10, 12, 16, 0.55); z-index: 60;
+  display: none; align-items: center; justify-content: center;
+  padding: var(--x4); animation: pfFade 0.15s ease-out;
 }
 .pf-modal-overlay.open { display: flex; }
 @keyframes pfFade { from { opacity: 0 } to { opacity: 1 } }
 
 .pf-modal {
-  position: relative;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-x2);
-  box-shadow: var(--elevation-3);
-  width: 100%;
-  max-width: 440px;
-  animation: pfPop 0.2s cubic-bezier(0.32, 0.72, 0, 1);
-  overflow: hidden;
+  position: relative; background: var(--color-surface);
+  border: 1px solid var(--color-border); border-radius: var(--radius-x2);
+  box-shadow: var(--elevation-3); width: 100%; max-width: 440px;
+  animation: pfPop 0.2s cubic-bezier(0.32, 0.72, 0, 1); overflow: hidden;
 }
 .pf-modal.sltp { max-width: 520px; }
 @keyframes pfPop {
@@ -1164,30 +819,14 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
 
 .pf-modal-header {
   padding: var(--x5) var(--x5) var(--x3);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--x3);
+  display: flex; align-items: center; justify-content: space-between; gap: var(--x3);
 }
-.pf-modal-title {
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--color-text-primary);
-  letter-spacing: -0.2px;
-}
-.pf-modal-sub {
-  font-size: 13px;
-  color: var(--color-text-secondary);
-  margin-top: 2px;
-}
+.pf-modal-title { font-size: 18px; font-weight: 700; color: var(--color-text-primary); letter-spacing: -0.2px; }
+.pf-modal-sub { font-size: 13px; color: var(--color-text-secondary); margin-top: 2px; }
 .pf-modal-close {
-  width: 32px; height: 32px;
-  display: flex; align-items: center; justify-content: center;
-  border: none;
-  background: transparent;
-  border-radius: var(--radius-full);
-  color: var(--color-text-secondary);
-  cursor: pointer;
+  width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+  border: none; background: transparent; border-radius: var(--radius-full);
+  color: var(--color-text-secondary); cursor: pointer;
 }
 .pf-modal-close:hover { background: var(--color-bg-secondary); color: var(--color-text-primary); }
 
@@ -1195,111 +834,59 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
 
 .pf-field { margin-top: var(--x4); }
 .pf-field-label {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  font-size: 12px;
-  color: var(--color-text-secondary);
-  font-weight: 500;
-  margin-bottom: var(--x2);
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-size: 12px; color: var(--color-text-secondary); font-weight: 500; margin-bottom: var(--x2);
 }
 .pf-field-hint { font-size: 11px; color: var(--color-text-muted); font-weight: 400; }
 .pf-input-wrap {
-  display: flex;
-  align-items: center;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-x1);
-  padding: 0 var(--x3);
-  background: var(--color-bg);
+  display: flex; align-items: center; border: 1px solid var(--color-border);
+  border-radius: var(--radius-x1); padding: 0 var(--x3); background: var(--color-bg);
   transition: border-color 0.15s;
 }
 .pf-input-wrap:focus-within { border-color: var(--color-brand-primary); }
 .pf-input-wrap .prefix { color: var(--color-text-muted); font-weight: 500; }
 .pf-input-wrap input {
-  flex: 1;
-  border: none;
-  outline: none;
-  background: transparent;
-  padding: var(--x3);
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--color-text-primary);
-  font-family: inherit;
+  flex: 1; border: none; outline: none; background: transparent;
+  padding: var(--x3); font-size: 16px; font-weight: 600;
+  color: var(--color-text-primary); font-family: inherit;
 }
 .pf-input-sub {
-  margin-top: var(--x2);
-  font-size: 12px;
-  color: var(--color-text-secondary);
-  display: flex;
-  justify-content: space-between;
+  margin-top: var(--x2); font-size: 12px; color: var(--color-text-secondary);
+  display: flex; justify-content: space-between;
 }
 .pf-input-sub .neg { color: var(--color-negative); font-weight: 600; }
 .pf-input-sub .pos { color: var(--color-brand-primary); font-weight: 600; }
 
 .pf-confirm-summary {
-  margin-top: var(--x4);
-  padding: var(--x4);
-  background: var(--color-bg-secondary);
-  border-radius: var(--radius-x1);
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--x4) var(--x5);
+  margin-top: var(--x4); padding: var(--x4);
+  background: var(--color-bg-secondary); border-radius: var(--radius-x1);
+  display: grid; grid-template-columns: 1fr 1fr; gap: var(--x4) var(--x5);
 }
 .pf-confirm-summary .k {
-  font-size: 11px;
-  color: var(--color-text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  font-weight: 600;
-  display: flex;
-  align-items: baseline;
-  gap: 6px;
+  font-size: 11px; color: var(--color-text-muted); text-transform: uppercase;
+  letter-spacing: 0.5px; font-weight: 600;
+  display: flex; align-items: baseline; gap: 6px;
 }
 .pf-confirm-summary .v { font-size: 15px; font-weight: 700; color: var(--color-text-primary); margin-top: 2px; }
-.pf-confirm-summary .pf-hint {
-  font-size: 10px;
-  color: var(--color-text-muted);
-  text-transform: none;
-  letter-spacing: 0;
-  font-weight: 500;
-}
+.pf-confirm-summary .pf-hint { font-size: 10px; color: var(--color-text-muted); text-transform: none; letter-spacing: 0; font-weight: 500; }
 
-/* Perp position identity strip inside close modal */
 .pf-pos-strip {
-  margin-top: var(--x4);
-  padding: var(--x4);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-x1);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--x4);
+  margin-top: var(--x4); padding: var(--x4);
+  border: 1px solid var(--color-border); border-radius: var(--radius-x1);
+  display: flex; align-items: center; justify-content: space-between; gap: var(--x4);
 }
 .pf-pos-left { display: flex; align-items: center; gap: var(--x3); }
 .pf-pos-icon {
-  width: 36px; height: 36px;
-  border-radius: var(--radius-full);
-  background: #F7931A;
-  color: #FFFFFF;
-  display: flex; align-items: center; justify-content: center;
-  font-weight: 700;
+  width: 36px; height: 36px; border-radius: var(--radius-full);
+  color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 700;
 }
 .pf-pos-title {
-  display: flex;
-  align-items: center;
-  gap: var(--x2);
-  font-weight: 700;
-  font-size: 15px;
-  color: var(--color-text-primary);
-  flex-wrap: wrap;
+  display: flex; align-items: center; gap: var(--x2);
+  font-weight: 700; font-size: 15px; color: var(--color-text-primary); flex-wrap: wrap;
 }
 .pf-pos-lev {
-  font-size: 12px;
-  color: var(--color-text-secondary);
-  font-weight: 600;
-  background: var(--color-bg-secondary);
-  padding: 2px 8px;
-  border-radius: var(--radius-full);
+  font-size: 12px; color: var(--color-text-secondary); font-weight: 600;
+  background: var(--color-bg-secondary); padding: 2px 8px; border-radius: var(--radius-full);
 }
 .pf-pos-sub { font-size: 12px; color: var(--color-text-secondary); margin-top: 2px; }
 .pf-pos-sub strong { color: var(--color-text-primary); font-weight: 600; }
@@ -1307,127 +894,58 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
 .pf-pos-mark { font-size: 18px; font-weight: 700; color: var(--color-text-primary); letter-spacing: -0.2px; }
 .pf-pos-mark-sub { font-size: 11px; color: var(--color-text-muted); margin-top: 2px; }
 
-.badge-purple {
-  background: rgba(123, 66, 244, 0.12);
-  color: #7B42F4;
-  font-weight: 700;
-}
-[data-theme="dark"] .badge-purple { background: rgba(170, 134, 255, 0.18); color: #C3ACFF; }
-
-/* Net settlement row */
 .pf-net-row {
-  margin-top: var(--x3);
-  padding: var(--x4);
-  background: var(--color-brand-primary-bg);
-  border: 1px solid transparent;
-  border-radius: var(--radius-x1);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--x4);
+  margin-top: var(--x3); padding: var(--x4);
+  background: var(--color-brand-primary-bg); border: 1px solid transparent;
+  border-radius: var(--radius-x1); display: flex;
+  align-items: center; justify-content: space-between; gap: var(--x4);
 }
 .pf-net-label { font-size: 13px; font-weight: 600; color: var(--color-text-primary); }
 .pf-net-note { font-size: 11px; color: var(--color-text-secondary); margin-top: 2px; }
 .pf-net-value { font-size: 22px; font-weight: 800; letter-spacing: -0.3px; }
 
-/* Warning note */
 .pf-warn {
-  margin-top: var(--x3);
-  padding: var(--x3);
-  display: flex;
-  gap: var(--x2);
-  align-items: flex-start;
-  color: var(--color-text-secondary);
-  font-size: 11px;
-  line-height: 1.4;
+  margin-top: var(--x3); padding: var(--x3); display: flex; gap: var(--x2);
+  align-items: flex-start; color: var(--color-text-secondary); font-size: 11px; line-height: 1.4;
 }
 .pf-warn svg { flex-shrink: 0; margin-top: 1px; color: var(--color-text-muted); }
 
 .pf-modal-footer {
-  padding: var(--x4) var(--x5);
-  border-top: 1px solid var(--color-border);
-  display: flex;
-  gap: var(--x3);
-  justify-content: flex-end;
-  background: var(--color-bg-secondary);
+  padding: var(--x4) var(--x5); border-top: 1px solid var(--color-border);
+  display: flex; gap: var(--x3); justify-content: flex-end; background: var(--color-bg-secondary);
 }
 .pf-modal-footer .btn { flex: 0 0 auto; min-width: 120px; }
 @media (max-width: 480px) {
   .pf-modal-footer { flex-direction: column-reverse; }
   .pf-modal-footer .btn { width: 100%; }
 }
-.breakdown-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  cursor: pointer;
-}
-.breakdown-header-left { display: flex; align-items: center; gap: var(--x2); color: var(--color-text-secondary); font-size: var(--type-caption); font-weight: 500; }
-.breakdown-header-left svg { width: 16px; height: 16px; }
-.chevron { width: 16px; height: 16px; color: var(--color-text-secondary); transition: transform 0.2s ease; }
-.chevron.open { transform: rotate(180deg); }
-.breakdown-body { display: none; margin-top: var(--x3); }
-.breakdown-body.open { display: block; }
-.breakdown-row {
-  display: flex;
-  justify-content: space-between;
-  font-size: var(--type-caption);
-  padding: var(--x1) 0;
-}
-.breakdown-row .b-label { color: var(--color-text-secondary); }
-.breakdown-row .b-value { color: var(--color-text-secondary); }
-.breakdown-row.total {
-  border-top: 1px solid var(--color-border);
-  margin-top: var(--x2); padding-top: var(--x2);
-  font-weight: 600;
-}
-.breakdown-row.total .b-label,
-.breakdown-row.total .b-value { color: var(--color-text-primary); }
 
 /* ============================================================
-   Footer / Page caption
+   Footer
    ============================================================ */
 .page-footer {
-  max-width: 430px;
-  margin: 0 auto;
+  max-width: 430px; margin: 0 auto;
   padding: var(--x6) var(--x6) var(--x10);
-  border-top: 1px solid var(--color-border);
-  text-align: center;
+  border-top: 1px solid var(--color-border); text-align: center;
 }
 .page-footer .eyebrow {
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: var(--color-brand-primary);
-  font-weight: 700;
-  margin-bottom: var(--x2);
+  font-size: 10px; text-transform: uppercase; letter-spacing: 1px;
+  color: var(--color-brand-primary); font-weight: 700; margin-bottom: var(--x2);
 }
 .page-footer p { font-size: var(--type-caption); color: var(--color-text-secondary); line-height: 1.6; }
 .page-footer a {
-  display: inline-block;
-  margin-top: var(--x3);
-  font-size: var(--type-caption);
-  color: var(--color-accent-blue);
-  font-weight: 500;
-  text-decoration: none;
+  display: inline-block; margin-top: var(--x3); font-size: var(--type-caption);
+  color: var(--color-accent-blue); font-weight: 500; text-decoration: none;
 }
 .page-footer a:hover { text-decoration: underline; }
 
-/* ============================================================
-   Theme toggle (top-right floating)
-   ============================================================ */
+/* Theme toggle */
 .theme-toggle {
-  position: fixed;
-  top: var(--x4);
-  right: var(--x4);
-  z-index: 100;
-  width: 40px; height: 40px;
-  border-radius: var(--radius-full);
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
+  position: fixed; top: var(--x4); right: var(--x4); z-index: 100;
+  width: 40px; height: 40px; border-radius: var(--radius-full);
+  background: var(--color-surface); border: 1px solid var(--color-border);
   display: flex; align-items: center; justify-content: center;
-  box-shadow: var(--elevation-2);
-  color: var(--color-text-primary);
+  box-shadow: var(--elevation-2); color: var(--color-text-primary);
 }
 .theme-toggle svg { width: 20px; height: 20px; }
 .theme-toggle .icon-moon { display: block; }
@@ -1435,13 +953,12 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
 [data-theme="dark"] .theme-toggle .icon-moon { display: none; }
 [data-theme="dark"] .theme-toggle .icon-sun { display: block; }
 
-/* spacer above bottom fixed buttons */
 .bottom-spacer { height: var(--x20); }
 </style>
 </head>
 <body>
 
-<!-- ==================== Theme Toggle ==================== -->
+<!-- Theme Toggle -->
 <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
   <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
   <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
@@ -1460,43 +977,73 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
     </div>
   </div>
 
-  <!-- Top Bar (iOS — 24px horizontal padding) -->
-  <!-- Top Bar — iOS variant (24px horizontal padding, per DS spec) -->
+  <!-- Top Bar -->
   <div class="top-bar" data-platform="ios">
     <div class="top-bar-left">
-      <svg class="top-bar-icon" data-icon="arrow-left-Line" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      <svg class="top-bar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
       <div class="instrument-info">
-        <div class="instrument-avatar">₿</div>
+        <div class="instrument-avatar" id="top-avatar" style="background: #F7931A;">₿</div>
         <div>
-          <div class="instrument-title">Bitcoin</div>
-          <div class="instrument-subtitle">BTC/USD · <span style="color: var(--color-accent-purple);">Real</span> · <span style="color: var(--color-accent-blue);">CFD</span> · <span style="color: var(--color-accent-purple);">Perp</span></div>
+          <div class="instrument-title" id="top-title">BTCUSDC</div>
+          <div class="instrument-subtitle">Perpetual · ×10 · <span style="color: var(--color-accent-purple);">USDC-Margined</span></div>
         </div>
       </div>
     </div>
     <div class="top-bar-actions">
-      <svg data-icon="bell-ring-Line" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-      <svg data-icon="star-Line" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+    </div>
+  </div>
+
+  <!-- Instrument Picker (5 pairs) -->
+  <div class="instrument-picker">
+    <div class="instrument-picker-label">Perpetual Contracts</div>
+    <div class="instrument-chips">
+      <button class="instrument-chip active" onclick="selectInstrument(this, 'BTC')">
+        <span class="chip-icon" style="background: #F7931A;">₿</span>
+        BTCUSDC
+        <span class="chip-change positive">+2.34%</span>
+      </button>
+      <button class="instrument-chip" onclick="selectInstrument(this, 'ETH')">
+        <span class="chip-icon" style="background: #627EEA;">Ξ</span>
+        ETHUSDC
+        <span class="chip-change positive">+1.87%</span>
+      </button>
+      <button class="instrument-chip" onclick="selectInstrument(this, 'SOL')">
+        <span class="chip-icon" style="background: #9945FF;">S</span>
+        SOLUSDC
+        <span class="chip-change negative">-0.42%</span>
+      </button>
+      <button class="instrument-chip" onclick="selectInstrument(this, 'ADA')">
+        <span class="chip-icon" style="background: #0033AD;">A</span>
+        ADAUSDC
+        <span class="chip-change positive">+3.15%</span>
+      </button>
+      <button class="instrument-chip" onclick="selectInstrument(this, 'XRP')">
+        <span class="chip-icon" style="background: #23292F;">X</span>
+        XRPUSDC
+        <span class="chip-change positive">+0.68%</span>
+      </button>
     </div>
   </div>
 
   <!-- Price Header -->
   <div class="price-header">
     <div class="price-main">
-      <span class="price-value">$84,231.50</span>
-      <span class="price-change text-positive">+2.34%</span>
+      <span class="price-value" id="display-price">$84,231.50</span>
+      <span class="price-change text-positive" id="display-change">+2.34%</span>
       <span class="text-caption text-subtle">24h</span>
     </div>
     <div class="price-meta">
-      <span>H: <strong>$85,100.00</strong></span>
-      <span>L: <strong>$81,443.20</strong></span>
+      <span>H: <strong id="display-high">$85,100.00</strong></span>
+      <span>L: <strong id="display-low">$81,443.20</strong></span>
       <div class="tooltip-wrap price-meta-item">
-        <span>Holding cost: <strong>~$2.31/day</strong></span>
+        <span>Spread: <strong>0.25% (fixed)</strong></span>
         <svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
         <div class="tooltip">
-          <strong>Funding Rate</strong>
-          <div class="row">Current: <span class="text-positive">+0.0100%</span></div>
-          <div class="row">Next in: 5h 23m</div>
-          <div class="row" style="margin-top: 4px;">Based on a $1,000 position. Longs pay shorts when positive.</div>
+          <strong>Fixed Spread: 0.25%</strong>
+          <div class="row">Applies on entry and exit</div>
+          <div class="row" style="margin-top: 4px;">Volume discounts available — see tier table below</div>
         </div>
       </div>
     </div>
@@ -1525,7 +1072,7 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
       <path d="M0,170 Q20,160 40,150 T80,130 T120,140 T160,110 T200,100 T240,105 T280,80 T320,70 T360,60 T400,50 L400,220 L0,220 Z"
             fill="url(#chartGrad)"/>
     </svg>
-    <div class="chart-price-tag">84,231.50</div>
+    <div class="chart-price-tag" id="chart-tag">84,231.50</div>
   </div>
 
   <!-- Tabs -->
@@ -1535,7 +1082,7 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
     <button class="tab">Feed</button>
   </div>
 
-  <!-- Metric Cards with sparklines + delta pills -->
+  <!-- Metric Cards -->
   <div class="metric-grid">
     <div class="metric-card">
       <div class="metric-label">24h Volume</div>
@@ -1554,17 +1101,14 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
       <span class="metric-delta" style="background: var(--color-accent-blue-bg); color: var(--color-accent-blue);">▲ 3.8%</span>
     </div>
     <div class="metric-card">
-      <div class="metric-label">Funding</div>
-      <div class="metric-value positive">+0.010%</div>
-      <svg class="metric-spark" viewBox="0 0 100 24" preserveAspectRatio="none" fill="none">
-        <path d="M0 14 L10 10 L20 16 L30 8 L40 12 L50 6 L60 14 L70 4 L80 10 L90 8 L100 12" stroke="var(--color-brand-primary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <line x1="0" y1="12" x2="100" y2="12" stroke="var(--color-border)" stroke-width="0.5" stroke-dasharray="2 2"/>
-      </svg>
-      <span class="metric-delta">Next 5h 23m</span>
+      <div class="metric-label">Spread</div>
+      <div class="metric-value">0.25%</div>
+      <div style="font-size: 10px; color: var(--color-text-muted); margin-top: 2px;">Fixed · Volume tiers available</div>
+      <span class="metric-delta" style="background: var(--color-accent-purple-bg); color: var(--color-accent-purple);">Fixed rate</span>
     </div>
   </div>
 
-  <!-- Rich Overview stack — sentiment, funding countdown, recent trades -->
+  <!-- Overview panels -->
   <div class="overview-stack">
 
     <!-- Market Sentiment -->
@@ -1587,7 +1131,7 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
       </div>
     </div>
 
-    <!-- Funding Countdown -->
+    <!-- Funding Rate -->
     <div class="panel">
       <div class="panel-header">
         <span class="panel-title">Funding Rate</span>
@@ -1607,8 +1151,54 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
         </div>
         <div class="funding-body">
           <div class="funding-rate">+0.0100%</div>
-          <div class="funding-hint">Based on a $1,000 position, you'd pay <strong style="color: var(--color-text-primary); font-weight: 600;">$0.10</strong> at next funding.</div>
+          <div class="funding-hint">Based on a 1,000 USDC position, you'd pay <strong style="color: var(--color-text-primary); font-weight: 600;">0.10 USDC</strong> at next funding.</div>
         </div>
+      </div>
+    </div>
+
+    <!-- Volume Tier Pricing -->
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">Spread Tiers</span>
+        <span class="panel-meta">30-day rolling volume</span>
+      </div>
+      <div class="volume-tiers">
+        <table class="volume-tier-table">
+          <thead>
+            <tr>
+              <th>Tier</th>
+              <th>30d Volume</th>
+              <th>Spread</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="tier-active">
+              <td>Standard</td>
+              <td>&lt; $100K</td>
+              <td><strong>0.25%</strong></td>
+            </tr>
+            <tr>
+              <td>Silver</td>
+              <td>$100K – $500K</td>
+              <td>0.20%</td>
+            </tr>
+            <tr>
+              <td>Gold</td>
+              <td>$500K – $2M</td>
+              <td>0.15%</td>
+            </tr>
+            <tr>
+              <td>Platinum</td>
+              <td>$2M – $10M</td>
+              <td>0.10%</td>
+            </tr>
+            <tr>
+              <td>Diamond</td>
+              <td>&gt; $10M</td>
+              <td>0.05%</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
 
@@ -1616,13 +1206,13 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
     <div class="panel">
       <div class="panel-header">
         <span class="panel-title">Recent Trades</span>
-        <span class="panel-meta">Live · BTC/USD Perp</span>
+        <span class="panel-meta" id="trades-pair-label">Live · BTCUSDC Perp</span>
       </div>
       <div class="trades-feed">
         <div class="trade-row">
           <span class="trade-marker buy">B</span>
           <span class="trade-size">0.248 BTC</span>
-          <span class="trade-price positive" style="color: var(--color-brand-primary);">$84,238.10</span>
+          <span class="trade-price" style="color: var(--color-brand-primary);">$84,238.10</span>
           <span class="trade-time">20:14:58</span>
         </div>
         <div class="trade-row">
@@ -1655,20 +1245,20 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
 
   <div class="bottom-spacer"></div>
 
-  <!-- Buy / Sell Fixed Row (dark bg pattern) -->
+  <!-- Buy / Sell Fixed Row -->
   <div class="buy-sell-row">
     <button class="trade-btn sell" onclick="openTradeSheet('sell')">
       <span class="trade-indicator">S</span>
       <span class="trade-btn-label">
         <span>SELL</span>
-        <span class="trade-btn-price">$84,229.00</span>
+        <span class="trade-btn-price" id="sell-price">$84,125.71</span>
       </span>
     </button>
     <button class="trade-btn buy" onclick="openTradeSheet('buy')">
       <span class="trade-indicator">B</span>
       <span class="trade-btn-label">
         <span>BUY</span>
-        <span class="trade-btn-price">$84,234.00</span>
+        <span class="trade-btn-price" id="buy-price">$84,337.29</span>
       </span>
     </button>
   </div>
@@ -1684,10 +1274,10 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
       <!-- Header -->
       <div class="sheet-header">
         <div class="instrument-info">
-          <div class="instrument-avatar" style="width: 28px; height: 28px; font-size: 11px;">₿</div>
+          <div class="instrument-avatar" id="sheet-avatar" style="width: 28px; height: 28px; font-size: 11px; background: #F7931A;">₿</div>
           <div>
-            <span class="text-body-sm" style="font-weight: 600;">BTC/USD</span>
-            <span class="text-caption text-muted" style="margin-left: 4px;">Perp</span>
+            <span class="text-body-sm" style="font-weight: 600;" id="sheet-pair">BTCUSDC</span>
+            <span class="text-caption text-muted" style="margin-left: 4px;">Perp · ×10</span>
           </div>
         </div>
         <button class="sheet-close" onclick="closeTradeSheet()" aria-label="Close">
@@ -1704,47 +1294,48 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
       <!-- Amount -->
       <div class="form-group">
         <div class="form-label-row">
-          <label class="form-label">Amount (USD)</label>
-          <span class="form-hint">Available: <strong>$12,450.00</strong></span>
+          <label class="form-label">Amount (USDC)</label>
+          <span class="form-hint">Available: <strong>12,450.00 USDC</strong></span>
         </div>
         <div class="input-wrapper">
-          <span class="input-prefix">$</span>
-          <input type="text" class="input" id="amount-input" value="1,000" oninput="onAmountInput()">
+          <span class="input-prefix" style="font-size: 12px; color: var(--color-accent-purple); font-weight: 600;">USDC</span>
+          <input type="text" class="input" id="amount-input" value="1,000" style="padding-left: 52px;" oninput="onAmountInput()">
         </div>
         <div class="quick-chips">
-          <button class="filter-chip" onclick="selectAmount(this, 100)">$100</button>
-          <button class="filter-chip" onclick="selectAmount(this, 500)">$500</button>
-          <button class="filter-chip selected" onclick="selectAmount(this, 1000)">$1,000</button>
-          <button class="filter-chip" onclick="selectAmount(this, 5000)">$5,000</button>
+          <button class="filter-chip" onclick="selectAmount(this, 100)">100</button>
+          <button class="filter-chip" onclick="selectAmount(this, 500)">500</button>
+          <button class="filter-chip selected" onclick="selectAmount(this, 1000)">1,000</button>
+          <button class="filter-chip" onclick="selectAmount(this, 5000)">5,000</button>
         </div>
       </div>
 
-      <!-- Leverage -->
+      <!-- Leverage (fixed ×10) -->
       <div class="form-group">
         <div class="form-label-row">
           <label class="form-label">Leverage</label>
-          <span class="form-hint" id="exposure-label">Exposure: <strong>$10,000</strong></span>
+          <span class="form-hint" id="exposure-label">Exposure: <strong>10,000 USDC</strong></span>
         </div>
-        <div class="lev-row">
-          <button class="lev-pill" onclick="setLeverage(this, 1)">
-            <div class="lev-num">×1</div><div class="lev-tag">Real</div>
-          </button>
-          <button class="lev-pill" onclick="setLeverage(this, 2)">
-            <div class="lev-num">×2</div><div class="lev-tag">CFD</div>
-          </button>
-          <button class="lev-pill" onclick="setLeverage(this, 5)">
-            <div class="lev-num">×5</div><div class="lev-tag">CFD</div>
-          </button>
-          <button class="lev-pill active" onclick="setLeverage(this, 10)">
-            <div class="lev-num">×10</div><div class="lev-tag">Perp</div>
-          </button>
+        <div class="leverage-fixed">
+          <span class="leverage-fixed-value">×10</span>
+          <div>
+            <div class="leverage-fixed-label"><strong>Perpetual Contract</strong></div>
+            <div class="leverage-fixed-label">Fixed leverage · Funding rate every 8h</div>
+          </div>
         </div>
-        <div class="inst-type-row">
-          <span class="badge badge-purple" id="inst-badge">
-            <span class="badge-dot"></span>
-            <span id="inst-label">Perpetual Contract</span>
-          </span>
-          <span class="text-caption text-subtle" id="inst-desc">Funding rate applies every 8h</span>
+      </div>
+
+      <!-- Spread info -->
+      <div class="form-group">
+        <div class="form-label-row">
+          <label class="form-label">Spread</label>
+          <span class="form-hint">Fixed rate</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: var(--x3); padding: var(--x3) var(--x4); background: var(--color-bg-secondary); border-radius: var(--radius-x2); border: 1px solid var(--color-border);">
+          <span style="font-size: var(--type-h3); font-weight: 700; color: var(--color-text-primary);">0.25%</span>
+          <div style="font-size: var(--type-caption); color: var(--color-text-secondary);">
+            <div>= <strong id="spread-usdc" style="color: var(--color-text-primary);">25.00 USDC</strong> on this trade</div>
+            <div style="margin-top: 2px;">Volume discounts from 0.20% to 0.05%</div>
+          </div>
         </div>
       </div>
 
@@ -1782,22 +1373,38 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
         <div class="summary-divider"></div>
         <div class="summary-row">
           <span class="label">Position size</span>
-          <span class="value" id="sum-size">$10,000.00</span>
+          <span class="value" id="sum-size">10,000.00 USDC</span>
         </div>
-        <div class="summary-row" id="holding-cost-row">
+        <div class="summary-row">
+          <span class="label">Margin (invested)</span>
+          <span class="value" id="sum-margin">1,000.00 USDC</span>
+        </div>
+        <div class="summary-row">
+          <span class="label tooltip-wrap">
+            Spread cost
+            <svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            <span class="tooltip">
+              <strong>Fixed 0.25% spread</strong>
+              <span class="row">Applied on position notional value at entry</span>
+              <span class="row" style="margin-top: 4px;">Volume tiers: Silver 0.20%, Gold 0.15%, Platinum 0.10%, Diamond 0.05%</span>
+            </span>
+          </span>
+          <span class="value" id="sum-spread">25.00 USDC (0.25%)</span>
+        </div>
+        <div class="summary-row">
           <span class="label tooltip-wrap">
             Holding cost
             <svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
             <span class="tooltip">
               <strong>Funding fee</strong>
-              <span class="row" id="holding-tooltip">Accrued every 8 hours based on market conditions. Current rate: +0.010%</span>
+              <span class="row">Accrued every 8 hours based on market conditions. Current rate: +0.010%</span>
             </span>
           </span>
-          <span class="value" id="sum-holding">~$2.31/day (funding)</span>
+          <span class="value" id="sum-holding">~2.31 USDC/day (funding)</span>
         </div>
-        <div class="summary-row" id="spread-row">
-          <span class="label">Spread</span>
-          <span class="value" id="sum-spread">$12.50 (0.015%)</span>
+        <div class="summary-row">
+          <span class="label">Settlement currency</span>
+          <span class="value" style="color: var(--color-accent-purple); font-weight: 600;">USDC</span>
         </div>
       </div>
 
@@ -1808,31 +1415,32 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
 
       <p class="disclaimer">
         Perpetual contracts involve significant risk. You may lose more than your invested amount.
+        Margin, P&amp;L, and all fees are denominated in USDC.
         <a href="#">Learn more</a>
       </p>
     </div>
   </div>
 </div>
 
-<!-- ==================== SCREEN 3: PORTFOLIO / OPEN POSITIONS ==================== -->
+<!-- ==================== SCREEN 3: PORTFOLIO ==================== -->
 <div class="position-section">
   <div class="portfolio-header">
     <div>
       <div class="portfolio-title">Portfolio</div>
-      <div class="portfolio-subtitle">1 open position · Perpetuals</div>
+      <div class="portfolio-subtitle">1 open position · Perpetuals · USDC-settled</div>
     </div>
     <div class="portfolio-summary">
       <div class="portfolio-stat">
-        <div class="k">Invested</div>
-        <div class="v" id="pf-invested">$1,000.00</div>
+        <div class="k">Margin</div>
+        <div class="v">1,000.00 USDC</div>
       </div>
       <div class="portfolio-stat">
         <div class="k">Exposure</div>
-        <div class="v" id="pf-exposure">$10,000.00</div>
+        <div class="v">10,000.00 USDC</div>
       </div>
       <div class="portfolio-stat">
         <div class="k">Unrealized P&L</div>
-        <div class="v positive" id="pf-pnl">+$234.50</div>
+        <div class="v positive">+234.50 USDC</div>
       </div>
     </div>
   </div>
@@ -1840,20 +1448,21 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
   <div class="position-card">
     <div class="position-header">
       <div class="position-id">
-        <div class="avatar">₿</div>
+        <div class="avatar" style="background: #F7931A;">₿</div>
         <div>
           <div class="position-name-row">
-            <span class="position-name">BTC/USD</span>
+            <span class="position-name">BTCUSDC</span>
             <span class="badge badge-positive">LONG</span>
-            <span class="text-caption text-subtle">×<span id="pos-leverage">10</span></span>
+            <span class="badge badge-purple">PERP</span>
+            <span class="text-caption text-subtle">×10</span>
           </div>
           <div class="position-meta">Opened Apr 16, 2026 · 20:15</div>
         </div>
       </div>
       <div class="position-pnl">
         <div class="pnl-main">
-          <span class="pnl-value text-positive" id="pos-pnl-value">+$234.50</span>
-          <span class="pnl-pct text-positive" id="pos-pnl-pct">(+23.45%)</span>
+          <span class="pnl-value text-positive">+234.50 USDC</span>
+          <span class="pnl-pct text-positive">(+23.45%)</span>
         </div>
         <div class="pnl-caption">Current $84,466.00 · Mark</div>
       </div>
@@ -1861,12 +1470,12 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
 
     <div class="position-details">
       <div>
-        <div class="detail-label">Invested</div>
-        <div class="detail-value">$1,000.00</div>
+        <div class="detail-label">Margin</div>
+        <div class="detail-value">1,000.00 USDC</div>
       </div>
       <div>
         <div class="detail-label">Exposure</div>
-        <div class="detail-value">$10,000.00</div>
+        <div class="detail-value">10,000.00 USDC</div>
       </div>
       <div>
         <div class="detail-label">Open rate</div>
@@ -1879,7 +1488,7 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
       <div>
         <div class="detail-label">Holding cost</div>
         <div class="detail-value">
-          -$4.62 <span class="detail-sub">(2 days)</span>
+          -4.62 USDC <span class="detail-sub">(2 days)</span>
         </div>
       </div>
     </div>
@@ -1888,12 +1497,12 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
       <div class="sltp-slot sl">
         <div class="sltp-slot-label">Stop Loss</div>
         <div class="sltp-slot-value" id="sl-display">$82,000.00</div>
-        <div class="sltp-slot-sub" id="sl-sub">-$265.10</div>
+        <div class="sltp-slot-sub" id="sl-sub">-265.10 USDC</div>
       </div>
       <div class="sltp-slot tp">
         <div class="sltp-slot-label">Take Profit</div>
         <div class="sltp-slot-value" id="tp-display">$88,000.00</div>
-        <div class="sltp-slot-sub" id="tp-sub">+$447.30</div>
+        <div class="sltp-slot-sub" id="tp-sub">+447.30 USDC</div>
       </div>
     </div>
 
@@ -1913,13 +1522,13 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
       <svg class="chevron" id="bd-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
     </div>
     <div class="breakdown-body" id="bd-body">
-      <div class="breakdown-row"><span class="b-label">Apr 16, 04:00 UTC</span><span class="b-value">-$0.77</span></div>
-      <div class="breakdown-row"><span class="b-label">Apr 16, 12:00 UTC</span><span class="b-value">-$0.82</span></div>
-      <div class="breakdown-row"><span class="b-label">Apr 16, 20:00 UTC</span><span class="b-value">-$0.71</span></div>
-      <div class="breakdown-row"><span class="b-label">Apr 17, 04:00 UTC</span><span class="b-value">-$0.69</span></div>
-      <div class="breakdown-row"><span class="b-label">Apr 17, 12:00 UTC</span><span class="b-value">-$0.81</span></div>
-      <div class="breakdown-row"><span class="b-label">Apr 17, 20:00 UTC</span><span class="b-value">-$0.82</span></div>
-      <div class="breakdown-row total"><span class="b-label">Total</span><span class="b-value">-$4.62</span></div>
+      <div class="breakdown-row"><span class="b-label">Apr 16, 04:00 UTC</span><span class="b-value">-0.77 USDC</span></div>
+      <div class="breakdown-row"><span class="b-label">Apr 16, 12:00 UTC</span><span class="b-value">-0.82 USDC</span></div>
+      <div class="breakdown-row"><span class="b-label">Apr 16, 20:00 UTC</span><span class="b-value">-0.71 USDC</span></div>
+      <div class="breakdown-row"><span class="b-label">Apr 17, 04:00 UTC</span><span class="b-value">-0.69 USDC</span></div>
+      <div class="breakdown-row"><span class="b-label">Apr 17, 12:00 UTC</span><span class="b-value">-0.81 USDC</span></div>
+      <div class="breakdown-row"><span class="b-label">Apr 17, 20:00 UTC</span><span class="b-value">-0.82 USDC</span></div>
+      <div class="breakdown-row total"><span class="b-label">Total</span><span class="b-value">-4.62 USDC</span></div>
     </div>
   </div>
 </div>
@@ -1930,7 +1539,7 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
     <div class="pf-modal-header">
       <div>
         <div class="pf-modal-title" id="sltp-modal-title">Edit Stop Loss &amp; Take Profit</div>
-        <div class="pf-modal-sub">BTC/USD · LONG · ×10 · Open $84,231.50</div>
+        <div class="pf-modal-sub">BTCUSDC · LONG · ×10 · Open $84,231.50</div>
       </div>
       <button class="pf-modal-close" onclick="closeSLTPSheet()" aria-label="Close">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -1940,7 +1549,7 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
       <div class="pf-field">
         <div class="pf-field-label">
           <span>Stop Loss</span>
-          <span class="pf-field-hint">Max loss: -100% of invested</span>
+          <span class="pf-field-hint">Max loss: -100% of margin</span>
         </div>
         <div class="pf-input-wrap">
           <span class="prefix">$</span>
@@ -1948,7 +1557,7 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
         </div>
         <div class="pf-input-sub">
           <span>At this rate your P&amp;L will be:</span>
-          <span class="neg" id="sl-preview">-$265.10</span>
+          <span class="neg" id="sl-preview">-265.10 USDC</span>
         </div>
       </div>
       <div class="pf-field">
@@ -1962,7 +1571,7 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
         </div>
         <div class="pf-input-sub">
           <span>At this rate your P&amp;L will be:</span>
-          <span class="pos" id="tp-preview">+$447.30</span>
+          <span class="pos" id="tp-preview">+447.30 USDC</span>
         </div>
       </div>
     </div>
@@ -1979,20 +1588,19 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
     <div class="pf-modal-header">
       <div>
         <div class="pf-modal-title" id="close-modal-title">Close perpetual position?</div>
-        <div class="pf-modal-sub">Settling at mark price. Net P&amp;L will be credited to your USD balance.</div>
+        <div class="pf-modal-sub">Settling at mark price. Net P&amp;L credited to your USDC balance.</div>
       </div>
       <button class="pf-modal-close" onclick="closeCloseConfirm()" aria-label="Close">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
     </div>
     <div class="pf-modal-body">
-      <!-- Position identity strip -->
       <div class="pf-pos-strip">
         <div class="pf-pos-left">
-          <div class="pf-pos-icon">₿</div>
+          <div class="pf-pos-icon" style="background: #F7931A;">₿</div>
           <div>
             <div class="pf-pos-title">
-              BTC/USD
+              BTCUSDC
               <span class="badge badge-positive">LONG</span>
               <span class="badge badge-purple">PERP</span>
               <span class="pf-pos-lev">×10</span>
@@ -2009,28 +1617,28 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
       <div class="pf-confirm-summary">
         <div>
           <div class="k">Notional value</div>
-          <div class="v">$10,019.86</div>
+          <div class="v">10,019.86 USDC</div>
         </div>
         <div>
           <div class="k">Price P&amp;L</div>
-          <div class="v text-positive">+$234.50</div>
+          <div class="v text-positive">+234.50 USDC</div>
         </div>
         <div>
           <div class="k">Funding paid <span class="pf-hint">(2 days)</span></div>
-          <div class="v text-negative">-$4.62</div>
+          <div class="v text-negative">-4.62 USDC</div>
         </div>
         <div>
-          <div class="k">Taker fee <span class="pf-hint">(0.05%)</span></div>
-          <div class="v text-negative">-$5.01</div>
+          <div class="k">Spread <span class="pf-hint">(0.25%)</span></div>
+          <div class="v text-negative">-25.05 USDC</div>
         </div>
       </div>
 
       <div class="pf-net-row">
         <div>
-          <div class="pf-net-label">Net credit to USD balance</div>
-          <div class="pf-net-note">Price P&amp;L − funding − taker fee</div>
+          <div class="pf-net-label">Net credit to USDC balance</div>
+          <div class="pf-net-note">Price P&amp;L − funding − spread</div>
         </div>
-        <div class="pf-net-value text-positive">+$224.87</div>
+        <div class="pf-net-value text-positive">+204.83 USDC</div>
       </div>
 
       <div class="pf-warn">
@@ -2045,13 +1653,14 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
   </div>
 </div>
 
-<!-- ==================== Toast ==================== -->
+<!-- Toast -->
 <div id="pf-toast" style="position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(20px); background:var(--color-text-primary); color:var(--color-bg); padding:12px 20px; border-radius:var(--radius-full); font-size:14px; font-weight:600; z-index:100; opacity:0; transition:all 0.25s; pointer-events:none; box-shadow:var(--elevation-3);"></div>
 
-<!-- ==================== Footer ==================== -->
+<!-- Footer -->
 <div class="page-footer">
   <div class="eyebrow">eToro Perps Mockup</div>
-  <p>3 views: Instrument Page → Order Entry (tap Buy/Sell) → Open Position</p>
+  <p>5 pairs: BTCUSDC · ETHUSDC · SOLUSDC · ADAUSDC · XRPUSDC</p>
+  <p style="margin-top: 4px;">×10 leverage · 0.25% fixed spread · USDC-margined · Funding every 8h</p>
   <p style="margin-top: 4px; color: var(--color-text-muted);">New DS v1.0.0 · Inter · 4px grid · CoreClaw · April 2026</p>
   <a href="/PERPS-COMPETITIVE-ANALYSIS.md">Full Competitive Analysis Report →</a>
   <div style="margin-top: 8px;">
@@ -2062,7 +1671,50 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
 </div>
 
 <script>
-/* ----------------------- Theme toggle ----------------------- */
+/* ============================================================
+   Instrument Data
+   ============================================================ */
+const instruments = {
+  BTC: { symbol: '₿', name: 'BTCUSDC', color: '#F7931A', price: 84231.50, change: '+2.34%', high: '$85,100.00', low: '$81,443.20' },
+  ETH: { symbol: 'Ξ', name: 'ETHUSDC', color: '#627EEA', price: 3241.80, change: '+1.87%', high: '$3,310.00', low: '$3,180.50' },
+  SOL: { symbol: 'S', name: 'SOLUSDC', color: '#9945FF', price: 148.62, change: '-0.42%', high: '$152.30', low: '$146.10' },
+  ADA: { symbol: 'A', name: 'ADAUSDC', color: '#0033AD', price: 0.6842, change: '+3.15%', high: '$0.7010', low: '$0.6580' },
+  XRP: { symbol: 'X', name: 'XRPUSDC', color: '#23292F', price: 2.1834, change: '+0.68%', high: '$2.2100', low: '$2.1520' }
+};
+
+let currentInstrument = 'BTC';
+
+function selectInstrument(el, ticker) {
+  document.querySelectorAll('.instrument-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  currentInstrument = ticker;
+  const inst = instruments[ticker];
+
+  document.getElementById('top-title').textContent = inst.name;
+  document.getElementById('top-avatar').style.background = inst.color;
+  document.getElementById('top-avatar').textContent = inst.symbol;
+  document.getElementById('display-price').textContent = '$' + inst.price.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+  document.getElementById('display-change').textContent = inst.change;
+  document.getElementById('display-change').className = 'price-change ' + (inst.change.startsWith('+') ? 'text-positive' : 'text-negative');
+  document.getElementById('display-high').textContent = inst.high;
+  document.getElementById('display-low').textContent = inst.low;
+  document.getElementById('chart-tag').textContent = inst.price.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+  document.getElementById('trades-pair-label').textContent = 'Live · ' + inst.name + ' Perp';
+
+  // Update buy/sell prices (±0.125% spread each side)
+  const halfSpread = inst.price * 0.00125;
+  document.getElementById('sell-price').textContent = '$' + (inst.price - halfSpread).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+  document.getElementById('buy-price').textContent = '$' + (inst.price + halfSpread).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+  // Update sheet pair name
+  document.getElementById('sheet-pair').textContent = inst.name;
+  document.getElementById('sheet-avatar').style.background = inst.color;
+  document.getElementById('sheet-avatar').textContent = inst.symbol;
+}
+
+/* ============================================================
+   Theme toggle
+   ============================================================ */
 function toggleTheme() {
   const cur = document.documentElement.getAttribute('data-theme');
   document.documentElement.setAttribute('data-theme', cur === 'dark' ? 'light' : 'dark');
@@ -2073,7 +1725,9 @@ function toggleTheme() {
   if (saved) document.documentElement.setAttribute('data-theme', saved);
 })();
 
-/* ----------------------- Trade sheet ----------------------- */
+/* ============================================================
+   Trade sheet
+   ============================================================ */
 function openTradeSheet(direction) {
   document.getElementById('trade-sheet').classList.add('open');
   setDirection(direction);
@@ -2084,7 +1738,6 @@ function closeTradeSheet() {
   document.body.style.overflow = '';
 }
 
-/* ----------------------- Direction ----------------------- */
 function setDirection(dir) {
   const buyBtn = document.getElementById('btn-buy');
   const sellBtn = document.getElementById('btn-sell');
@@ -2092,10 +1745,8 @@ function setDirection(dir) {
 
   buyBtn.classList.toggle('active', dir === 'buy');
   buyBtn.classList.toggle('buy-active', dir === 'buy');
-  buyBtn.classList.toggle('sell-active', false);
   sellBtn.classList.toggle('active', dir === 'sell');
   sellBtn.classList.toggle('sell-active', dir === 'sell');
-  sellBtn.classList.toggle('buy-active', false);
 
   if (dir === 'buy') {
     submit.className = 'btn btn-xl btn-primary btn-block';
@@ -2106,29 +1757,30 @@ function setDirection(dir) {
   }
 }
 
-/* ----------------------- Chip select ----------------------- */
-/* ----------------------- Shared trade-ticket state ----------------------- */
+/* ============================================================
+   Amount & Summary
+   ============================================================ */
 let tradeAmount = 1000;
-let tradeLeverage = 10;
+const LEVERAGE = 10;
+const SPREAD_PCT = 0.0025; // 0.25% fixed
 
 function parseAmount(str) {
   const n = parseFloat(String(str).replace(/[^0-9.]/g, ''));
   return isNaN(n) ? 0 : n;
 }
-function formatAmount(n) { return n.toLocaleString('en-US', { maximumFractionDigits: 0 }); }
+function fmtNum(n) { return n.toLocaleString('en-US', { maximumFractionDigits: 0 }); }
+function fmtUsdc(n) { return n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' USDC'; }
 
 function selectAmount(el, value) {
   el.parentElement.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('selected'));
   el.classList.add('selected');
   tradeAmount = value;
-  const input = document.getElementById('amount-input');
-  if (input) input.value = formatAmount(value);
+  document.getElementById('amount-input').value = fmtNum(value);
   recomputeSummary();
 }
 
 function onAmountInput() {
-  const input = document.getElementById('amount-input');
-  tradeAmount = parseAmount(input.value);
+  tradeAmount = parseAmount(document.getElementById('amount-input').value);
   document.querySelectorAll('.quick-chips .filter-chip').forEach(c => {
     const chipVal = parseAmount(c.textContent);
     c.classList.toggle('selected', chipVal === tradeAmount);
@@ -2136,56 +1788,23 @@ function onAmountInput() {
   recomputeSummary();
 }
 
-/* ----------------------- Leverage ----------------------- */
-function setLeverage(el, value) {
-  document.querySelectorAll('.lev-pill').forEach(p => p.classList.remove('active'));
-  el.classList.add('active');
-  tradeLeverage = value;
-  recomputeSummary();
-}
-
-/* ----------------------- Summary recomputation ----------------------- */
 function recomputeSummary() {
-  const exposure = tradeAmount * tradeLeverage;
+  const exposure = tradeAmount * LEVERAGE;
+  const spreadCost = exposure * SPREAD_PCT;
+  const dailyFunding = exposure * 0.000231;
 
   document.getElementById('exposure-label').innerHTML =
-    'Exposure: <strong>$' + formatAmount(exposure) + '</strong>';
-
-  const badge = document.getElementById('inst-badge');
-  const label = document.getElementById('inst-label');
-  const desc = document.getElementById('inst-desc');
-  const holdingRow = document.getElementById('holding-cost-row');
-  const spread = document.getElementById('sum-spread');
-  const holding = document.getElementById('sum-holding');
-
-  badge.className = 'badge';
-  if (tradeLeverage === 1) {
-    badge.classList.add('badge-positive');
-    label.textContent = 'Real Crypto';
-    desc.textContent = 'You own the underlying asset';
-    holdingRow.style.display = 'none';
-    spread.textContent = '$' + (exposure * 0.00084).toFixed(2) + ' (spread)';
-  } else if (tradeLeverage <= 5) {
-    badge.classList.add('badge-blue');
-    label.textContent = 'CFD';
-    desc.textContent = 'Overnight fee applies daily';
-    holdingRow.style.display = 'flex';
-    const dailyPct = tradeLeverage === 2 ? 0.00165 : 0.000824;
-    holding.textContent = '~$' + (exposure * dailyPct).toFixed(2) + '/day (overnight)';
-    spread.textContent = '$' + (exposure * 0.00093).toFixed(2) + ' (0.093%)';
-  } else {
-    badge.classList.add('badge-purple');
-    label.textContent = 'Perpetual Contract';
-    desc.textContent = 'Funding rate applies every 8h';
-    holdingRow.style.display = 'flex';
-    holding.textContent = '~$' + (exposure * 0.000231).toFixed(2) + '/day (funding)';
-    spread.textContent = '$' + (exposure * 0.000125).toFixed(2) + ' (0.015%)';
-  }
-
-  document.getElementById('sum-size').textContent = '$' + formatAmount(exposure) + '.00';
+    'Exposure: <strong>' + fmtNum(exposure) + ' USDC</strong>';
+  document.getElementById('sum-size').textContent = fmtUsdc(exposure);
+  document.getElementById('sum-margin').textContent = fmtUsdc(tradeAmount);
+  document.getElementById('sum-spread').textContent = fmtUsdc(spreadCost) + ' (0.25%)';
+  document.getElementById('sum-holding').textContent = '~' + fmtUsdc(dailyFunding) + '/day (funding)';
+  document.getElementById('spread-usdc').textContent = fmtUsdc(spreadCost);
 }
 
-/* ----------------------- SL/TP toggle ----------------------- */
+/* ============================================================
+   SL/TP toggle
+   ============================================================ */
 function toggleSLTP() {
   const toggle = document.getElementById('sltp-toggle');
   const fields = document.getElementById('sltp-fields');
@@ -2193,22 +1812,25 @@ function toggleSLTP() {
   fields.style.display = isOn ? 'block' : 'none';
 }
 
-/* ----------------------- Breakdown ----------------------- */
+/* ============================================================
+   Breakdown
+   ============================================================ */
 function toggleBreakdown() {
   document.getElementById('bd-body').classList.toggle('open');
   document.getElementById('bd-chevron').classList.toggle('open');
 }
 
-/* ----------------------- Portfolio: position state ----------------------- */
+/* ============================================================
+   Portfolio calculations
+   ============================================================ */
 const posOpenRate = 84231.50;
-const posInvested = 1000;
-const posLeverage = 10;
-const posExposure = posInvested * posLeverage;
+const posMargin = 1000;
+const posExposure = posMargin * LEVERAGE;
 const posUnits = posExposure / posOpenRate;
 
-function fmtUsd(n) {
+function fmtPnl(n) {
   const sign = n >= 0 ? '+' : '-';
-  return sign + '$' + Math.abs(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  return sign + Math.abs(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' USDC';
 }
 function fmtUsdPlain(n) {
   return '$' + Math.abs(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -2218,7 +1840,7 @@ function parseNum(str) {
   return isNaN(n) ? 0 : n;
 }
 
-/* ----------------------- Edit SL/TP modal ----------------------- */
+/* Edit SL/TP modal */
 function openSLTPSheet() {
   document.getElementById('sltp-modal').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -2235,9 +1857,9 @@ function recomputeSLTP() {
   const tpPnl = (tp - posOpenRate) * posUnits;
   const slEl = document.getElementById('sl-preview');
   const tpEl = document.getElementById('tp-preview');
-  slEl.textContent = fmtUsd(slPnl);
+  slEl.textContent = fmtPnl(slPnl);
   slEl.className = slPnl < 0 ? 'neg' : 'pos';
-  tpEl.textContent = fmtUsd(tpPnl);
+  tpEl.textContent = fmtPnl(tpPnl);
   tpEl.className = tpPnl < 0 ? 'neg' : 'pos';
 }
 function applySLTP() {
@@ -2247,13 +1869,13 @@ function applySLTP() {
   const tpPnl = (tp - posOpenRate) * posUnits;
   document.getElementById('sl-display').textContent = fmtUsdPlain(sl);
   document.getElementById('tp-display').textContent = fmtUsdPlain(tp);
-  document.getElementById('sl-sub').textContent = fmtUsd(slPnl);
-  document.getElementById('tp-sub').textContent = fmtUsd(tpPnl);
+  document.getElementById('sl-sub').textContent = fmtPnl(slPnl);
+  document.getElementById('tp-sub').textContent = fmtPnl(tpPnl);
   closeSLTPSheet();
   showToast('SL/TP updated');
 }
 
-/* ----------------------- Close Position confirmation ----------------------- */
+/* Close Position confirmation */
 function openCloseConfirm() {
   document.getElementById('close-modal').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -2264,7 +1886,7 @@ function closeCloseConfirm() {
 }
 function confirmClose() {
   closeCloseConfirm();
-  showToast('Position closed · P&L +$234.50 credited');
+  showToast('Position closed · +234.50 USDC credited');
   const card = document.querySelector('.position-card');
   if (card) {
     card.style.transition = 'opacity 0.4s, transform 0.4s';
@@ -2273,7 +1895,7 @@ function confirmClose() {
   }
 }
 
-/* ----------------------- Toast ----------------------- */
+/* Toast */
 function showToast(msg) {
   const t = document.getElementById('pf-toast');
   if (!t) return;
@@ -2289,10 +1911,7 @@ function showToast(msg) {
 
 /* Close modals on Escape */
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') {
-    closeSLTPSheet();
-    closeCloseConfirm();
-  }
+  if (e.key === 'Escape') { closeSLTPSheet(); closeCloseConfirm(); closeTradeSheet(); }
 });
 </script>
 </body>
