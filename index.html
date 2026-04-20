@@ -1151,7 +1151,7 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
         </div>
         <div class="funding-body">
           <div class="funding-rate">+0.0100%</div>
-          <div class="funding-hint">Based on a 1,000 USDC position, you'd pay <strong style="color: var(--color-text-primary); font-weight: 600;">0.10 USDC</strong> at next funding.</div>
+          <div class="funding-hint">Based on a $1,000 position, you'd pay <strong style="color: var(--color-text-primary); font-weight: 600;">$0.10</strong> at next funding.</div>
         </div>
       </div>
     </div>
@@ -1294,11 +1294,11 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
       <!-- Amount -->
       <div class="form-group">
         <div class="form-label-row">
-          <label class="form-label">Amount (USDC)</label>
-          <span class="form-hint">Available: <strong>12,450.00 USDC</strong></span>
+          <label class="form-label">Amount</label>
+          <span class="form-hint">Available: <strong>$12,450.00</strong></span>
         </div>
         <div class="input-wrapper">
-          <span class="input-prefix" style="font-size: 12px; color: var(--color-accent-purple); font-weight: 600;">USDC</span>
+          <span class="input-prefix">$</span>
           <input type="text" class="input" id="amount-input" value="1,000" style="padding-left: 52px;" oninput="onAmountInput()">
         </div>
         <div class="quick-chips">
@@ -1313,7 +1313,7 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
       <div class="form-group">
         <div class="form-label-row">
           <label class="form-label">Leverage</label>
-          <span class="form-hint" id="exposure-label">Exposure: <strong>10,000 USDC</strong></span>
+          <span class="form-hint" id="exposure-label">Exposure: <strong>$10,000</strong></span>
         </div>
         <div class="leverage-fixed">
           <span class="leverage-fixed-value">×10</span>
@@ -1333,7 +1333,7 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
         <div style="display: flex; align-items: center; gap: var(--x3); padding: var(--x3) var(--x4); background: var(--color-bg-secondary); border-radius: var(--radius-x2); border: 1px solid var(--color-border);">
           <span style="font-size: var(--type-h3); font-weight: 700; color: var(--color-text-primary);">0.25%</span>
           <div style="font-size: var(--type-caption); color: var(--color-text-secondary);">
-            <div>= <strong id="spread-usdc" style="color: var(--color-text-primary);">25.00 USDC</strong> on this trade</div>
+            <div>= <strong id="spread-usdc" style="color: var(--color-text-primary);">$25.00</strong> on this trade</div>
             <div style="margin-top: 2px;">Volume discounts from 0.20% to 0.05%</div>
           </div>
         </div>
@@ -1373,11 +1373,11 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
         <div class="summary-divider"></div>
         <div class="summary-row">
           <span class="label">Position size</span>
-          <span class="value" id="sum-size">10,000.00 USDC</span>
+          <span class="value" id="sum-size">$10,000.00</span>
         </div>
         <div class="summary-row">
-          <span class="label">Margin (invested)</span>
-          <span class="value" id="sum-margin">1,000.00 USDC</span>
+          <span class="label">Invested amount</span>
+          <span class="value" id="sum-margin">$1,000.00</span>
         </div>
         <div class="summary-row">
           <span class="label tooltip-wrap">
@@ -1389,7 +1389,7 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
               <span class="row" style="margin-top: 4px;">Volume tiers: Silver 0.20%, Gold 0.15%, Platinum 0.10%, Diamond 0.05%</span>
             </span>
           </span>
-          <span class="value" id="sum-spread">25.00 USDC (0.25%)</span>
+          <span class="value" id="sum-spread">$25.00 (0.25%)</span>
         </div>
         <div class="summary-row">
           <span class="label tooltip-wrap">
@@ -1400,11 +1400,10 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
               <span class="row">Accrued every 8 hours based on market conditions. Current rate: +0.010%</span>
             </span>
           </span>
-          <span class="value" id="sum-holding">~2.31 USDC/day (funding)</span>
+          <span class="value" id="sum-holding">~$2.31/day (funding)</span>
         </div>
         <div class="summary-row">
-          <span class="label">Settlement currency</span>
-          <span class="value" style="color: var(--color-accent-purple); font-weight: 600;">USDC</span>
+
         </div>
       </div>
 
@@ -1415,7 +1414,7 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
 
       <p class="disclaimer">
         Perpetual contracts involve significant risk. You may lose more than your invested amount.
-        Margin, P&amp;L, and all fees are denominated in USDC.
+        
         <a href="#">Learn more</a>
       </p>
     </div>
@@ -1431,16 +1430,16 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
     </div>
     <div class="portfolio-summary">
       <div class="portfolio-stat">
-        <div class="k">Margin</div>
-        <div class="v">1,000.00 USDC</div>
+        <div class="k">Invested</div>
+        <div class="v">$1,000.00</div>
       </div>
       <div class="portfolio-stat">
         <div class="k">Exposure</div>
-        <div class="v">10,000.00 USDC</div>
+        <div class="v">$10,000.00</div>
       </div>
       <div class="portfolio-stat">
         <div class="k">Unrealized P&L</div>
-        <div class="v positive">+234.50 USDC</div>
+        <div class="v positive">+$234.50</div>
       </div>
     </div>
   </div>
@@ -1461,7 +1460,7 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
       </div>
       <div class="position-pnl">
         <div class="pnl-main">
-          <span class="pnl-value text-positive">+234.50 USDC</span>
+          <span class="pnl-value text-positive">+$234.50</span>
           <span class="pnl-pct text-positive">(+23.45%)</span>
         </div>
         <div class="pnl-caption">Current $84,466.00 · Mark</div>
@@ -1470,12 +1469,12 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
 
     <div class="position-details">
       <div>
-        <div class="detail-label">Margin</div>
-        <div class="detail-value">1,000.00 USDC</div>
+        <div class="detail-label">Invested</div>
+        <div class="detail-value">$1,000.00</div>
       </div>
       <div>
         <div class="detail-label">Exposure</div>
-        <div class="detail-value">10,000.00 USDC</div>
+        <div class="detail-value">$10,000.00</div>
       </div>
       <div>
         <div class="detail-label">Open rate</div>
@@ -1488,7 +1487,7 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
       <div>
         <div class="detail-label">Holding cost</div>
         <div class="detail-value">
-          -4.62 USDC <span class="detail-sub">(2 days)</span>
+          -$4.62 <span class="detail-sub">(2 days)</span>
         </div>
       </div>
     </div>
@@ -1497,12 +1496,12 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
       <div class="sltp-slot sl">
         <div class="sltp-slot-label">Stop Loss</div>
         <div class="sltp-slot-value" id="sl-display">$82,000.00</div>
-        <div class="sltp-slot-sub" id="sl-sub">-265.10 USDC</div>
+        <div class="sltp-slot-sub" id="sl-sub">-$265.10</div>
       </div>
       <div class="sltp-slot tp">
         <div class="sltp-slot-label">Take Profit</div>
         <div class="sltp-slot-value" id="tp-display">$88,000.00</div>
-        <div class="sltp-slot-sub" id="tp-sub">+447.30 USDC</div>
+        <div class="sltp-slot-sub" id="tp-sub">+$447.30</div>
       </div>
     </div>
 
@@ -1522,13 +1521,13 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
       <svg class="chevron" id="bd-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
     </div>
     <div class="breakdown-body" id="bd-body">
-      <div class="breakdown-row"><span class="b-label">Apr 16, 04:00 UTC</span><span class="b-value">-0.77 USDC</span></div>
-      <div class="breakdown-row"><span class="b-label">Apr 16, 12:00 UTC</span><span class="b-value">-0.82 USDC</span></div>
-      <div class="breakdown-row"><span class="b-label">Apr 16, 20:00 UTC</span><span class="b-value">-0.71 USDC</span></div>
-      <div class="breakdown-row"><span class="b-label">Apr 17, 04:00 UTC</span><span class="b-value">-0.69 USDC</span></div>
-      <div class="breakdown-row"><span class="b-label">Apr 17, 12:00 UTC</span><span class="b-value">-0.81 USDC</span></div>
-      <div class="breakdown-row"><span class="b-label">Apr 17, 20:00 UTC</span><span class="b-value">-0.82 USDC</span></div>
-      <div class="breakdown-row total"><span class="b-label">Total</span><span class="b-value">-4.62 USDC</span></div>
+      <div class="breakdown-row"><span class="b-label">Apr 16, 04:00 UTC</span><span class="b-value">-$0.77</span></div>
+      <div class="breakdown-row"><span class="b-label">Apr 16, 12:00 UTC</span><span class="b-value">-$0.82</span></div>
+      <div class="breakdown-row"><span class="b-label">Apr 16, 20:00 UTC</span><span class="b-value">-$0.71</span></div>
+      <div class="breakdown-row"><span class="b-label">Apr 17, 04:00 UTC</span><span class="b-value">-$0.69</span></div>
+      <div class="breakdown-row"><span class="b-label">Apr 17, 12:00 UTC</span><span class="b-value">-$0.81</span></div>
+      <div class="breakdown-row"><span class="b-label">Apr 17, 20:00 UTC</span><span class="b-value">-$0.82</span></div>
+      <div class="breakdown-row total"><span class="b-label">Total</span><span class="b-value">-$4.62</span></div>
     </div>
   </div>
 </div>
@@ -1549,7 +1548,7 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
       <div class="pf-field">
         <div class="pf-field-label">
           <span>Stop Loss</span>
-          <span class="pf-field-hint">Max loss: -100% of margin</span>
+          <span class="pf-field-hint">Max loss: -100% of invested</span>
         </div>
         <div class="pf-input-wrap">
           <span class="prefix">$</span>
@@ -1557,7 +1556,7 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
         </div>
         <div class="pf-input-sub">
           <span>At this rate your P&amp;L will be:</span>
-          <span class="neg" id="sl-preview">-265.10 USDC</span>
+          <span class="neg" id="sl-preview">-$265.10</span>
         </div>
       </div>
       <div class="pf-field">
@@ -1571,7 +1570,7 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
         </div>
         <div class="pf-input-sub">
           <span>At this rate your P&amp;L will be:</span>
-          <span class="pos" id="tp-preview">+447.30 USDC</span>
+          <span class="pos" id="tp-preview">+$447.30</span>
         </div>
       </div>
     </div>
@@ -1588,7 +1587,7 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
     <div class="pf-modal-header">
       <div>
         <div class="pf-modal-title" id="close-modal-title">Close perpetual position?</div>
-        <div class="pf-modal-sub">Settling at mark price. Net P&amp;L credited to your USDC balance.</div>
+        <div class="pf-modal-sub">Settling at mark price. Net P&amp;L credited to your balance.</div>
       </div>
       <button class="pf-modal-close" onclick="closeCloseConfirm()" aria-label="Close">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -1617,28 +1616,28 @@ input:focus { outline: none; border-color: var(--color-accent-blue); }
       <div class="pf-confirm-summary">
         <div>
           <div class="k">Notional value</div>
-          <div class="v">10,019.86 USDC</div>
+          <div class="v">$10,019.86</div>
         </div>
         <div>
           <div class="k">Price P&amp;L</div>
-          <div class="v text-positive">+234.50 USDC</div>
+          <div class="v text-positive">+$234.50</div>
         </div>
         <div>
           <div class="k">Funding paid <span class="pf-hint">(2 days)</span></div>
-          <div class="v text-negative">-4.62 USDC</div>
+          <div class="v text-negative">-$4.62</div>
         </div>
         <div>
           <div class="k">Spread <span class="pf-hint">(0.25%)</span></div>
-          <div class="v text-negative">-25.05 USDC</div>
+          <div class="v text-negative">-$25.05</div>
         </div>
       </div>
 
       <div class="pf-net-row">
         <div>
-          <div class="pf-net-label">Net credit to USDC balance</div>
+          <div class="pf-net-label">Net credit to balance</div>
           <div class="pf-net-note">Price P&amp;L − funding − spread</div>
         </div>
-        <div class="pf-net-value text-positive">+204.83 USDC</div>
+        <div class="pf-net-value text-positive">+$204.83</div>
       </div>
 
       <div class="pf-warn">
@@ -1769,7 +1768,7 @@ function parseAmount(str) {
   return isNaN(n) ? 0 : n;
 }
 function fmtNum(n) { return n.toLocaleString('en-US', { maximumFractionDigits: 0 }); }
-function fmtUsdc(n) { return n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' USDC'; }
+function fmtUsd(n) { return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
 
 function selectAmount(el, value) {
   el.parentElement.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('selected'));
@@ -1794,12 +1793,12 @@ function recomputeSummary() {
   const dailyFunding = exposure * 0.000231;
 
   document.getElementById('exposure-label').innerHTML =
-    'Exposure: <strong>' + fmtNum(exposure) + ' USDC</strong>';
-  document.getElementById('sum-size').textContent = fmtUsdc(exposure);
-  document.getElementById('sum-margin').textContent = fmtUsdc(tradeAmount);
-  document.getElementById('sum-spread').textContent = fmtUsdc(spreadCost) + ' (0.25%)';
-  document.getElementById('sum-holding').textContent = '~' + fmtUsdc(dailyFunding) + '/day (funding)';
-  document.getElementById('spread-usdc').textContent = fmtUsdc(spreadCost);
+    'Exposure: <strong>$' + fmtNum(exposure) + '</strong>';
+  document.getElementById('sum-size').textContent = fmtUsd(exposure);
+  document.getElementById('sum-margin').textContent = fmtUsd(tradeAmount);
+  document.getElementById('sum-spread').textContent = fmtUsd(spreadCost) + ' (0.25%)';
+  document.getElementById('sum-holding').textContent = '~' + fmtUsd(dailyFunding) + '/day (funding)';
+  document.getElementById('spread-usdc').textContent = fmtUsd(spreadCost);
 }
 
 /* ============================================================
@@ -1830,7 +1829,7 @@ const posUnits = posExposure / posOpenRate;
 
 function fmtPnl(n) {
   const sign = n >= 0 ? '+' : '-';
-  return sign + Math.abs(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' USDC';
+  return sign + '$' + Math.abs(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 function fmtUsdPlain(n) {
   return '$' + Math.abs(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -1886,7 +1885,7 @@ function closeCloseConfirm() {
 }
 function confirmClose() {
   closeCloseConfirm();
-  showToast('Position closed · +234.50 USDC credited');
+  showToast('Position closed · +$234.50 credited');
   const card = document.querySelector('.position-card');
   if (card) {
     card.style.transition = 'opacity 0.4s, transform 0.4s';
