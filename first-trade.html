@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>eToro Perps — First Trade Pop-Up</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   eToro New Design System v1.0.0 — semantic tokens
+   ============================================================ */
+:root {
+  --color-bg: #FFFFFF;
+  --color-bg-secondary: #F5F7FA;
+  --color-surface: #FFFFFF;
+  --color-surface-elevated: #FFFFFF;
+  --color-text-primary: #242628;
+  --color-text-secondary: #6B7280;
+  --color-text-muted: #9CA3AF;
+  --color-text-inverse: #FFFFFF;
+  --color-border: #E4E7F0;
+  --color-border-strong: #D1D5DB;
+  --color-brand-primary: #0EB12E;
+  --color-brand-primary-hover: #0A9824;
+  --color-brand-primary-bg: #E7F7EB;
+  --color-negative: #F23D40;
+  --color-negative-hover: #D8353A;
+  --color-negative-bg: #FDECEC;
+  --color-accent-blue: #2A84F7;
+  --color-accent-blue-bg: #E8F1FE;
+  --color-accent-purple: #8B5CF6;
+  --color-accent-purple-bg: #F0EBFE;
+  --color-accent-orange: #FF8A3D;
+  --color-accent-orange-bg: #FFF4EC;
+  --color-trade-bg: #1B1D21;
+
+  --x1: 4px;  --x2: 8px;  --x3: 12px; --x4: 16px;
+  --x5: 20px; --x6: 24px; --x7: 28px; --x8: 32px;
+  --x10: 40px; --x12: 48px; --x16: 64px; --x20: 80px;
+
+  --radius-x1: 4px;
+  --radius-x2: 8px;
+  --radius-x6: 24px;
+  --radius-full: 9999px;
+
+  --elevation-1: 0 1px 2px rgba(16, 24, 40, 0.06), 0 1px 3px rgba(16, 24, 40, 0.04);
+  --elevation-2: 0 4px 8px -2px rgba(16, 24, 40, 0.08), 0 2px 4px -2px rgba(16, 24, 40, 0.04);
+  --elevation-3: 0 12px 20px -4px rgba(16, 24, 40, 0.10), 0 4px 8px -2px rgba(16, 24, 40, 0.06);
+
+  --type-display: 36px;
+  --type-h1: 30px;
+  --type-h2: 24px;
+  --type-h3: 20px;
+  --type-h4: 18px;
+  --type-body-lg: 16px;
+  --type-body: 15px;
+  --type-body-sm: 13px;
+  --type-caption: 11px;
+}
+
+[data-theme="dark"] {
+  --color-bg: #13151C;
+  --color-bg-secondary: #0E1014;
+  --color-surface: #1C1F29;
+  --color-surface-elevated: #242834;
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #C7CBD6;
+  --color-text-muted: #999FB2;
+  --color-text-inverse: #13151C;
+  --color-border: #2E323F;
+  --color-border-strong: #5A6178;
+  --color-brand-primary: #30CF4F;
+  --color-brand-primary-hover: #25B842;
+  --color-brand-primary-bg: rgba(48, 207, 79, 0.14);
+  --color-negative: #E9544C;
+  --color-negative-hover: #D24A44;
+  --color-negative-bg: rgba(233, 84, 76, 0.14);
+  --color-accent-blue: #5AA3FF;
+  --color-accent-blue-bg: rgba(90, 163, 255, 0.14);
+  --color-accent-purple: #A78BFA;
+  --color-accent-purple-bg: rgba(167, 139, 250, 0.14);
+  --color-accent-orange: #FFB380;
+  --color-accent-orange-bg: rgba(255, 179, 128, 0.14);
+  --color-trade-bg: #0F1116;
+  --elevation-1: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --elevation-2: 0 4px 8px rgba(0, 0, 0, 0.35);
+  --elevation-3: 0 12px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* ============================================================
+   Base
+   ============================================================ */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: var(--type-body);
+  line-height: 1.5;
+  color: var(--color-text-primary);
+  background: var(--color-bg-secondary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button { font-family: inherit; border: none; background: none; cursor: pointer; color: inherit; }
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--color-border-strong); border-radius: var(--radius-x1); }
+
+/* ============================================================
+   Phone frame
+   ============================================================ */
+.phone {
+  max-width: 430px;
+  margin: 0 auto;
+  background: var(--color-bg);
+  min-height: 100vh;
+  position: relative;
+  border-left: 1px solid var(--color-border);
+  border-right: 1px solid var(--color-border);
+}
+
+.status-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: var(--x2) var(--x6);
+  font-size: var(--type-caption); font-weight: 600;
+  color: var(--color-text-primary);
+}
+.status-right { display: flex; gap: var(--x1); align-items: center; }
+.status-right svg { width: 14px; height: 14px; }
+
+.top-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: var(--x3) var(--x6); background: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+}
+.top-bar-left { display: flex; align-items: center; gap: var(--x3); }
+.top-bar-icon { width: 24px; height: 24px; color: var(--color-text-primary); }
+
+.instrument-info { display: flex; align-items: center; gap: var(--x2); }
+.instrument-avatar {
+  width: 32px; height: 32px; border-radius: var(--radius-full);
+  display: flex; align-items: center; justify-content: center;
+  color: #FFFFFF; font-weight: 700; font-size: var(--type-body-sm);
+}
+.instrument-title { font-size: var(--type-body-lg); font-weight: 600; line-height: 1.2; }
+.instrument-subtitle { font-size: var(--type-caption); color: var(--color-text-secondary); margin-top: 2px; }
+
+/* ============================================================
+   Pop-up overlay — NOT dismissible
+   ============================================================ */
+.popup-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 12, 16, 0.6);
+  z-index: 50;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.popup-overlay.accepted { display: none; }
+
+.popup {
+  width: 100%;
+  max-height: 92vh;
+  background: var(--color-bg);
+  border-top-left-radius: var(--radius-x6);
+  border-top-right-radius: var(--radius-x6);
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--elevation-3);
+  animation: popupUp 0.35s cubic-bezier(0.32, 0.72, 0, 1);
+}
+@keyframes popupUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.popup-handle {
+  padding: var(--x3) 0 var(--x1);
+  display: flex; justify-content: center;
+  flex-shrink: 0;
+}
+.popup-handle::after {
+  content: ''; width: 40px; height: 4px;
+  border-radius: var(--radius-full); background: var(--color-border-strong);
+}
+
+.popup-scroll {
+  flex: 1; overflow-y: auto; padding: 0 var(--x6) var(--x6);
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ============================================================
+   Pop-up content
+   ============================================================ */
+/* Warning icon */
+.popup-icon {
+  width: 56px; height: 56px; border-radius: var(--radius-full);
+  background: var(--color-accent-orange-bg);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto var(--x4);
+}
+.popup-icon svg { width: 28px; height: 28px; color: var(--color-accent-orange); }
+
+.popup-title {
+  font-size: var(--type-h3);
+  font-weight: 700;
+  text-align: center;
+  color: var(--color-text-primary);
+  letter-spacing: -0.3px;
+}
+.popup-subtitle {
+  font-size: var(--type-body);
+  color: var(--color-text-secondary);
+  text-align: center;
+  margin-top: var(--x2);
+}
+
+/* Disclosure bullets */
+.disclosure-list {
+  margin-top: var(--x5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--x3);
+  list-style: none;
+}
+.disclosure-item {
+  display: flex;
+  gap: var(--x3);
+  align-items: flex-start;
+  /* WCAG 2.1 AA: min 14px on mobile */
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-text-primary);
+}
+.disclosure-num {
+  flex-shrink: 0;
+  width: 24px; height: 24px;
+  border-radius: var(--radius-full);
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700;
+  color: var(--color-text-secondary);
+  margin-top: 1px;
+}
+.disclosure-item strong {
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+/* "Read more" link */
+.read-more-link {
+  display: flex;
+  align-items: center;
+  gap: var(--x2);
+  margin-top: var(--x5);
+  padding: var(--x3) var(--x4);
+  background: var(--color-accent-blue-bg);
+  border-radius: var(--radius-x2);
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.read-more-link:hover { background: var(--color-accent-blue-bg); filter: brightness(0.97); }
+.read-more-link svg { width: 18px; height: 18px; color: var(--color-accent-blue); flex-shrink: 0; }
+.read-more-link span {
+  font-size: 14px; font-weight: 600;
+  color: var(--color-accent-blue);
+}
+
+/* ADL checkbox */
+.adl-consent {
+  margin-top: var(--x5);
+  padding: var(--x4);
+  background: var(--color-bg-secondary);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-x2);
+  transition: border-color 0.15s;
+}
+.adl-consent.checked {
+  border-color: var(--color-brand-primary);
+  background: var(--color-brand-primary-bg);
+}
+.adl-consent label {
+  display: flex;
+  gap: var(--x3);
+  align-items: flex-start;
+  cursor: pointer;
+  /* WCAG: 14px min */
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-text-primary);
+}
+
+/* Custom checkbox */
+.checkbox-wrapper {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.checkbox-wrapper input {
+  position: absolute;
+  opacity: 0;
+  width: 0; height: 0;
+}
+.checkbox-box {
+  width: 22px; height: 22px;
+  border-radius: var(--radius-x1);
+  border: 2px solid var(--color-border-strong);
+  background: var(--color-bg);
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s;
+}
+.checkbox-wrapper input:checked + .checkbox-box {
+  background: var(--color-brand-primary);
+  border-color: var(--color-brand-primary);
+}
+.checkbox-wrapper input:checked + .checkbox-box svg { display: block; }
+.checkbox-box svg { display: none; width: 14px; height: 14px; color: #FFFFFF; }
+
+/* Focus visible for accessibility */
+.checkbox-wrapper input:focus-visible + .checkbox-box {
+  outline: 2px solid var(--color-accent-blue);
+  outline-offset: 2px;
+}
+
+/* CTA button */
+.popup-cta {
+  margin-top: var(--x5);
+  width: 100%;
+  padding: var(--x4) var(--x6);
+  border-radius: 48px;
+  font-size: var(--type-body-lg);
+  font-weight: 700;
+  transition: all 0.15s;
+  box-shadow: var(--elevation-1);
+}
+.popup-cta.enabled {
+  background: var(--color-brand-primary);
+  color: #FFFFFF;
+  cursor: pointer;
+}
+.popup-cta.enabled:hover { background: var(--color-brand-primary-hover); }
+.popup-cta.enabled:active { transform: scale(0.98); }
+.popup-cta.disabled {
+  background: var(--color-border);
+  color: var(--color-text-muted);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.popup-footer-note {
+  font-size: var(--type-caption);
+  color: var(--color-text-muted);
+  text-align: center;
+  margin-top: var(--x3);
+  line-height: 1.5;
+}
+
+/* Version tag */
+.popup-version {
+  font-size: 10px;
+  color: var(--color-text-muted);
+  text-align: center;
+  margin-top: var(--x4);
+  padding-top: var(--x3);
+  border-top: 1px solid var(--color-border);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ============================================================
+   Success state (behind popup)
+   ============================================================ */
+.behind-content {
+  padding: var(--x4) var(--x6);
+  filter: blur(2px);
+  opacity: 0.4;
+  pointer-events: none;
+  user-select: none;
+}
+.behind-content.unlocked {
+  filter: none;
+  opacity: 1;
+  pointer-events: auto;
+  user-select: auto;
+}
+
+/* Success toast */
+.consent-toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px);
+  background: var(--color-brand-primary); color: #FFFFFF;
+  padding: 12px 20px; border-radius: var(--radius-full);
+  font-size: 14px; font-weight: 600; z-index: 100;
+  opacity: 0; transition: all 0.25s; pointer-events: none;
+  box-shadow: var(--elevation-3);
+  display: flex; align-items: center; gap: var(--x2);
+}
+.consent-toast svg { width: 18px; height: 18px; }
+.consent-toast.show {
+  opacity: 1; transform: translateX(-50%) translateY(0);
+}
+
+/* ============================================================
+   Theme toggle + Footer
+   ============================================================ */
+.theme-toggle {
+  position: fixed; top: var(--x4); right: var(--x4); z-index: 100;
+  width: 40px; height: 40px; border-radius: var(--radius-full);
+  background: var(--color-surface); border: 1px solid var(--color-border);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: var(--elevation-2); color: var(--color-text-primary);
+}
+.theme-toggle svg { width: 20px; height: 20px; }
+.theme-toggle .icon-moon { display: block; }
+.theme-toggle .icon-sun { display: none; }
+[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+
+.page-footer {
+  max-width: 430px; margin: 0 auto;
+  padding: var(--x6) var(--x6) var(--x10);
+  border-top: 1px solid var(--color-border); text-align: center;
+}
+.page-footer .eyebrow {
+  font-size: 10px; text-transform: uppercase; letter-spacing: 1px;
+  color: var(--color-brand-primary); font-weight: 700; margin-bottom: var(--x2);
+}
+.page-footer p { font-size: var(--type-caption); color: var(--color-text-secondary); line-height: 1.6; }
+.page-footer a {
+  display: inline-block; margin-top: var(--x3); font-size: var(--type-caption);
+  color: var(--color-accent-blue); font-weight: 500; text-decoration: none;
+}
+.page-footer a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<!-- Theme Toggle -->
+<button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+  <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+</button>
+
+<!-- Phone Frame -->
+<div class="phone">
+
+  <!-- Status Bar -->
+  <div class="status-bar">
+    <span>20:15</span>
+    <div class="status-right">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M2 22h2v-2H2v2zm4 0h2v-6H6v6zm4 0h2v-10h-2v10zm4 0h2V8h-2v14zm4 0h2V4h-2v18z"/></svg>
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 4C7 4 2.73 6.11 0 9.27l12 14.54 12-14.54C21.27 6.11 17 4 12 4z"/></svg>
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 5H5c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-3h2v-4h-2V7c0-1.1-.9-2-2-2zm-2 10H5V9h10v6z"/></svg>
+    </div>
+  </div>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="top-bar-left">
+      <svg class="top-bar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      <div class="instrument-info">
+        <div class="instrument-avatar" style="background: #F7931A;">₿</div>
+        <div>
+          <div class="instrument-title">BTCUSDC</div>
+          <div class="instrument-subtitle">Perpetual · ×10</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Blurred trade screen behind -->
+  <div class="behind-content" id="behind">
+    <div style="height: 200px; background: linear-gradient(180deg, rgba(14,177,46,0.04) 0%, transparent 100%); border-radius: var(--radius-x2); margin-bottom: var(--x4);"></div>
+    <div style="display: flex; gap: var(--x3);">
+      <div style="flex:1; height: 48px; background: var(--color-bg-secondary); border-radius: var(--radius-full);"></div>
+      <div style="flex:1; height: 48px; background: var(--color-bg-secondary); border-radius: var(--radius-full);"></div>
+    </div>
+  </div>
+
+  <!-- ==================== FIRST TRADE POP-UP ==================== -->
+  <div class="popup-overlay" id="popup-overlay">
+    <div class="popup" role="dialog" aria-modal="true" aria-labelledby="popup-title">
+      <div class="popup-handle"></div>
+      <div class="popup-scroll">
+
+        <!-- Icon -->
+        <div class="popup-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </div>
+
+        <!-- Title -->
+        <div class="popup-title" id="popup-title">Before Your First Perpetuals Trade</div>
+        <div class="popup-subtitle">Perpetual Contracts are different from anything else on eToro.<br>Please read these 5 points carefully:</div>
+
+        <!-- 5 Disclosure bullets -->
+        <ol class="disclosure-list">
+          <li class="disclosure-item">
+            <span class="disclosure-num">1</span>
+            <span>eToro executes your trade through its omnibus account at Perpetuals.com. <strong>You contract with eToro. Losses may exceed your deposit.</strong></span>
+          </li>
+          <li class="disclosure-item">
+            <span class="disclosure-num">2</span>
+            <span>There is <strong>no expiry date</strong>. You must actively manage or close your position.</span>
+          </li>
+          <li class="disclosure-item">
+            <span class="disclosure-num">3</span>
+            <span>A <strong>Funding Rate</strong> set by Perpetuals.com is passed through to you by eToro with no mark-up. This rate can erode your balance even when the market is flat.</span>
+          </li>
+          <li class="disclosure-item">
+            <span class="disclosure-num">4</span>
+            <span>If your balance falls below the minimum, your position is <strong>closed automatically — no warning</strong>.</span>
+          </li>
+          <li class="disclosure-item">
+            <span class="disclosure-num">5</span>
+            <span><strong>Auto-Deleveraging (ADL):</strong> In extreme conditions, ADL at Perpetuals.com may reduce eToro's omnibus account. eToro will pass this reduction through to your position proportionally. <strong>eToro does not absorb ADL losses.</strong></span>
+          </li>
+        </ol>
+
+        <!-- Read more link -->
+        <a href="#" class="read-more-link" aria-label="Read our plain-language guide about Perpetual Contracts">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+          <span>Want to understand more? Read our plain-language guide →</span>
+        </a>
+
+        <!-- ADL Checkbox (mandatory, separate interaction) -->
+        <div class="adl-consent" id="adl-consent-box">
+          <label>
+            <div class="checkbox-wrapper">
+              <input type="checkbox" id="adl-checkbox" onchange="onADLChange()" aria-required="true">
+              <div class="checkbox-box">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+              </div>
+            </div>
+            <span>I understand that Auto-Deleveraging (ADL) at Perpetuals.com may reduce eToro's omnibus account, and that eToro will pass the economic effect of any ADL reduction through to my position proportionally. I consent to this pass-through as a condition of accessing Perpetual Contracts.</span>
+          </label>
+        </div>
+
+        <!-- CTA Button -->
+        <button class="popup-cta disabled" id="cta-btn" onclick="onAccept()" disabled aria-label="I Understand and Accept">
+          I Understand and Accept
+        </button>
+
+        <div class="popup-footer-note">
+          By clicking above, I confirm I have read and understood the above disclosures. My consent is logged.
+        </div>
+
+        <!-- Version tag -->
+        <div class="popup-version">
+          Pop-up version 1.0 · April 2026
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Success Toast -->
+<div class="consent-toast" id="consent-toast">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+  Consent logged — you can now trade
+</div>
+
+<!-- Footer -->
+<div class="page-footer">
+  <div class="eyebrow">eToro Perps — First Trade Pop-Up</div>
+  <p>Non-dismissible consent pop-up · ADL checkbox required · WCAG 2.1 AA · MiFID II compliant logging</p>
+  <p style="margin-top: 4px; color: var(--color-text-muted);">Logged: client_id, popup_version, timestamp_utc, consent_granted, adl_checkbox_ticked</p>
+  <div style="margin-top: 8px;">
+    <a href="index.html">BTCUSDC Perp Execution</a>
+    <span style="color: var(--color-text-muted); margin: 0 8px;">·</span>
+    <a href="btcusd.html">BTCUSD Regular</a>
+    <span style="color: var(--color-text-muted); margin: 0 8px;">·</span>
+    <a href="liquidation.html">Liquidation</a>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   First Trade Pop-Up Logic
+   ============================================================ */
+const POPUP_VERSION = '1.0';
+
+function onADLChange() {
+  const checked = document.getElementById('adl-checkbox').checked;
+  const btn = document.getElementById('cta-btn');
+  const box = document.getElementById('adl-consent-box');
+
+  if (checked) {
+    btn.classList.remove('disabled');
+    btn.classList.add('enabled');
+    btn.disabled = false;
+    box.classList.add('checked');
+  } else {
+    btn.classList.add('disabled');
+    btn.classList.remove('enabled');
+    btn.disabled = true;
+    box.classList.remove('checked');
+  }
+}
+
+function onAccept() {
+  const adlChecked = document.getElementById('adl-checkbox').checked;
+  if (!adlChecked) return;
+
+  // Log consent (in production: POST to compliance API)
+  const consentRecord = {
+    client_id: 'demo_user_12345',
+    popup_version: POPUP_VERSION,
+    timestamp_utc: new Date().toISOString(),
+    consent_granted: true,
+    adl_checkbox_ticked: true
+  };
+  console.log('[CONSENT LOGGED]', JSON.stringify(consentRecord, null, 2));
+
+  // Dismiss popup
+  document.getElementById('popup-overlay').classList.add('accepted');
+  document.getElementById('behind').classList.add('unlocked');
+
+  // Show success toast
+  const toast = document.getElementById('consent-toast');
+  toast.classList.add('show');
+  setTimeout(() => { toast.classList.remove('show'); }, 3000);
+}
+
+// Prevent dismissal via Escape
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') e.preventDefault();
+});
+
+// Theme
+function toggleTheme() {
+  const cur = document.documentElement.getAttribute('data-theme');
+  document.documentElement.setAttribute('data-theme', cur === 'dark' ? 'light' : 'dark');
+  localStorage.setItem('perps-theme', cur === 'dark' ? 'light' : 'dark');
+}
+(function initTheme() {
+  const saved = localStorage.getItem('perps-theme');
+  if (saved) document.documentElement.setAttribute('data-theme', saved);
+})();
+</script>
+</body>
+</html>
