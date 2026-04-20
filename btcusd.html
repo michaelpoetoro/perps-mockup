@@ -274,6 +274,88 @@ button { font-family: inherit; border: none; background: none; cursor: pointer; 
 
 .bottom-spacer { height: var(--x20); }
 
+/* Sheet overlay */
+.sheet-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+  z-index: 50; display: none;
+}
+.sheet-overlay.open { display: block; }
+.sheet {
+  position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 100%; max-width: 430px; background: var(--color-bg);
+  border-top-left-radius: var(--radius-x6); border-top-right-radius: var(--radius-x6);
+  max-height: 90vh; display: flex; flex-direction: column;
+  animation: sheetUp 0.3s cubic-bezier(0.32,0.72,0,1); box-shadow: var(--elevation-3);
+}
+@keyframes sheetUp { from{transform:translate(-50%,100%)} to{transform:translate(-50%,0)} }
+.sheet-handle { padding: var(--x3) 0 var(--x2); display: flex; justify-content: center; }
+.sheet-handle::after { content:''; width:40px; height:4px; border-radius:var(--radius-full); background:var(--color-border-strong); }
+.sheet-content { padding: 0 var(--x6) var(--x6); overflow-y: auto; flex: 1; }
+
+/* Segmented control */
+.segmented {
+  display: flex; background: var(--color-bg-secondary);
+  padding: 4px; border-radius: var(--radius-x2); margin-bottom: var(--x4);
+}
+.segmented button {
+  flex: 1; padding: var(--x2) var(--x4); border-radius: 6px;
+  font-size: var(--type-body-sm); font-weight: 600;
+  color: var(--color-text-secondary); transition: all 0.2s;
+}
+.segmented button.active {
+  background: var(--color-surface); color: var(--color-text-primary); box-shadow: var(--elevation-1);
+}
+.segmented button.active.buy-active { color: var(--color-brand-primary); }
+.segmented button.active.sell-active { color: var(--color-negative); }
+
+/* Form inputs */
+.form-group { margin-bottom: var(--x4); }
+.input-wrapper { position: relative; }
+.input-prefix {
+  position: absolute; left: var(--x4); top: 50%; transform: translateY(-50%);
+  font-weight: 500; color: var(--color-text-secondary);
+}
+.input {
+  width: 100%; padding: var(--x3) var(--x4) var(--x3) var(--x8);
+  background: var(--color-bg-secondary); border: 1px solid var(--color-border);
+  border-radius: var(--radius-x2); font-size: var(--type-h4); font-weight: 600;
+  color: var(--color-text-primary); transition: border-color 0.15s;
+}
+.quick-chips { display: flex; gap: var(--x2); margin-top: var(--x2); flex-wrap: wrap; }
+.filter-chip {
+  padding: 6px var(--x3); font-size: var(--type-caption); font-weight: 500;
+  background: transparent; color: var(--color-text-secondary);
+  border: 1px solid var(--color-border); border-radius: var(--radius-full); transition: all 0.15s;
+}
+.filter-chip.selected {
+  background: var(--color-brand-primary-bg); color: var(--color-brand-primary); border-color: transparent;
+}
+
+/* Perp upsell banner inside sheet */
+.perp-upsell {
+  margin: var(--x3) 0;
+  padding: var(--x3) var(--x4);
+  background: linear-gradient(135deg, #1C1F29 0%, #2A2D33 60%, #3B2F5E 100%);
+  border-radius: var(--radius-x2);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.perp-upsell:hover { transform: translateY(-1px); box-shadow: var(--elevation-2); }
+
+/* Buttons */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: var(--x2); font-family: 'Inter', sans-serif; font-weight: 600;
+  transition: all 0.15s; white-space: nowrap; border: none; cursor: pointer;
+}
+.btn-xl { padding: var(--x4) var(--x6); border-radius: 48px; font-size: var(--type-body-lg); }
+.btn-primary { background: var(--color-brand-primary); color: #FFFFFF; }
+.btn-primary:hover { background: var(--color-brand-primary-hover); }
+.btn-negative { background: var(--color-negative); color: #FFFFFF; }
+.btn-block { width: 100%; }
+.btn:active { transform: scale(0.98); }
+
 /* Theme toggle */
 .theme-toggle {
   position: fixed; top: var(--x4); right: var(--x4); z-index: 100;
@@ -498,20 +580,120 @@ button { font-family: inherit; border: none; background: none; cursor: pointer; 
 
   <!-- Buy / Sell -->
   <div class="buy-sell-row">
-    <button class="trade-btn sell">
+    <button class="trade-btn sell" onclick="openSheet('sell')">
       <span class="trade-indicator">S</span>
       <span class="trade-btn-label">
         <span>SELL</span>
         <span class="trade-btn-price">$83,915.53</span>
       </span>
     </button>
-    <button class="trade-btn buy">
+    <button class="trade-btn buy" onclick="openSheet('buy')">
       <span class="trade-indicator">B</span>
       <span class="trade-btn-label">
         <span>BUY</span>
         <span class="trade-btn-price">$84,547.47</span>
       </span>
     </button>
+  </div>
+</div>
+
+<!-- ==================== ORDER ENTRY BOTTOM SHEET ==================== -->
+<div id="order-sheet" class="sheet-overlay">
+  <div style="position:absolute;inset:0;" onclick="closeSheet()"></div>
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-content">
+
+      <!-- Header -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--x4);">
+        <div class="instrument-info">
+          <div class="instrument-avatar" style="width:28px;height:28px;font-size:11px;background:#F7931A;">₿</div>
+          <div>
+            <span style="font-size:var(--type-body-sm);font-weight:600;">BTCUSD</span>
+            <span style="font-size:var(--type-caption);color:var(--color-text-muted);margin-left:4px;">Bitcoin</span>
+          </div>
+        </div>
+        <button style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;color:var(--color-text-secondary);border-radius:var(--radius-full);" onclick="closeSheet()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <!-- Buy/Sell segmented -->
+      <div class="segmented" id="seg-dir">
+        <button id="btn-buy" class="active buy-active" onclick="setDir('buy')">BUY</button>
+        <button id="btn-sell" onclick="setDir('sell')">SELL</button>
+      </div>
+
+      <!-- Amount -->
+      <div class="form-group">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--x2);">
+          <label style="font-size:var(--type-caption);font-weight:500;color:var(--color-text-secondary);">Amount (USD)</label>
+          <span style="font-size:var(--type-caption);color:var(--color-text-muted);">Available: <strong style="color:var(--color-text-primary);font-weight:500;">$12,450.00</strong></span>
+        </div>
+        <div class="input-wrapper">
+          <span class="input-prefix">$</span>
+          <input type="text" class="input" value="1,000">
+        </div>
+        <div class="quick-chips">
+          <button class="filter-chip">100</button>
+          <button class="filter-chip">500</button>
+          <button class="filter-chip selected">1,000</button>
+          <button class="filter-chip">5,000</button>
+        </div>
+      </div>
+
+      <!-- Leverage -->
+      <div class="form-group">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--x2);">
+          <label style="font-size:var(--type-caption);font-weight:500;color:var(--color-text-secondary);">Leverage</label>
+        </div>
+        <div class="leverage-row">
+          <div class="lev-pill active" onclick="selectLev(this,1)"><span class="lev-num">×1</span><span class="lev-tag">Real</span></div>
+          <div class="lev-pill" onclick="selectLev(this,2)"><span class="lev-num">×2</span><span class="lev-tag">CFD</span></div>
+          <div class="lev-pill" onclick="selectLev(this,5)"><span class="lev-num">×5</span><span class="lev-tag">CFD</span></div>
+        </div>
+      </div>
+
+      <!-- PERP UPSELL inside order sheet -->
+      <div class="perp-upsell" onclick="window.location.href='index.html'">
+        <div style="display:flex;align-items:center;gap:var(--x2);">
+          <div style="width:28px;height:28px;border-radius:var(--radius-full);background:linear-gradient(135deg,#8B5CF6,#6D28D9);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:var(--type-body-sm);font-weight:700;color:#FFF;">Want ×10? Try BTCUSDC Perp →</div>
+            <div style="font-size:10px;color:rgba(255,255,255,0.6);margin-top:1px;">0.25% spread · Funding every 8h · USDC settled</div>
+          </div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+        </div>
+      </div>
+
+      <!-- Summary -->
+      <div style="margin:var(--x4) 0;">
+        <div style="height:1px;background:var(--color-border);margin-bottom:var(--x4);"></div>
+        <div style="display:flex;justify-content:space-between;padding:6px 0;font-size:var(--type-body-sm);">
+          <span style="color:var(--color-text-secondary);">Position size</span>
+          <span style="font-weight:500;">$1,000.00</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:6px 0;font-size:var(--type-body-sm);">
+          <span style="color:var(--color-text-secondary);">Spread</span>
+          <span style="font-weight:500;">0.75%</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:6px 0;font-size:var(--type-body-sm);">
+          <span style="color:var(--color-text-secondary);">Holding cost</span>
+          <span style="font-weight:500;">None (×1 Real)</span>
+        </div>
+      </div>
+
+      <!-- Submit -->
+      <button id="submit-btn" class="btn btn-xl btn-primary btn-block" onclick="closeSheet()">
+        Open BUY Position
+      </button>
+
+      <p style="font-size:10px;color:var(--color-text-muted);text-align:center;margin-top:var(--x3);line-height:1.5;">
+        At ×1, you own the underlying BTC. At ×2 or ×5 this becomes a CFD with overnight fees.
+      </p>
+    </div>
   </div>
 </div>
 
@@ -538,6 +720,33 @@ function selectLev(el, val) {
   document.querySelectorAll('.lev-pill').forEach(p => p.classList.remove('active'));
   el.classList.add('active');
 }
+
+function openSheet(dir) {
+  document.getElementById('order-sheet').classList.add('open');
+  setDir(dir);
+  document.body.style.overflow = 'hidden';
+}
+function closeSheet() {
+  document.getElementById('order-sheet').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function setDir(dir) {
+  const buyBtn = document.getElementById('btn-buy');
+  const sellBtn = document.getElementById('btn-sell');
+  const submit = document.getElementById('submit-btn');
+  buyBtn.classList.toggle('active', dir === 'buy');
+  buyBtn.classList.toggle('buy-active', dir === 'buy');
+  sellBtn.classList.toggle('active', dir === 'sell');
+  sellBtn.classList.toggle('sell-active', dir === 'sell');
+  if (dir === 'buy') {
+    submit.className = 'btn btn-xl btn-primary btn-block';
+    submit.textContent = 'Open BUY Position';
+  } else {
+    submit.className = 'btn btn-xl btn-negative btn-block';
+    submit.textContent = 'Open SELL Position';
+  }
+}
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeSheet(); });
 </script>
 </body>
 </html>
