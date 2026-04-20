@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>eToro Perps — Liquidation Flow</title>
+<title>eToro Perps — Liquidation</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -18,17 +18,13 @@
   --color-border: #E4E7F0;
   --color-border-strong: #D1D5DB;
   --color-brand-primary: #0EB12E;
-  --color-brand-primary-hover: #0A9824;
   --color-brand-primary-bg: #E7F7EB;
   --color-negative: #F23D40;
-  --color-negative-hover: #D8353A;
   --color-negative-bg: #FDECEC;
   --color-accent-blue: #2A84F7;
   --color-accent-blue-bg: #E8F1FE;
   --color-accent-purple: #8B5CF6;
   --color-accent-purple-bg: #F0EBFE;
-  --color-accent-orange: #FF8A3D;
-  --color-accent-orange-bg: #FFF4EC;
   --color-trade-bg: #1B1D21;
 
   --x1: 4px; --x2: 8px; --x3: 12px; --x4: 16px;
@@ -45,13 +41,10 @@
   --color-surface: #1C1F29; --color-text-primary: #FFFFFF;
   --color-text-secondary: #C7CBD6; --color-text-muted: #999FB2;
   --color-border: #2E323F; --color-border-strong: #5A6178;
-  --color-brand-primary: #30CF4F; --color-brand-primary-hover: #25B842;
-  --color-brand-primary-bg: rgba(48,207,79,0.14);
-  --color-negative: #E9544C; --color-negative-hover: #D24A44;
-  --color-negative-bg: rgba(233,84,76,0.14);
+  --color-brand-primary: #30CF4F; --color-brand-primary-bg: rgba(48,207,79,0.14);
+  --color-negative: #E9544C; --color-negative-bg: rgba(233,84,76,0.14);
   --color-accent-blue: #5AA3FF; --color-accent-blue-bg: rgba(90,163,255,0.14);
   --color-accent-purple: #A78BFA; --color-accent-purple-bg: rgba(167,139,250,0.14);
-  --color-accent-orange: #FFB380; --color-accent-orange-bg: rgba(255,179,128,0.14);
   --elevation-1: 0 1px 2px rgba(0,0,0,0.4);
   --elevation-2: 0 4px 8px rgba(0,0,0,0.35);
   --elevation-3: 0 12px 20px rgba(0,0,0,0.5);
@@ -72,72 +65,12 @@ button { font-family: inherit; border: none; background: none; cursor: pointer; 
   border-left: 1px solid var(--color-border); border-right: 1px solid var(--color-border);
 }
 
-/* Status bar */
 .status-bar {
   display: flex; align-items: center; justify-content: space-between;
   padding: var(--x2) var(--x6); font-size: var(--type-caption); font-weight: 600;
 }
 .status-right { display: flex; gap: var(--x1); align-items: center; }
 .status-right svg { width: 14px; height: 14px; }
-
-/* ============================================================
-   SCREEN 1: PUSH NOTIFICATION (Lock screen)
-   ============================================================ */
-.lock-screen {
-  background: linear-gradient(180deg, #1a1c24 0%, #0d0f14 100%);
-  min-height: 100vh; padding: var(--x6);
-  display: flex; flex-direction: column;
-}
-.lock-time {
-  text-align: center; margin-top: 60px;
-  font-size: 64px; font-weight: 200; color: #FFFFFF;
-  letter-spacing: -2px; line-height: 1;
-}
-.lock-date {
-  text-align: center; margin-top: var(--x2);
-  font-size: var(--type-body); color: rgba(255,255,255,0.6); font-weight: 400;
-}
-
-.notification-stack { margin-top: 48px; display: flex; flex-direction: column; gap: var(--x3); }
-
-.notif {
-  background: rgba(255,255,255,0.12);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-radius: 16px;
-  padding: var(--x4);
-  border: 1px solid rgba(255,255,255,0.08);
-}
-.notif-header {
-  display: flex; align-items: center; gap: var(--x2); margin-bottom: var(--x2);
-}
-.notif-app-icon {
-  width: 20px; height: 20px; border-radius: 5px;
-  background: #0EB12E; display: flex; align-items: center; justify-content: center;
-  font-size: 10px; font-weight: 700; color: #FFF;
-}
-.notif-app { font-size: 12px; color: rgba(255,255,255,0.5); font-weight: 500; }
-.notif-time { font-size: 12px; color: rgba(255,255,255,0.35); margin-left: auto; }
-
-.notif-title { font-size: var(--type-body); font-weight: 700; color: #FFFFFF; }
-.notif-body { font-size: var(--type-body-sm); color: rgba(255,255,255,0.7); margin-top: 4px; line-height: 1.5; }
-
-.notif.urgent {
-  border-color: rgba(242, 61, 64, 0.4);
-  background: rgba(242, 61, 64, 0.15);
-}
-.notif.urgent .notif-app-icon { background: var(--color-negative); }
-
-.notif.warning {
-  border-color: rgba(255, 138, 61, 0.3);
-  background: rgba(255, 138, 61, 0.12);
-}
-.notif.warning .notif-app-icon { background: var(--color-accent-orange); }
-
-/* ============================================================
-   SCREEN 2: IN-APP NOTIFICATION (Notification center)
-   ============================================================ */
-.app-screen { padding-bottom: var(--x20); }
 
 .top-bar {
   display: flex; align-items: center; justify-content: space-between;
@@ -147,135 +80,41 @@ button { font-family: inherit; border: none; background: none; cursor: pointer; 
 .top-bar-left { display: flex; align-items: center; gap: var(--x3); }
 .top-bar-icon { width: 24px; height: 24px; color: var(--color-text-primary); }
 
-/* Alert banner (in-app) */
-.alert-banner {
+/* ============================================================
+   Liquidation Notification (in-app)
+   ============================================================ */
+.liq-notification {
   margin: var(--x4) var(--x6);
   border-radius: var(--radius-x2);
   overflow: hidden;
   border: 1.5px solid var(--color-negative);
-  animation: bannerPulse 3s ease-in-out infinite;
 }
-@keyframes bannerPulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(242,61,64,0); }
-  50% { box-shadow: 0 0 0 4px rgba(242,61,64,0.1); }
-}
-.alert-banner-header {
+.liq-notification-header {
   background: var(--color-negative);
   padding: var(--x3) var(--x4);
   display: flex; align-items: center; gap: var(--x2);
   color: #FFFFFF;
 }
-.alert-banner-header svg { width: 18px; height: 18px; flex-shrink: 0; }
-.alert-banner-header .title { font-size: var(--type-body-sm); font-weight: 700; }
-.alert-banner-header .time { font-size: var(--type-caption); opacity: 0.7; margin-left: auto; }
+.liq-notification-header svg { width: 18px; height: 18px; flex-shrink: 0; }
+.liq-notification-header .title { font-size: var(--type-body-sm); font-weight: 700; }
+.liq-notification-header .time { font-size: var(--type-caption); opacity: 0.7; margin-left: auto; }
 
-.alert-banner-body {
+.liq-notification-body {
   background: var(--color-negative-bg);
   padding: var(--x4);
 }
-.alert-pair {
+
+.liq-pair {
   display: flex; align-items: center; gap: var(--x3);
   margin-bottom: var(--x3);
 }
-.alert-pair-icon {
+.liq-pair-icon {
   width: 36px; height: 36px; border-radius: var(--radius-full);
   background: #F7931A; display: flex; align-items: center; justify-content: center;
   color: #FFF; font-weight: 700; font-size: var(--type-body-sm);
 }
-.alert-pair-name { font-weight: 700; font-size: var(--type-body); }
-.alert-pair-badges { display: flex; gap: var(--x1); margin-top: 2px; }
-
-.alert-details {
-  display: grid; grid-template-columns: 1fr 1fr; gap: var(--x3);
-}
-.alert-detail-item {}
-.alert-detail-label {
-  font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px;
-  color: var(--color-text-muted); font-weight: 600;
-}
-.alert-detail-value {
-  font-size: var(--type-body-sm); font-weight: 600;
-  color: var(--color-text-primary); margin-top: 2px;
-}
-
-.alert-loss-row {
-  margin-top: var(--x3); padding: var(--x3) var(--x4);
-  background: var(--color-surface); border-radius: var(--radius-x2);
-  border: 1px solid var(--color-border);
-  display: flex; align-items: center; justify-content: space-between;
-}
-.alert-loss-label { font-size: var(--type-body-sm); font-weight: 600; color: var(--color-text-primary); }
-.alert-loss-value { font-size: var(--type-h3); font-weight: 800; color: var(--color-negative); letter-spacing: -0.3px; }
-
-.alert-actions {
-  display: flex; gap: var(--x3); margin-top: var(--x4);
-}
-.alert-actions .btn {
-  flex: 1; display: inline-flex; align-items: center; justify-content: center;
-  gap: var(--x2); font-weight: 600; font-size: var(--type-body-sm);
-  padding: var(--x3) var(--x4); border-radius: var(--radius-full);
-  transition: all 0.15s; cursor: pointer; border: none;
-}
-.alert-actions .btn-primary {
-  background: var(--color-text-primary); color: var(--color-bg);
-}
-.alert-actions .btn-secondary {
-  background: transparent; color: var(--color-text-primary);
-  border: 1px solid var(--color-border-strong);
-}
-
-/* ============================================================
-   SCREEN 3: Liquidated Position Card (in Portfolio)
-   ============================================================ */
-.portfolio-section {
-  max-width: 960px; margin: var(--x8) auto 0;
-  padding: 0 var(--x6) var(--x8);
-}
-@media (max-width: 560px) { .portfolio-section { padding: 0 var(--x4) var(--x6); } }
-
-.portfolio-header {
-  display: flex; align-items: flex-end; justify-content: space-between;
-  gap: var(--x4); margin-bottom: var(--x5); flex-wrap: wrap;
-}
-.portfolio-title { font-size: 24px; font-weight: 700; letter-spacing: -0.3px; }
-.portfolio-subtitle { font-size: 13px; color: var(--color-text-secondary); margin-top: 2px; }
-
-.position-card {
-  background: var(--color-surface); border: 1px solid var(--color-border);
-  border-radius: var(--radius-x2); overflow: hidden; box-shadow: var(--elevation-1);
-}
-.position-card.liquidated {
-  border-color: var(--color-negative);
-  border-width: 1.5px;
-}
-
-.liquidated-strip {
-  background: var(--color-negative);
-  padding: var(--x2) var(--x5);
-  display: flex; align-items: center; gap: var(--x2);
-  color: #FFFFFF; font-size: var(--type-body-sm); font-weight: 700;
-}
-.liquidated-strip svg { width: 16px; height: 16px; flex-shrink: 0; }
-.liquidated-strip .liq-time {
-  margin-left: auto; font-size: var(--type-caption); font-weight: 500; opacity: 0.8;
-}
-
-.position-header {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: var(--x5) var(--x5) var(--x4); gap: var(--x4); flex-wrap: wrap;
-}
-.position-id { display: flex; align-items: center; gap: var(--x3); }
-.position-id .avatar {
-  width: 40px; height: 40px; border-radius: var(--radius-full);
-  display: flex; align-items: center; justify-content: center;
-  color: #FFFFFF; font-weight: 700; font-size: var(--type-body);
-  opacity: 0.5;
-}
-.position-card.liquidated .position-id .avatar { opacity: 0.5; }
-
-.position-name-row { display: flex; align-items: center; gap: var(--x2); flex-wrap: wrap; }
-.position-name { font-weight: 600; color: var(--color-text-primary); }
-.position-meta { font-size: var(--type-caption); color: var(--color-text-secondary); margin-top: 2px; }
+.liq-pair-name { font-weight: 700; font-size: var(--type-body); }
+.liq-pair-badges { display: flex; gap: var(--x1); margin-top: 2px; }
 
 .badge {
   display: inline-flex; align-items: center; gap: var(--x1);
@@ -285,197 +124,133 @@ button { font-family: inherit; border: none; background: none; cursor: pointer; 
 .badge-purple { background: var(--color-accent-purple-bg); color: var(--color-accent-purple); }
 .badge-negative { background: var(--color-negative-bg); color: var(--color-negative); }
 
-.position-pnl { text-align: right; display: flex; flex-direction: column; align-items: flex-end; }
-.pnl-value { font-size: 28px; font-weight: 700; letter-spacing: -0.3px; line-height: 1.1; }
-.pnl-pct { font-size: var(--type-body-sm); font-weight: 600; }
-.pnl-caption { font-size: 11px; color: var(--color-text-muted); margin-top: 2px; }
+.liq-details {
+  display: grid; grid-template-columns: 1fr 1fr; gap: var(--x3);
+}
+.liq-detail-label {
+  font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--color-text-muted); font-weight: 600;
+}
+.liq-detail-value {
+  font-size: var(--type-body-sm); font-weight: 600;
+  color: var(--color-text-primary); margin-top: 2px;
+}
 
-.position-details {
-  display: grid; grid-template-columns: repeat(4, 1fr);
-  gap: var(--x4) var(--x5); padding: var(--x4) var(--x5);
-  border-top: 1px solid var(--color-border);
+.liq-loss-row {
+  margin-top: var(--x3); padding: var(--x3) var(--x4);
+  background: var(--color-surface); border-radius: var(--radius-x2);
+  border: 1px solid var(--color-border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.liq-loss-label { font-size: var(--type-body-sm); font-weight: 600; }
+.liq-loss-value { font-size: var(--type-h3); font-weight: 800; color: var(--color-negative); letter-spacing: -0.3px; }
+
+.liq-actions {
+  display: flex; gap: var(--x3); margin-top: var(--x4);
+}
+.liq-actions .btn {
+  flex: 1; display: inline-flex; align-items: center; justify-content: center;
+  gap: var(--x2); font-weight: 600; font-size: var(--type-body-sm);
+  padding: var(--x3) var(--x4); border-radius: var(--radius-full);
+  transition: all 0.15s; cursor: pointer; border: none;
+}
+.btn-dark { background: var(--color-text-primary); color: var(--color-bg); }
+.btn-outline { background: transparent; color: var(--color-text-primary); border: 1px solid var(--color-border-strong); }
+
+/* ============================================================
+   Account Statement
+   ============================================================ */
+.statement-section {
+  max-width: 640px; margin: var(--x8) auto 0;
+  padding: 0 var(--x6) var(--x8);
+}
+@media (max-width: 560px) { .statement-section { padding: 0 var(--x4) var(--x6); } }
+
+.statement-header {
+  margin-bottom: var(--x5);
+}
+.statement-title { font-size: 24px; font-weight: 700; letter-spacing: -0.3px; }
+.statement-subtitle { font-size: 13px; color: var(--color-text-secondary); margin-top: 2px; }
+
+.statement-card {
+  background: var(--color-surface); border: 1px solid var(--color-border);
+  border-radius: var(--radius-x2); overflow: hidden; box-shadow: var(--elevation-1);
+}
+
+/* Liquidated position row in statement */
+.statement-position {
   border-bottom: 1px solid var(--color-border);
 }
-@media (max-width: 600px) { .position-details { grid-template-columns: repeat(2, 1fr); } }
-.detail-label {
+.statement-position-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: var(--x4) var(--x5); gap: var(--x4); flex-wrap: wrap;
+}
+.statement-pos-left { display: flex; align-items: center; gap: var(--x3); }
+.statement-pos-avatar {
+  width: 36px; height: 36px; border-radius: var(--radius-full);
+  display: flex; align-items: center; justify-content: center;
+  color: #FFF; font-weight: 700; font-size: var(--type-body-sm);
+}
+.statement-pos-name { font-weight: 600; }
+.statement-pos-meta { font-size: var(--type-caption); color: var(--color-text-secondary); margin-top: 2px; }
+.statement-pos-pnl { text-align: right; }
+.statement-pos-pnl-value { font-size: var(--type-h3); font-weight: 700; letter-spacing: -0.3px; }
+.statement-pos-pnl-pct { font-size: var(--type-body-sm); font-weight: 600; }
+
+/* Detail grid */
+.statement-details {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: var(--x3) var(--x4); padding: var(--x4) var(--x5);
+  background: var(--color-bg-secondary);
+  border-top: 1px solid var(--color-border);
+}
+@media (max-width: 560px) { .statement-details { grid-template-columns: repeat(2, 1fr); } }
+.statement-detail-label {
   font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px;
   color: var(--color-text-muted); font-weight: 500;
 }
-.detail-value {
-  font-size: var(--type-body-sm); font-weight: 500; color: var(--color-text-primary);
-  margin-top: 2px;
+.statement-detail-value {
+  font-size: var(--type-body-sm); font-weight: 500;
+  color: var(--color-text-primary); margin-top: 2px;
 }
 
-/* Liquidation explanation panel */
-.liq-explanation {
+/* Fee breakdown */
+.statement-fees {
   padding: var(--x4) var(--x5);
-  background: var(--color-bg-secondary);
+  border-top: 1px solid var(--color-border);
 }
-.liq-explanation-title {
-  font-size: var(--type-body-sm); font-weight: 700; color: var(--color-text-primary);
-  margin-bottom: var(--x3); display: flex; align-items: center; gap: var(--x2);
+.statement-fee-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 4px 0; font-size: var(--type-body-sm);
 }
-.liq-explanation-title svg { width: 16px; height: 16px; color: var(--color-text-muted); }
+.statement-fee-row .label { color: var(--color-text-secondary); }
+.statement-fee-row .value { color: var(--color-text-primary); font-weight: 500; }
+.statement-fee-row.total {
+  border-top: 1px solid var(--color-border);
+  margin-top: var(--x2); padding-top: var(--x2);
+  font-weight: 700;
+}
+.statement-fee-row.total .label { color: var(--color-text-primary); }
 
-.liq-timeline { display: flex; flex-direction: column; gap: 0; }
-.liq-step {
-  display: flex; gap: var(--x3); position: relative;
-  padding-bottom: var(--x4);
-}
-.liq-step:last-child { padding-bottom: 0; }
-.liq-dot-col {
-  display: flex; flex-direction: column; align-items: center; flex-shrink: 0; width: 20px;
-}
-.liq-dot {
-  width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
-  border: 2px solid var(--color-border-strong); background: var(--color-bg);
-  z-index: 1;
-}
-.liq-dot.active { border-color: var(--color-negative); background: var(--color-negative); }
-.liq-dot.warning { border-color: var(--color-accent-orange); background: var(--color-accent-orange); }
-.liq-line {
-  flex: 1; width: 2px; background: var(--color-border);
-  margin-top: 2px;
-}
-.liq-step:last-child .liq-line { display: none; }
-.liq-step-content { flex: 1; min-width: 0; padding-top: 0; }
-.liq-step-title { font-size: 12px; font-weight: 600; color: var(--color-text-primary); line-height: 1.2; }
-.liq-step-sub { font-size: 11px; color: var(--color-text-secondary); margin-top: 2px; line-height: 1.4; }
-.liq-step-time { font-size: 10px; color: var(--color-text-muted); margin-top: 2px; }
-
-.position-footer {
-  padding: var(--x4) var(--x5);
-  display: flex; gap: var(--x3); justify-content: flex-end;
-}
-.position-footer .btn {
-  display: inline-flex; align-items: center; justify-content: center;
-  gap: var(--x2); font-weight: 600; font-size: var(--type-body-sm);
-  padding: var(--x3) var(--x6); border-radius: 44px;
-  transition: all 0.15s; cursor: pointer; border: none;
-}
-.position-footer .btn-primary {
-  background: var(--color-text-primary); color: var(--color-bg);
-  box-shadow: var(--elevation-1);
-}
-.position-footer .btn-secondary {
-  background: transparent; color: var(--color-text-primary);
-  border: 1px solid var(--color-border-strong);
+/* Closure type tag */
+.closure-tag {
+  display: inline-flex; align-items: center; gap: var(--x1);
+  padding: var(--x1) var(--x3); border-radius: var(--radius-full);
+  background: var(--color-negative-bg); color: var(--color-negative);
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
 }
 
-/* ============================================================
-   Section labels (design annotation)
-   ============================================================ */
+/* Section labels */
 .section-label {
-  max-width: 960px; margin: var(--x8) auto var(--x3);
+  max-width: 640px; margin: var(--x8) auto var(--x3);
   padding: 0 var(--x6);
   display: flex; align-items: center; gap: var(--x2);
   font-size: 10px; text-transform: uppercase; letter-spacing: 1px;
-  color: var(--color-accent-blue); font-weight: 700;
+  color: var(--color-negative); font-weight: 700;
 }
 .section-label::before {
   content: ''; width: 8px; height: 8px; border-radius: 50%;
-  background: var(--color-accent-blue); flex-shrink: 0;
-}
-.section-label.red { color: var(--color-negative); }
-.section-label.red::before { background: var(--color-negative); }
-.section-label.orange { color: var(--color-accent-orange); }
-.section-label.orange::before { background: var(--color-accent-orange); }
-
-/* Reason code badge */
-.reason-code {
-  display: inline-flex; align-items: center; gap: var(--x2);
-  padding: var(--x2) var(--x3);
-  background: var(--color-bg-secondary); border: 1px solid var(--color-border);
-  border-radius: var(--radius-x1); font-family: 'SF Mono', 'Menlo', monospace;
-  font-size: 11px; font-weight: 600; color: var(--color-text-secondary);
-  margin-top: var(--x2);
-}
-.reason-code .code { color: var(--color-text-primary); }
-
-/* ADL indicator bar */
-.adl-indicator {
-  display: flex; gap: 3px; align-items: center;
-}
-.adl-bar {
-  width: 6px; height: 16px; border-radius: 2px;
-  background: var(--color-border);
-}
-.adl-bar.active { background: var(--color-accent-orange); }
-.adl-bar.active.high { background: var(--color-negative); }
-
-/* Audit trail table */
-.audit-trail {
-  margin-top: var(--x3); border: 1px solid var(--color-border);
-  border-radius: var(--radius-x2); overflow: hidden;
-}
-.audit-trail-header {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: var(--x3) var(--x4); background: var(--color-bg-secondary);
-  border-bottom: 1px solid var(--color-border);
-  font-size: 11px; font-weight: 600; color: var(--color-text-secondary);
-  text-transform: uppercase; letter-spacing: 0.5px;
-}
-.audit-row {
-  display: grid; grid-template-columns: 120px 1fr auto;
-  padding: var(--x3) var(--x4); border-bottom: 1px solid var(--color-border);
-  font-size: 12px; align-items: center; gap: var(--x3);
-}
-.audit-row:last-child { border-bottom: none; }
-.audit-time { color: var(--color-text-muted); font-variant-numeric: tabular-nums; font-size: 11px; }
-.audit-event { color: var(--color-text-primary); font-weight: 500; }
-.audit-value { color: var(--color-text-secondary); font-weight: 500; text-align: right; font-variant-numeric: tabular-nums; }
-
-/* Partial close indicator */
-.partial-indicator {
-  display: flex; align-items: center; gap: var(--x3);
-  padding: var(--x3) var(--x4); margin-top: var(--x3);
-  background: var(--color-accent-orange-bg);
-  border: 1px solid rgba(255,138,61,0.3);
-  border-radius: var(--radius-x2);
-}
-.partial-bar-track {
-  flex: 1; height: 8px; background: var(--color-border);
-  border-radius: var(--radius-full); overflow: hidden;
-}
-.partial-bar-fill {
-  height: 100%; border-radius: var(--radius-full);
-  background: var(--color-accent-orange);
-  transition: width 0.3s ease;
-}
-.partial-labels {
-  display: flex; justify-content: space-between; margin-top: var(--x1);
-  font-size: 10px; color: var(--color-text-muted);
-}
-
-/* Notification type variants */
-.notif.adl {
-  border-color: rgba(255, 138, 61, 0.4);
-  background: rgba(255, 138, 61, 0.12);
-}
-.notif.adl .notif-app-icon { background: var(--color-accent-orange); }
-
-.alert-banner.adl {
-  border-color: var(--color-accent-orange);
-}
-.alert-banner.adl .alert-banner-header {
-  background: var(--color-accent-orange);
-}
-.alert-banner.adl .alert-banner-body {
-  background: var(--color-accent-orange-bg);
-}
-
-.position-card.adl {
-  border-color: var(--color-accent-orange);
-}
-.adl-strip {
-  background: var(--color-accent-orange);
-  padding: var(--x2) var(--x5);
-  display: flex; align-items: center; gap: var(--x2);
-  color: #FFFFFF; font-size: var(--type-body-sm); font-weight: 700;
-}
-.adl-strip svg { width: 16px; height: 16px; flex-shrink: 0; }
-.adl-strip .liq-time {
-  margin-left: auto; font-size: var(--type-caption); font-weight: 500; opacity: 0.8;
+  background: var(--color-negative); flex-shrink: 0;
 }
 
 /* Theme toggle */
@@ -492,7 +267,7 @@ button { font-family: inherit; border: none; background: none; cursor: pointer; 
 [data-theme="dark"] .theme-toggle .icon-moon { display: none; }
 [data-theme="dark"] .theme-toggle .icon-sun { display: block; }
 
-/* Page footer */
+/* Footer */
 .page-footer {
   max-width: 430px; margin: 0 auto;
   padding: var(--x6) var(--x6) var(--x10);
@@ -518,535 +293,217 @@ button { font-family: inherit; border: none; background: none; cursor: pointer; 
   <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
 </button>
 
-<!-- ==================== SCREEN 1: PUSH NOTIFICATION ON LOCK SCREEN ==================== -->
-<div class="section-label red">Screen 1 — Push Notification (Lock Screen)</div>
+<!-- ==================== SCREEN 1: CLIENT UI — LIQUIDATION NOTIFICATION ==================== -->
+<div class="section-label">Screen 1 — Client UI: Liquidation Notification</div>
 
 <div class="phone">
-  <div class="lock-screen">
-    <!-- Lock screen time -->
-    <div class="lock-time">03:47</div>
-    <div class="lock-date">Monday, April 21</div>
-
-    <div class="notification-stack">
-      <!-- Warning notification (earlier) -->
-      <div class="notif warning">
-        <div class="notif-header">
-          <div class="notif-app-icon">e</div>
-          <span class="notif-app">eToro</span>
-          <span class="notif-time">2h ago</span>
-        </div>
-        <div class="notif-title">⚠️ BTCUSDC position at risk</div>
-        <div class="notif-body">
-          Your BTCUSDC LONG is approaching liquidation. BTC has dropped 8.2% in the last 4 hours. Consider adding funds or closing your position.
-        </div>
-      </div>
-
-      <!-- Liquidation notification -->
-      <div class="notif urgent">
-        <div class="notif-header">
-          <div class="notif-app-icon">e</div>
-          <span class="notif-app">eToro</span>
-          <span class="notif-time">now</span>
-        </div>
-        <div class="notif-title">🔴 BTCUSDC position liquidated</div>
-        <div class="notif-body">
-          Your BTCUSDC LONG (×10) was automatically closed due to liquidation. Loss: -$987.40 (-98.74%). Tap for details.
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ==================== SCREEN 2: IN-APP ALERT ==================== -->
-<div class="section-label red" style="margin-top: 48px;">Screen 2 — In-App Liquidation Alert</div>
-
-<div class="phone">
-  <div class="app-screen">
-    <!-- Status Bar -->
-    <div class="status-bar">
-      <span>03:47</span>
-      <div class="status-right">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M2 22h2v-2H2v2zm4 0h2v-6H6v6zm4 0h2v-10h-2v10zm4 0h2V8h-2v14zm4 0h2V4h-2v18z"/></svg>
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 4C7 4 2.73 6.11 0 9.27l12 14.54 12-14.54C21.27 6.11 17 4 12 4z"/></svg>
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 5H5c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-3h2v-4h-2V7c0-1.1-.9-2-2-2zm-2 10H5V9h10v6z"/></svg>
-      </div>
-    </div>
-
-    <!-- Top Bar -->
-    <div class="top-bar">
-      <div class="top-bar-left">
-        <svg class="top-bar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-        <div style="font-size: var(--type-body-lg); font-weight: 600;">Notifications</div>
-      </div>
-    </div>
-
-    <!-- Liquidation Alert Banner -->
-    <div class="alert-banner">
-      <div class="alert-banner-header">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-        <span class="title">Position Liquidated</span>
-        <span class="time">3:47 AM</span>
-      </div>
-      <div class="alert-banner-body">
-        <div class="alert-pair">
-          <div class="alert-pair-icon">₿</div>
-          <div>
-            <div class="alert-pair-name">BTCUSDC</div>
-            <div class="alert-pair-badges">
-              <span class="badge badge-positive" style="font-size: 9px;">LONG</span>
-              <span class="badge badge-purple" style="font-size: 9px;">PERP</span>
-              <span style="font-size: 10px; color: var(--color-text-muted);">×10</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="alert-details">
-          <div class="alert-detail-item">
-            <div class="alert-detail-label">Entry Price</div>
-            <div class="alert-detail-value">$84,231.50</div>
-          </div>
-          <div class="alert-detail-item">
-            <div class="alert-detail-label">Liquidation Price</div>
-            <div class="alert-detail-value" style="color: var(--color-negative);">$75,536.12</div>
-          </div>
-          <div class="alert-detail-item">
-            <div class="alert-detail-label">Invested</div>
-            <div class="alert-detail-value">$1,000.00</div>
-          </div>
-          <div class="alert-detail-item">
-            <div class="alert-detail-label">Exposure</div>
-            <div class="alert-detail-value">$10,000.00</div>
-          </div>
-        </div>
-
-        <div class="alert-loss-row">
-          <div class="alert-loss-label">Realized Loss</div>
-          <div class="alert-loss-value">-$987.40</div>
-        </div>
-
-        <div style="font-size: 11px; color: var(--color-text-secondary); margin-top: var(--x3); line-height: 1.5;">
-          Your position was automatically closed because the mark price reached the liquidation threshold. The remaining balance of $12.60 has been credited to your account.
-        </div>
-
-        <div class="alert-actions">
-          <button class="btn btn-secondary" onclick="window.location.href='index.html'">Trade Again</button>
-          <button class="btn btn-primary">View Position</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ==================== SCREEN 3: LIQUIDATED POSITION IN PORTFOLIO ==================== -->
-<div class="section-label red" style="margin-top: 48px;">Screen 3 — Portfolio View (Liquidated Position)</div>
-
-<div class="portfolio-section">
-  <div class="portfolio-header">
-    <div>
-      <div class="portfolio-title">Portfolio</div>
-      <div class="portfolio-subtitle">Closed positions · Perpetuals</div>
+  <div class="status-bar">
+    <span>03:47</span>
+    <div class="status-right">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M2 22h2v-2H2v2zm4 0h2v-6H6v6zm4 0h2v-10h-2v10zm4 0h2V8h-2v14zm4 0h2V4h-2v18z"/></svg>
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 4C7 4 2.73 6.11 0 9.27l12 14.54 12-14.54C21.27 6.11 17 4 12 4z"/></svg>
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 5H5c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-3h2v-4h-2V7c0-1.1-.9-2-2-2zm-2 10H5V9h10v6z"/></svg>
     </div>
   </div>
 
-  <div class="position-card liquidated">
-    <!-- Red liquidated strip -->
-    <div class="liquidated-strip">
+  <div class="top-bar">
+    <div class="top-bar-left">
+      <svg class="top-bar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      <div style="font-size: var(--type-body-lg); font-weight: 600;">BTCUSDC</div>
+    </div>
+  </div>
+
+  <!-- Liquidation notification -->
+  <div class="liq-notification">
+    <div class="liq-notification-header">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-      LIQUIDATED
-      <span class="liq-time">Apr 21, 2026 · 03:47 AM</span>
+      <span class="title">Position Liquidated</span>
+      <span class="time">3:47 AM</span>
     </div>
-
-    <div class="position-header">
-      <div class="position-id">
-        <div class="avatar" style="background: #F7931A;">₿</div>
+    <div class="liq-notification-body">
+      <div class="liq-pair">
+        <div class="liq-pair-icon">₿</div>
         <div>
-          <div class="position-name-row">
-            <span class="position-name">BTCUSDC</span>
-            <span class="badge badge-positive">LONG</span>
-            <span class="badge badge-purple">PERP</span>
-            <span class="badge badge-negative">LIQUIDATED</span>
-            <span style="font-size: var(--type-caption); color: var(--color-text-muted);">×10</span>
+          <div class="liq-pair-name">BTCUSDC</div>
+          <div class="liq-pair-badges">
+            <span class="badge badge-positive" style="font-size: 9px;">LONG</span>
+            <span class="badge badge-purple" style="font-size: 9px;">PERP</span>
+            <span style="font-size: 10px; color: var(--color-text-muted);">×10</span>
           </div>
-          <div class="position-meta">Opened Apr 16, 2026 · Closed Apr 21, 2026 (auto)</div>
         </div>
       </div>
-      <div class="position-pnl">
-        <div style="display: flex; align-items: baseline; gap: var(--x2);">
-          <span class="pnl-value" style="color: var(--color-negative);">-$987.40</span>
-          <span class="pnl-pct" style="color: var(--color-negative);">(-98.74%)</span>
+
+      <div class="liq-details">
+        <div>
+          <div class="liq-detail-label">Entry Price</div>
+          <div class="liq-detail-value">$84,231.50</div>
         </div>
-        <div class="pnl-caption">Closed at $75,536.12 · Liquidation</div>
+        <div>
+          <div class="liq-detail-label">Liquidation Price</div>
+          <div class="liq-detail-value" style="color: var(--color-negative);">$75,536.12</div>
+        </div>
+        <div>
+          <div class="liq-detail-label">Invested</div>
+          <div class="liq-detail-value">$1,000.00</div>
+        </div>
+        <div>
+          <div class="liq-detail-label">Exposure</div>
+          <div class="liq-detail-value">$10,000.00</div>
+        </div>
+      </div>
+
+      <div class="liq-loss-row">
+        <div class="liq-loss-label">Realized Loss</div>
+        <div class="liq-loss-value">-$987.40</div>
+      </div>
+
+      <div style="font-size: 11px; color: var(--color-text-secondary); margin-top: var(--x3); line-height: 1.5;">
+        Your position was automatically closed because the mark price reached the liquidation threshold. The remaining balance of $12.60 has been credited to your account.
+      </div>
+
+      <div class="liq-actions">
+        <button class="btn btn-outline" onclick="window.location.href='index.html'">Trade Again</button>
+        <button class="btn btn-dark">View Statement</button>
       </div>
     </div>
+  </div>
+</div>
 
-    <div class="position-details">
-      <div>
-        <div class="detail-label">Invested</div>
-        <div class="detail-value">$1,000.00</div>
-      </div>
-      <div>
-        <div class="detail-label">Entry Price</div>
-        <div class="detail-value">$84,231.50</div>
-      </div>
-      <div>
-        <div class="detail-label">Liquidation Price</div>
-        <div class="detail-value" style="color: var(--color-negative); font-weight: 600;">$75,536.12</div>
-      </div>
-      <div>
-        <div class="detail-label">Returned</div>
-        <div class="detail-value">$12.60</div>
-      </div>
-    </div>
+<!-- ==================== SCREEN 2: ACCOUNT STATEMENT ==================== -->
+<div class="section-label" style="margin-top: 64px;">Screen 2 — Account Statement (After Liquidation)</div>
 
-    <!-- Liquidation explanation -->
-    <div class="liq-explanation">
-      <div class="liq-explanation-title">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-        What happened
-      </div>
-      <div class="liq-timeline">
-        <div class="liq-step">
-          <div class="liq-dot-col">
-            <div class="liq-dot"></div>
-            <div class="liq-line"></div>
-          </div>
-          <div class="liq-step-content">
-            <div class="liq-step-title">Position opened</div>
-            <div class="liq-step-sub">BTCUSDC LONG ×10 at $84,231.50</div>
-            <div class="liq-step-time">Apr 16, 20:15</div>
-          </div>
-        </div>
-        <div class="liq-step">
-          <div class="liq-dot-col">
-            <div class="liq-dot warning"></div>
-            <div class="liq-line"></div>
-          </div>
-          <div class="liq-step-content">
-            <div class="liq-step-title" style="color: var(--color-accent-orange);">Approaching liquidation</div>
-            <div class="liq-step-sub">BTC dropped below $77,000. Warning notification sent.</div>
-            <div class="liq-step-time">Apr 21, 01:32</div>
+<div class="statement-section">
+  <div class="statement-header">
+    <div class="statement-title">Account Statement</div>
+    <div class="statement-subtitle">Closed Trades · April 2026</div>
+  </div>
+
+  <div class="statement-card">
+    <!-- Position summary row -->
+    <div class="statement-position">
+      <div class="statement-position-header">
+        <div class="statement-pos-left">
+          <div class="statement-pos-avatar" style="background: #F7931A;">₿</div>
+          <div>
+            <div style="display: flex; align-items: center; gap: var(--x2); flex-wrap: wrap;">
+              <span class="statement-pos-name">BTCUSDC</span>
+              <span class="badge badge-positive" style="font-size: 9px;">LONG</span>
+              <span class="badge badge-purple" style="font-size: 9px;">PERP ×10</span>
+              <span class="closure-tag">Liquidated</span>
+            </div>
+            <div class="statement-pos-meta">Apr 16, 20:15 → Apr 21, 03:47 · 4d 7h</div>
           </div>
         </div>
-        <div class="liq-step">
-          <div class="liq-dot-col">
-            <div class="liq-dot active"></div>
-            <div class="liq-line"></div>
-          </div>
-          <div class="liq-step-content">
-            <div class="liq-step-title" style="color: var(--color-negative);">Position liquidated</div>
-            <div class="liq-step-sub">Mark price hit $75,536.12. Your position was automatically closed to prevent further losses.</div>
-            <div class="liq-step-time">Apr 21, 03:47</div>
-          </div>
-        </div>
-        <div class="liq-step">
-          <div class="liq-dot-col">
-            <div class="liq-dot"></div>
-          </div>
-          <div class="liq-step-content">
-            <div class="liq-step-title">Balance settled</div>
-            <div class="liq-step-sub">Remaining balance of $12.60 credited to your account. Total loss: $987.40 (98.74% of invested amount).</div>
-            <div class="liq-step-time">Apr 21, 03:47</div>
-          </div>
+        <div class="statement-pos-pnl">
+          <div class="statement-pos-pnl-value" style="color: var(--color-negative);">-$987.40</div>
+          <div class="statement-pos-pnl-pct" style="color: var(--color-negative);">-98.74%</div>
         </div>
       </div>
     </div>
 
-    <div class="position-footer">
-      <button class="btn btn-secondary">Download Statement</button>
-      <button class="btn btn-primary" onclick="window.location.href='index.html'">Trade BTCUSDC</button>
+    <!-- Position details -->
+    <div class="statement-details">
+      <div>
+        <div class="statement-detail-label">Invested</div>
+        <div class="statement-detail-value">$1,000.00</div>
+      </div>
+      <div>
+        <div class="statement-detail-label">Entry Price</div>
+        <div class="statement-detail-value">$84,231.50</div>
+      </div>
+      <div>
+        <div class="statement-detail-label">Liquidation Price</div>
+        <div class="statement-detail-value" style="color: var(--color-negative); font-weight: 600;">$75,536.12</div>
+      </div>
+      <div>
+        <div class="statement-detail-label">Closure Type</div>
+        <div class="statement-detail-value" style="color: var(--color-negative); font-weight: 600;">Liquidation</div>
+      </div>
+    </div>
+
+    <!-- Fee breakdown -->
+    <div class="statement-fees">
+      <div class="statement-fee-row">
+        <span class="label">Price P&L</span>
+        <span class="value" style="color: var(--color-negative);">-$1,031.82</span>
+      </div>
+      <div class="statement-fee-row">
+        <span class="label">Spread (0.25% × entry + exit)</span>
+        <span class="value">-$25.05</span>
+      </div>
+      <div class="statement-fee-row">
+        <span class="label">Funding fees (4d, 13 intervals)</span>
+        <span class="value">-$30.03</span>
+      </div>
+      <div class="statement-fee-row">
+        <span class="label">Liquidation fee</span>
+        <span class="value">$0.00</span>
+      </div>
+      <div class="statement-fee-row total">
+        <span class="label">Net P&L</span>
+        <span class="value" style="color: var(--color-negative);">-$987.40</span>
+      </div>
+      <div class="statement-fee-row" style="border-top: none; padding-top: 0;">
+        <span class="label">Returned to balance</span>
+        <span class="value">$12.60</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Other closed trades for context -->
+  <div style="margin-top: var(--x4); font-size: var(--type-caption); color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600;">
+    Other Closed Trades
+  </div>
+
+  <div class="statement-card" style="margin-top: var(--x2);">
+    <div class="statement-position">
+      <div class="statement-position-header">
+        <div class="statement-pos-left">
+          <div class="statement-pos-avatar" style="background: #627EEA;">Ξ</div>
+          <div>
+            <div style="display: flex; align-items: center; gap: var(--x2); flex-wrap: wrap;">
+              <span class="statement-pos-name">ETHUSDC</span>
+              <span class="badge badge-positive" style="font-size: 9px;">LONG</span>
+              <span class="badge badge-purple" style="font-size: 9px;">PERP ×10</span>
+              <span style="font-size: 10px; color: var(--color-text-muted); font-weight: 500;">Closed by user</span>
+            </div>
+            <div class="statement-pos-meta">Apr 14, 11:20 → Apr 19, 16:45 · 5d 5h</div>
+          </div>
+        </div>
+        <div class="statement-pos-pnl">
+          <div class="statement-pos-pnl-value" style="color: var(--color-brand-primary); font-size: var(--type-h4);">+$342.10</div>
+          <div class="statement-pos-pnl-pct" style="color: var(--color-brand-primary);">+17.11%</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="statement-position" style="border-bottom: none;">
+      <div class="statement-position-header">
+        <div class="statement-pos-left">
+          <div class="statement-pos-avatar" style="background: #9945FF;">S</div>
+          <div>
+            <div style="display: flex; align-items: center; gap: var(--x2); flex-wrap: wrap;">
+              <span class="statement-pos-name">SOLUSDC</span>
+              <span class="badge badge-negative" style="font-size: 9px;">SHORT</span>
+              <span class="badge badge-purple" style="font-size: 9px;">PERP ×10</span>
+              <span style="font-size: 10px; color: var(--color-text-muted); font-weight: 500;">Closed by user</span>
+            </div>
+            <div class="statement-pos-meta">Apr 17, 09:00 → Apr 20, 14:30 · 3d 5h</div>
+          </div>
+        </div>
+        <div class="statement-pos-pnl">
+          <div class="statement-pos-pnl-value" style="color: var(--color-negative); font-size: var(--type-h4);">-$88.50</div>
+          <div class="statement-pos-pnl-pct" style="color: var(--color-negative);">-8.85%</div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
 <!-- Footer -->
 <div class="page-footer">
-
-<div class="phone">
-  <div class="lock-screen">
-    <div class="lock-time">14:22</div>
-    <div class="lock-date">Tuesday, April 22</div>
-
-    <div class="notification-stack">
-      <div class="notif adl">
-        <div class="notif-header">
-          <div class="notif-app-icon">e</div>
-          <span class="notif-app">eToro</span>
-          <span class="notif-time">now</span>
-        </div>
-        <div class="notif-title">⚡ ETHUSDC position closed (ADL)</div>
-        <div class="notif-body">
-          Due to extreme market volatility, your ETHUSDC LONG (×10) was automatically closed. Loss: -$782.00 (-15.64%). Tap for details.
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ==================== SCREEN 5: ADL IN-APP ALERT ==================== -->
-<div class="section-label orange" style="margin-top: 48px;">Screen 5 — ADL In-App Alert (Partial Reduction)</div>
-
-<div class="phone">
-  <div class="app-screen">
-    <div class="status-bar">
-      <span>14:22</span>
-      <div class="status-right">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M2 22h2v-2H2v2zm4 0h2v-6H6v6zm4 0h2v-10h-2v10zm4 0h2V8h-2v14zm4 0h2V4h-2v18z"/></svg>
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 4C7 4 2.73 6.11 0 9.27l12 14.54 12-14.54C21.27 6.11 17 4 12 4z"/></svg>
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 5H5c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-3h2v-4h-2V7c0-1.1-.9-2-2-2zm-2 10H5V9h10v6z"/></svg>
-      </div>
-    </div>
-
-    <div class="top-bar">
-      <div class="top-bar-left">
-        <svg class="top-bar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-        <div style="font-size: var(--type-body-lg); font-weight: 600;">Notifications</div>
-      </div>
-    </div>
-
-    <!-- ADL Alert Banner -->
-    <div class="alert-banner adl">
-      <div class="alert-banner-header">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-        <span class="title">Position Closed — ADL</span>
-        <span class="time">2:22 PM</span>
-      </div>
-      <div class="alert-banner-body">
-        <div class="alert-pair">
-          <div class="alert-pair-icon" style="background: #627EEA;">Ξ</div>
-          <div>
-            <div class="alert-pair-name">ETHUSDC</div>
-            <div class="alert-pair-badges">
-              <span class="badge badge-positive" style="font-size: 9px;">LONG</span>
-              <span class="badge badge-purple" style="font-size: 9px;">PERP</span>
-              <span style="font-size: 10px; color: var(--color-text-muted);">×10</span>
-            </div>
-          </div>
-        </div>
-
-        <div style="font-size: 12px; color: var(--color-text-primary); font-weight: 600; margin-bottom: var(--x3);">
-          Your position was fully closed due to extreme market conditions (auto-deleverage).
-        </div>
-
-        <div class="alert-details" style="margin-top: var(--x3);">
-          <div class="alert-detail-item">
-            <div class="alert-detail-label">Invested</div>
-            <div class="alert-detail-value">$5,000.00</div>
-          </div>
-          <div class="alert-detail-item">
-            <div class="alert-detail-label">Close Price</div>
-            <div class="alert-detail-value" style="color: var(--color-negative);">$2,844.30</div>
-          </div>
-          <div class="alert-detail-item">
-            <div class="alert-detail-label">Entry Price</div>
-            <div class="alert-detail-value">$3,241.80</div>
-          </div>
-          <div class="alert-detail-item">
-            <div class="alert-detail-label">Realized P&amp;L</div>
-            <div class="alert-detail-value" style="color: var(--color-negative);">-$782.00</div>
-          </div>
-        </div>
-
-        <div class="alert-loss-row">
-          <div class="alert-loss-label">Realized Loss</div>
-          <div class="alert-loss-value">-$782.00</div>
-        </div>
-
-        <!-- Reason code -->
-        <div class="reason-code">
-          Closure reason: <span class="code">ADL_EXTREME_VOLATILITY</span>
-        </div>
-
-        <div style="font-size: 11px; color: var(--color-text-secondary); margin-top: var(--x3); line-height: 1.5;">
-          During extreme market events, positions may be automatically closed to maintain market stability. This is recorded as a trade in your account history with a full audit trail.
-        </div>
-
-        <div class="alert-actions">
-          <button class="btn btn-secondary">View Position</button>
-          <button class="btn btn-primary">View Trade History</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ==================== SCREEN 6: ADL POSITION IN PORTFOLIO ==================== -->
-<div class="section-label orange" style="margin-top: 48px;">Screen 6 — Portfolio (ADL-Closed Position)</div>
-
-<div class="portfolio-section">
-  <div class="portfolio-header">
-    <div>
-      <div class="portfolio-title">Portfolio</div>
-      <div class="portfolio-subtitle">Closed positions · Auto-deleveraged</div>
-    </div>
-  </div>
-
-  <div class="position-card adl">
-    <div class="adl-strip">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-      AUTO-DELEVERAGED · Position closed
-      <span class="liq-time">Apr 22, 2026 · 02:22 PM</span>
-    </div>
-
-    <div class="position-header">
-      <div class="position-id">
-        <div class="avatar" style="background: #627EEA; opacity: 1;">Ξ</div>
-        <div>
-          <div class="position-name-row">
-            <span class="position-name">ETHUSDC</span>
-            <span class="badge badge-positive">LONG</span>
-            <span class="badge badge-purple">PERP</span>
-            <span class="badge" style="background: var(--color-accent-orange-bg); color: var(--color-accent-orange);">ADL</span>
-            <span class="badge badge-negative">CLOSED</span>
-            <span style="font-size: var(--type-caption); color: var(--color-text-muted);">×10</span>
-          </div>
-          <div class="position-meta">Opened Apr 18, 2026 · Closed Apr 22, 2026 (auto)</div>
-        </div>
-      </div>
-      <div class="position-pnl">
-        <div style="display: flex; align-items: baseline; gap: var(--x2);">
-          <span class="pnl-value" style="color: var(--color-negative);">-$782.00</span>
-          <span class="pnl-pct" style="color: var(--color-negative);">(-15.64%)</span>
-        </div>
-        <div class="pnl-caption">Closed at $2,844.30 · ADL</div>
-      </div>
-    </div>
-
-    <div class="position-details">
-      <div>
-        <div class="detail-label">Invested</div>
-        <div class="detail-value">$5,000.00</div>
-      </div>
-      <div>
-        <div class="detail-label">Entry Price</div>
-        <div class="detail-value">$3,241.80</div>
-      </div>
-      <div>
-        <div class="detail-label">Close Price</div>
-        <div class="detail-value" style="color: var(--color-accent-orange); font-weight: 600;">$2,844.30</div>
-      </div>
-      <div>
-        <div class="detail-label">Realized P&amp;L</div>
-        <div class="detail-value" style="color: var(--color-negative); font-weight: 600;">-$782.00</div>
-      </div>
-    </div>
-
-    <!-- Audit trail -->
-    <div style="padding: var(--x4) var(--x5);">
-      <div class="liq-explanation-title">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
-        Trade &amp; Event History
-      </div>
-      <div class="audit-trail">
-        <div class="audit-trail-header">
-          <span>Timestamp</span>
-          <span>Event</span>
-          <span>Details</span>
-        </div>
-        <div class="audit-row">
-          <span class="audit-time">Apr 18, 15:30</span>
-          <span class="audit-event">Position opened</span>
-          <span class="audit-value">LONG $5,000 @ $3,241.80</span>
-        </div>
-        <div class="audit-row">
-          <span class="audit-time">Apr 22, 14:22</span>
-          <span class="audit-event" style="color: var(--color-accent-orange); font-weight: 600;">
-            ⚡ ADL — Position closed
-          </span>
-          <span class="audit-value">SELL $5,000 @ $2,844.30</span>
-        </div>
-        <div class="audit-row" style="background: var(--color-bg-secondary);">
-          <span class="audit-time"></span>
-          <span class="audit-event" style="font-size: 11px; color: var(--color-text-muted);">
-            Reason: ADL_EXTREME_VOLATILITY
-          </span>
-          <span class="audit-value" style="color: var(--color-negative);">P&amp;L: -$782.00</span>
-        </div>
-      </div>
-
-      <div style="margin-top: var(--x3); font-size: 11px; color: var(--color-text-muted); line-height: 1.5;">
-        <strong style="color: var(--color-text-secondary);">Regulatory note:</strong> All unsolicited closures are recorded as trades with reason codes and appear in your account statement and trade history for full transparency.
-      </div>
-    </div>
-
-    <div class="position-footer">
-      <button class="btn btn-secondary">Download Statement</button>
-      <button class="btn btn-primary" onclick="window.location.href='index.html'">View Full Position</button>
-    </div>
-  </div>
-</div>
-
-<!-- ==================== SCREEN 7: CLOSURE REASON CODES REFERENCE ==================== -->
-<div class="section-label" style="margin-top: 64px;">Reference — Unsolicited Closure Reason Codes</div>
-
-<div class="portfolio-section" style="margin-top: var(--x3);">
-  <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-x2); overflow: hidden; box-shadow: var(--elevation-1);">
-    <div style="padding: var(--x4) var(--x5); border-bottom: 1px solid var(--color-border);">
-      <div style="font-size: var(--type-body-lg); font-weight: 700; color: var(--color-text-primary);">Closure Reason Codes</div>
-      <div style="font-size: var(--type-body-sm); color: var(--color-text-secondary); margin-top: 2px;">Every unsolicited closure includes a reason code in the API response and user-facing notification. All are surfaced as trades (not silent deletions) for regulatory compliance.</div>
-    </div>
-
-    <div style="padding: 0;">
-      <!-- LIQUIDATION -->
-      <div style="display: grid; grid-template-columns: 180px 1fr; border-bottom: 1px solid var(--color-border);">
-        <div style="padding: var(--x3) var(--x4); background: var(--color-negative-bg); display: flex; align-items: center; gap: var(--x2);">
-          <span style="font-family: monospace; font-size: 11px; font-weight: 700; color: var(--color-negative);">LIQUIDATION</span>
-        </div>
-        <div style="padding: var(--x3) var(--x4);">
-          <div style="font-size: 12px; font-weight: 600; color: var(--color-text-primary);">Full position liquidated</div>
-          <div style="font-size: 11px; color: var(--color-text-secondary); margin-top: 2px;">Mark price reached liquidation threshold. Position fully closed. Remaining balance returned.</div>
-        </div>
-      </div>
-
-      <!-- ADL_EXTREME_VOLATILITY -->
-      <div style="display: grid; grid-template-columns: 180px 1fr; border-bottom: 1px solid var(--color-border);">
-        <div style="padding: var(--x3) var(--x4); background: var(--color-accent-orange-bg); display: flex; align-items: center;">
-          <span style="font-family: monospace; font-size: 10px; font-weight: 700; color: var(--color-accent-orange);">ADL_EXTREME_VOLATILITY</span>
-        </div>
-        <div style="padding: var(--x3) var(--x4);">
-          <div style="font-size: 12px; font-weight: 600; color: var(--color-text-primary);">Auto-deleverage — extreme volatility</div>
-          <div style="font-size: 11px; color: var(--color-text-secondary); margin-top: 2px;">Position fully closed during extreme market conditions to maintain market stability. Entire position is closed — no partial reductions.</div>
-        </div>
-      </div>
-
-      <!-- ADL_COUNTERPARTY -->
-      <div style="display: grid; grid-template-columns: 180px 1fr; border-bottom: 1px solid var(--color-border);">
-        <div style="padding: var(--x3) var(--x4); background: var(--color-accent-orange-bg); display: flex; align-items: center;">
-          <span style="font-family: monospace; font-size: 10px; font-weight: 700; color: var(--color-accent-orange);">ADL_COUNTERPARTY</span>
-        </div>
-        <div style="padding: var(--x3) var(--x4);">
-          <div style="font-size: 12px; font-weight: 600; color: var(--color-text-primary);">Auto-deleverage — counterparty default</div>
-          <div style="font-size: 11px; color: var(--color-text-secondary); margin-top: 2px;">Position reduced as part of ADL queue when a counterparty was liquidated and the insurance fund couldn't cover the deficit.</div>
-        </div>
-      </div>
-
-      <!-- MARKET_CLOSURE -->
-      <div style="display: grid; grid-template-columns: 180px 1fr; border-bottom: 1px solid var(--color-border);">
-        <div style="padding: var(--x3) var(--x4); background: var(--color-accent-blue-bg); display: flex; align-items: center;">
-          <span style="font-family: monospace; font-size: 11px; font-weight: 700; color: var(--color-accent-blue);">MARKET_CLOSURE</span>
-        </div>
-        <div style="padding: var(--x3) var(--x4);">
-          <div style="font-size: 12px; font-weight: 600; color: var(--color-text-primary);">Market/instrument delisted</div>
-          <div style="font-size: 11px; color: var(--color-text-secondary); margin-top: 2px;">Instrument was delisted or market suspended. All open positions closed at last available mark price.</div>
-        </div>
-      </div>
-
-      <!-- COMPLIANCE_ACTION -->
-      <div style="display: grid; grid-template-columns: 180px 1fr;">
-        <div style="padding: var(--x3) var(--x4); background: var(--color-bg-secondary); display: flex; align-items: center;">
-          <span style="font-family: monospace; font-size: 11px; font-weight: 700; color: var(--color-text-secondary);">COMPLIANCE_ACTION</span>
-        </div>
-        <div style="padding: var(--x3) var(--x4);">
-          <div style="font-size: 12px; font-weight: 600; color: var(--color-text-primary);">Regulatory/compliance closure</div>
-          <div style="font-size: 11px; color: var(--color-text-secondary); margin-top: 2px;">Position closed due to regulatory requirement or compliance action. Contact support for details.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
   <div class="eyebrow">Liquidation Flow</div>
-  <p>3 screens: Push notification → In-app alert → Portfolio (liquidated position card)</p>
-  <p style="margin-top: 4px; color: var(--color-text-muted);">Full position close · Surfaced as a trade · Audit trail for regulatory transparency</p>
+  <p>2 screens: Client notification + Account statement</p>
   <div style="margin-top: 8px;">
     <a href="index.html">BTCUSDC Perp Execution</a>
     <span style="color: var(--color-text-muted); margin: 0 8px;">·</span>
