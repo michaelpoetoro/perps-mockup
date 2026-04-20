@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>eToro — BTCUSD Execution</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --color-bg: #FFFFFF;
+  --color-bg-secondary: #F5F7FA;
+  --color-surface: #FFFFFF;
+  --color-text-primary: #242628;
+  --color-text-secondary: #6B7280;
+  --color-text-muted: #9CA3AF;
+  --color-border: #E4E7F0;
+  --color-border-strong: #D1D5DB;
+  --color-brand-primary: #0EB12E;
+  --color-brand-primary-hover: #0A9824;
+  --color-brand-primary-bg: #E7F7EB;
+  --color-negative: #F23D40;
+  --color-negative-bg: #FDECEC;
+  --color-accent-blue: #2A84F7;
+  --color-accent-blue-bg: #E8F1FE;
+  --color-accent-purple: #8B5CF6;
+  --color-accent-purple-bg: #F0EBFE;
+  --color-trade-bg: #1B1D21;
+  --color-trade-bg-hover: #2A2D33;
+
+  --x1: 4px;  --x2: 8px;  --x3: 12px; --x4: 16px;
+  --x5: 20px; --x6: 24px; --x8: 32px; --x10: 40px; --x20: 80px;
+  --radius-x1: 4px; --radius-x2: 8px; --radius-x6: 24px; --radius-full: 9999px;
+  --elevation-1: 0 1px 2px rgba(16, 24, 40, 0.06), 0 1px 3px rgba(16, 24, 40, 0.04);
+  --elevation-2: 0 4px 8px -2px rgba(16, 24, 40, 0.08), 0 2px 4px -2px rgba(16, 24, 40, 0.04);
+  --elevation-3: 0 12px 20px -4px rgba(16, 24, 40, 0.10), 0 4px 8px -2px rgba(16, 24, 40, 0.06);
+  --type-caption: 11px; --type-body-sm: 13px; --type-body: 15px; --type-body-lg: 16px; --type-h4: 18px; --type-h3: 20px; --type-h2: 24px; --type-h1: 30px;
+}
+
+[data-theme="dark"] {
+  --color-bg: #13151C; --color-bg-secondary: #0E1014;
+  --color-surface: #1C1F29; --color-text-primary: #FFFFFF;
+  --color-text-secondary: #C7CBD6; --color-text-muted: #999FB2;
+  --color-border: #2E323F; --color-border-strong: #5A6178;
+  --color-brand-primary: #30CF4F; --color-brand-primary-hover: #25B842;
+  --color-brand-primary-bg: rgba(48, 207, 79, 0.14);
+  --color-negative: #E9544C; --color-negative-bg: rgba(233, 84, 76, 0.14);
+  --color-accent-blue: #5AA3FF; --color-accent-blue-bg: rgba(90, 163, 255, 0.14);
+  --color-accent-purple: #A78BFA; --color-accent-purple-bg: rgba(167, 139, 250, 0.14);
+  --color-trade-bg: #0F1116; --color-trade-bg-hover: #1B1D21;
+  --elevation-1: 0 1px 2px rgba(0,0,0,0.4);
+  --elevation-2: 0 4px 8px rgba(0,0,0,0.35);
+  --elevation-3: 0 12px 20px rgba(0,0,0,0.5);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: var(--type-body); line-height: 1.5;
+  color: var(--color-text-primary); background: var(--color-bg-secondary);
+  -webkit-font-smoothing: antialiased;
+}
+button { font-family: inherit; border: none; background: none; cursor: pointer; color: inherit; }
+
+.phone {
+  max-width: 430px; margin: 0 auto; background: var(--color-bg);
+  min-height: 100vh; position: relative;
+  border-left: 1px solid var(--color-border); border-right: 1px solid var(--color-border);
+}
+
+/* Status bar */
+.status-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: var(--x2) var(--x6); font-size: var(--type-caption); font-weight: 600;
+}
+.status-right { display: flex; gap: var(--x1); align-items: center; }
+.status-right svg { width: 14px; height: 14px; }
+
+/* Top bar */
+.top-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: var(--x3) var(--x6); background: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+}
+.top-bar-left { display: flex; align-items: center; gap: var(--x3); }
+.top-bar-icon { width: 24px; height: 24px; color: var(--color-text-primary); cursor: pointer; }
+.instrument-info { display: flex; align-items: center; gap: var(--x2); }
+.instrument-avatar {
+  width: 32px; height: 32px; border-radius: var(--radius-full);
+  background: #F7931A; display: flex; align-items: center; justify-content: center;
+  color: #FFFFFF; font-weight: 700; font-size: var(--type-body-sm);
+}
+.instrument-title { font-size: var(--type-body-lg); font-weight: 600; line-height: 1.2; }
+.instrument-subtitle { font-size: var(--type-caption); color: var(--color-text-secondary); margin-top: 2px; }
+.top-bar-actions { display: flex; gap: var(--x4); align-items: center; }
+.top-bar-actions svg { width: 22px; height: 22px; cursor: pointer; }
+
+/* Price */
+.price-header { padding: var(--x4) var(--x6) var(--x3); }
+.price-main { display: flex; align-items: baseline; gap: var(--x2); }
+.price-value { font-size: var(--type-h1); font-weight: 700; letter-spacing: -0.5px; animation: pulse 2s ease-in-out infinite; }
+.price-change { font-size: var(--type-body-sm); font-weight: 600; }
+.price-meta { display: flex; gap: var(--x4); margin-top: var(--x2); font-size: var(--type-caption); color: var(--color-text-secondary); }
+
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.75} }
+
+.text-positive { color: var(--color-brand-primary); }
+.text-negative { color: var(--color-negative); }
+
+/* Period chips */
+.period-chips { display: flex; gap: var(--x1); padding: 0 var(--x6) var(--x2); }
+.period-chip {
+  padding: 6px var(--x3); font-size: var(--type-caption); font-weight: 500;
+  color: var(--color-text-secondary); border-radius: var(--radius-full); transition: all 0.15s;
+}
+.period-chip.active { background: var(--color-text-primary); color: var(--color-bg); }
+
+/* Chart */
+.chart-area {
+  margin: 0 var(--x6); height: 200px; border-radius: var(--radius-x2);
+  position: relative; overflow: hidden;
+  background: linear-gradient(180deg, rgba(14,177,46,0.04) 0%, transparent 100%);
+}
+.chart-price-tag {
+  position: absolute; right: var(--x2); top: 20%;
+  background: var(--color-brand-primary); color: #FFF;
+  font-size: var(--type-caption); font-weight: 600;
+  padding: 2px var(--x2); border-radius: var(--radius-x1);
+}
+
+/* Leverage selector row */
+.leverage-section { padding: var(--x4) var(--x6) var(--x2); }
+.leverage-label { font-size: var(--type-caption); font-weight: 500; color: var(--color-text-secondary); margin-bottom: var(--x2); }
+.leverage-row { display: flex; gap: var(--x2); }
+.lev-pill {
+  flex: 1; padding: var(--x2) 0; text-align: center;
+  border: 1px solid var(--color-border); border-radius: var(--radius-x2);
+  color: var(--color-text-secondary); transition: all 0.15s; cursor: pointer;
+}
+.lev-pill .lev-num { font-size: var(--type-body-sm); font-weight: 600; display: block; }
+.lev-pill .lev-tag { font-size: 10px; display: block; margin-top: 2px; opacity: 0.75; }
+.lev-pill:hover { background: var(--color-bg-secondary); }
+.lev-pill.active { background: var(--color-brand-primary); color: #FFF; border-color: var(--color-brand-primary); }
+
+/* Instrument type row */
+.inst-type-row { display: flex; align-items: center; gap: var(--x2); flex-wrap: wrap; margin-top: var(--x3); padding: 0 var(--x6); }
+.badge {
+  display: inline-flex; align-items: center; gap: var(--x1);
+  padding: 3px var(--x2); border-radius: var(--radius-full); font-size: 10px; font-weight: 600;
+}
+.badge-dot { width: 6px; height: 6px; border-radius: var(--radius-full); }
+.badge-positive { background: var(--color-brand-primary-bg); color: var(--color-brand-primary); }
+.badge-positive .badge-dot { background: var(--color-brand-primary); }
+.badge-blue { background: var(--color-accent-blue-bg); color: var(--color-accent-blue); }
+.badge-blue .badge-dot { background: var(--color-accent-blue); }
+
+/* ============================================================
+   PERP PROMO BANNER — cross-sell from BTCUSD → BTCUSDC Perp
+   ============================================================ */
+.perp-promo {
+  margin: var(--x4) var(--x6);
+  padding: var(--x4) var(--x5);
+  background: linear-gradient(135deg, #1C1F29 0%, #2A2D33 60%, #3B2F5E 100%);
+  border-radius: var(--radius-x2);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.perp-promo:hover { transform: translateY(-1px); box-shadow: var(--elevation-2); }
+.perp-promo::before {
+  content: '';
+  position: absolute; top: -30px; right: -20px;
+  width: 100px; height: 100px;
+  background: radial-gradient(circle, rgba(139,92,246,0.2) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.perp-promo-tag {
+  display: inline-flex; align-items: center; gap: var(--x1);
+  background: rgba(139, 92, 246, 0.25);
+  color: #A78BFA;
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px;
+  padding: 3px 10px; border-radius: var(--radius-full);
+  margin-bottom: var(--x2);
+}
+.perp-promo-tag .pulse-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #A78BFA;
+  animation: promoPulse 1.5s ease-in-out infinite;
+}
+@keyframes promoPulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
+.perp-promo-title {
+  font-size: var(--type-body-lg); font-weight: 700; color: #FFFFFF;
+  display: flex; align-items: center; gap: var(--x2);
+}
+.perp-promo-title .arrow {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 24px; height: 24px; border-radius: var(--radius-full);
+  background: rgba(255,255,255,0.1); transition: background 0.15s;
+}
+.perp-promo:hover .perp-promo-title .arrow { background: rgba(255,255,255,0.2); }
+.perp-promo-sub {
+  font-size: var(--type-body-sm); color: rgba(255,255,255,0.65);
+  margin-top: var(--x1); line-height: 1.4;
+}
+.perp-promo-chips {
+  display: flex; gap: var(--x2); margin-top: var(--x3); flex-wrap: wrap;
+}
+.perp-promo-chip {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 4px 10px; border-radius: var(--radius-full);
+  background: rgba(255,255,255,0.08); font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.8);
+}
+.perp-promo-chip svg { width: 12px; height: 12px; }
+
+/* Tabs */
+.tabs {
+  display: flex; gap: var(--x1); padding: var(--x1);
+  margin: var(--x4) var(--x6) 0;
+  background: var(--color-bg-secondary); border-radius: var(--radius-full);
+}
+.tab {
+  flex: 1; padding: 8px var(--x3); font-size: 13px; font-weight: 500;
+  color: var(--color-text-secondary); border-radius: var(--radius-full);
+  text-align: center; transition: all 0.15s;
+}
+.tab.active {
+  color: var(--color-text-primary); font-weight: 600;
+  background: var(--color-surface); box-shadow: var(--elevation-1);
+}
+
+/* Stats overview */
+.stats-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: var(--x3);
+  padding: var(--x4) var(--x6);
+}
+.stat-item { }
+.stat-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--color-text-muted); font-weight: 500; }
+.stat-value { font-size: var(--type-body); font-weight: 600; color: var(--color-text-primary); margin-top: 2px; }
+
+/* About section */
+.about-section { padding: var(--x3) var(--x6) var(--x4); }
+.about-text { font-size: var(--type-body-sm); color: var(--color-text-secondary); line-height: 1.6; }
+
+/* Buy/Sell row */
+.buy-sell-row {
+  position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 100%; max-width: 430px;
+  background: var(--color-bg); border-top: 1px solid var(--color-border);
+  padding: var(--x4) var(--x6) calc(var(--x4) + env(safe-area-inset-bottom));
+  display: flex; gap: var(--x3); z-index: 40;
+}
+.trade-btn {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  gap: var(--x2); padding: var(--x3) var(--x5);
+  background: var(--color-trade-bg); border-radius: var(--radius-full);
+  color: #FFFFFF; font-weight: 700; font-size: var(--type-body-lg);
+  transition: all 0.15s; border: 2px solid transparent;
+}
+.trade-btn:hover { background: var(--color-trade-bg-hover); }
+.trade-indicator {
+  width: 24px; height: 24px; border-radius: var(--radius-full);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: var(--type-body-sm);
+}
+.trade-btn.buy .trade-indicator { background: var(--color-brand-primary); }
+.trade-btn.buy:hover { border-color: var(--color-brand-primary); }
+.trade-btn.sell .trade-indicator { background: var(--color-negative); }
+.trade-btn.sell:hover { border-color: var(--color-negative); }
+.trade-btn-label { display: flex; flex-direction: column; align-items: flex-start; }
+.trade-btn-price { font-size: var(--type-caption); font-weight: 500; opacity: 0.7; }
+
+.bottom-spacer { height: var(--x20); }
+
+/* Theme toggle */
+.theme-toggle {
+  position: fixed; top: var(--x4); right: var(--x4); z-index: 100;
+  width: 40px; height: 40px; border-radius: var(--radius-full);
+  background: var(--color-surface); border: 1px solid var(--color-border);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: var(--elevation-2);
+}
+.theme-toggle svg { width: 20px; height: 20px; }
+.theme-toggle .icon-moon { display: block; }
+.theme-toggle .icon-sun { display: none; }
+[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+
+/* Page footer */
+.page-footer {
+  max-width: 430px; margin: 0 auto;
+  padding: var(--x6) var(--x6) var(--x10);
+  border-top: 1px solid var(--color-border); text-align: center;
+}
+.page-footer .eyebrow {
+  font-size: 10px; text-transform: uppercase; letter-spacing: 1px;
+  color: var(--color-brand-primary); font-weight: 700; margin-bottom: var(--x2);
+}
+.page-footer p { font-size: var(--type-caption); color: var(--color-text-secondary); line-height: 1.6; }
+.page-footer a {
+  display: inline-block; margin-top: var(--x3); font-size: var(--type-caption);
+  color: var(--color-accent-blue); font-weight: 500; text-decoration: none;
+}
+.page-footer a:hover { text-decoration: underline; }
+
+/* Annotation label */
+.annotation {
+  display: flex; align-items: center; gap: var(--x2);
+  padding: var(--x3) var(--x6);
+  font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px;
+  color: var(--color-accent-blue); font-weight: 700;
+}
+.annotation::before {
+  content: ''; flex: 0 0 auto;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--color-accent-blue);
+  animation: annPulse 1.5s infinite;
+}
+@keyframes annPulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+</style>
+</head>
+<body>
+
+<!-- Theme Toggle -->
+<button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+  <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+</button>
+
+<div class="phone">
+
+  <!-- Status Bar -->
+  <div class="status-bar">
+    <span>20:15</span>
+    <div class="status-right">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M2 22h2v-2H2v2zm4 0h2v-6H6v6zm4 0h2v-10h-2v10zm4 0h2V8h-2v14zm4 0h2V4h-2v18z"/></svg>
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 4C7 4 2.73 6.11 0 9.27l12 14.54 12-14.54C21.27 6.11 17 4 12 4z"/></svg>
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 5H5c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-3h2v-4h-2V7c0-1.1-.9-2-2-2zm-2 10H5V9h10v6z"/></svg>
+    </div>
+  </div>
+
+  <!-- Top Bar — BTCUSD (regular crypto asset) -->
+  <div class="top-bar">
+    <div class="top-bar-left">
+      <svg class="top-bar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      <div class="instrument-info">
+        <div class="instrument-avatar" style="background: #F7931A;">₿</div>
+        <div>
+          <div class="instrument-title">BTCUSD</div>
+          <div class="instrument-subtitle">Bitcoin · Crypto</div>
+        </div>
+      </div>
+    </div>
+    <div class="top-bar-actions">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+    </div>
+  </div>
+
+  <!-- Price Header -->
+  <div class="price-header">
+    <div class="price-main">
+      <span class="price-value">$84,231.50</span>
+      <span class="price-change text-positive">+2.34%</span>
+      <span style="font-size: var(--type-caption); color: var(--color-text-muted);">24h</span>
+    </div>
+    <div class="price-meta">
+      <span>H: <strong style="color: var(--color-text-primary); font-weight: 500;">$85,100.00</strong></span>
+      <span>L: <strong style="color: var(--color-text-primary); font-weight: 500;">$81,443.20</strong></span>
+      <span>Spread: <strong style="color: var(--color-text-primary); font-weight: 500;">0.75%</strong></span>
+    </div>
+  </div>
+
+  <!-- Period Chips -->
+  <div class="period-chips">
+    <button class="period-chip">1H</button>
+    <button class="period-chip active">1D</button>
+    <button class="period-chip">1W</button>
+    <button class="period-chip">1M</button>
+    <button class="period-chip">YTD</button>
+  </div>
+
+  <!-- Chart -->
+  <div class="chart-area">
+    <svg viewBox="0 0 400 200" preserveAspectRatio="none" style="width: 100%; height: 100%;">
+      <defs>
+        <linearGradient id="cg" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#0EB12E" stop-opacity="0.25"/>
+          <stop offset="100%" stop-color="#0EB12E" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <path d="M0,160 Q20,150 40,140 T80,120 T120,130 T160,100 T200,90 T240,95 T280,70 T320,60 T360,55 T400,45"
+            fill="none" stroke="#0EB12E" stroke-width="2"/>
+      <path d="M0,160 Q20,150 40,140 T80,120 T120,130 T160,100 T200,90 T240,95 T280,70 T320,60 T360,55 T400,45 L400,200 L0,200 Z"
+            fill="url(#cg)"/>
+    </svg>
+    <div class="chart-price-tag">84,231.50</div>
+  </div>
+
+  <!-- Leverage row (standard eToro ×1/×2/×5) -->
+  <div class="leverage-section">
+    <div class="leverage-label">Leverage</div>
+    <div class="leverage-row">
+      <div class="lev-pill active" onclick="selectLev(this, 1)">
+        <span class="lev-num">×1</span>
+        <span class="lev-tag">Real</span>
+      </div>
+      <div class="lev-pill" onclick="selectLev(this, 2)">
+        <span class="lev-num">×2</span>
+        <span class="lev-tag">CFD</span>
+      </div>
+      <div class="lev-pill" onclick="selectLev(this, 5)">
+        <span class="lev-num">×5</span>
+        <span class="lev-tag">CFD</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Instrument type badges -->
+  <div class="inst-type-row">
+    <span class="badge badge-positive"><span class="badge-dot"></span> Real crypto</span>
+    <span class="badge badge-blue"><span class="badge-dot"></span> Non-expiry</span>
+    <span style="font-size: 10px; color: var(--color-text-muted);">You own the underlying BTC</span>
+  </div>
+
+  <!-- ============================================================
+       PERP CROSS-SELL BANNER — redirects to BTCUSDC perp
+       ============================================================ -->
+  <div class="annotation">Cross-sell entry point — visible on BTCUSD instrument page</div>
+
+  <div class="perp-promo" onclick="window.location.href='index.html'">
+    <div class="perp-promo-tag">
+      <span class="pulse-dot"></span>
+      NEW — Perpetual contracts
+    </div>
+    <div class="perp-promo-title">
+      Trade BTCUSDC Perp
+      <span class="arrow">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </span>
+    </div>
+    <div class="perp-promo-sub">
+      ×10 leverage · 0.25% spread · Funding every 8h
+    </div>
+    <div class="perp-promo-chips">
+      <span class="perp-promo-chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        ×10 Leverage
+      </span>
+      <span class="perp-promo-chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        No expiry
+      </span>
+      <span class="perp-promo-chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+        USDC settled
+      </span>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab active">Overview</button>
+    <button class="tab">Stats</button>
+    <button class="tab">Feed</button>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-grid">
+    <div class="stat-item">
+      <div class="stat-label">Market Cap</div>
+      <div class="stat-value">$1.67T</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-label">24h Volume</div>
+      <div class="stat-value">$48.2B</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-label">Circulating Supply</div>
+      <div class="stat-value">19.83M BTC</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-label">52w Range</div>
+      <div class="stat-value">$58.2K – $109.1K</div>
+    </div>
+  </div>
+
+  <!-- About -->
+  <div class="about-section">
+    <div class="about-text">
+      Bitcoin is a decentralised digital currency. It operates on a peer-to-peer network without the need for intermediaries. BTC has a fixed supply cap of 21 million coins.
+    </div>
+  </div>
+
+  <div class="bottom-spacer"></div>
+
+  <!-- Buy / Sell -->
+  <div class="buy-sell-row">
+    <button class="trade-btn sell">
+      <span class="trade-indicator">S</span>
+      <span class="trade-btn-label">
+        <span>SELL</span>
+        <span class="trade-btn-price">$83,915.53</span>
+      </span>
+    </button>
+    <button class="trade-btn buy">
+      <span class="trade-indicator">B</span>
+      <span class="trade-btn-label">
+        <span>BUY</span>
+        <span class="trade-btn-price">$84,547.47</span>
+      </span>
+    </button>
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="page-footer">
+  <div class="eyebrow">eToro — BTCUSD Execution Screen</div>
+  <p>Regular crypto asset page with cross-sell banner to BTCUSDC Perpetual</p>
+  <p style="margin-top: 4px; color: var(--color-text-muted);">Clicking the promo banner → redirects to BTCUSDC Perp execution screen</p>
+  <a href="index.html">View BTCUSDC Perp Mockup →</a>
+  <div style="margin-top: 8px;">
+    <a href="analysis.html">Competitive Analysis</a>
+    <span style="color: var(--color-text-muted); margin: 0 8px;">·</span>
+    <a href="usd-to-perps-journey.html">Full User Journey</a>
+  </div>
+</div>
+
+<script>
+function toggleTheme() {
+  const cur = document.documentElement.getAttribute('data-theme');
+  document.documentElement.setAttribute('data-theme', cur === 'dark' ? 'light' : 'dark');
+}
+
+function selectLev(el, val) {
+  document.querySelectorAll('.lev-pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+}
+</script>
+</body>
+</html>
