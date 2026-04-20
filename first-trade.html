@@ -615,14 +615,13 @@ function onAccept() {
   };
   console.log('[CONSENT LOGGED]', JSON.stringify(consentRecord, null, 2));
 
-  // Dismiss popup
+  // Dismiss popup, show toast, then redirect
   document.getElementById('popup-overlay').classList.add('accepted');
   document.getElementById('behind').classList.add('unlocked');
 
-  // Show success toast
   const toast = document.getElementById('consent-toast');
   toast.classList.add('show');
-  setTimeout(() => { toast.classList.remove('show'); }, 3000);
+  setTimeout(() => { window.location.href = 'index.html'; }, 1500);
 }
 
 // Prevent dismissal via Escape
