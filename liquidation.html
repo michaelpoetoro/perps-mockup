@@ -773,9 +773,9 @@ button { font-family: inherit; border: none; background: none; cursor: pointer; 
           <span class="notif-app">eToro</span>
           <span class="notif-time">now</span>
         </div>
-        <div class="notif-title">⚡ ETHUSDC position partially closed (ADL)</div>
+        <div class="notif-title">⚡ ETHUSDC position closed (ADL)</div>
         <div class="notif-body">
-          Due to extreme market volatility, 40% of your ETHUSDC LONG (×10) was automatically reduced. Remaining position: 60%. Tap for details.
+          Due to extreme market volatility, your ETHUSDC LONG (×10) was automatically closed. Loss: -$782.00 (-15.64%). Tap for details.
         </div>
       </div>
     </div>
@@ -807,7 +807,7 @@ button { font-family: inherit; border: none; background: none; cursor: pointer; 
     <div class="alert-banner adl">
       <div class="alert-banner-header">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-        <span class="title">Auto-Deleverage (ADL)</span>
+        <span class="title">Position Closed — ADL</span>
         <span class="time">2:22 PM</span>
       </div>
       <div class="alert-banner-body">
@@ -824,40 +824,31 @@ button { font-family: inherit; border: none; background: none; cursor: pointer; 
         </div>
 
         <div style="font-size: 12px; color: var(--color-text-primary); font-weight: 600; margin-bottom: var(--x3);">
-          40% of your position was automatically reduced due to extreme market conditions.
-        </div>
-
-        <!-- Partial close visual -->
-        <div class="partial-indicator">
-          <div style="flex: 1;">
-            <div style="font-size: 11px; font-weight: 600; color: var(--color-text-primary); margin-bottom: var(--x1);">Position reduced</div>
-            <div class="partial-bar-track">
-              <div class="partial-bar-fill" style="width: 60%;"></div>
-            </div>
-            <div class="partial-labels">
-              <span>Closed: 40%</span>
-              <span style="color: var(--color-text-primary); font-weight: 600;">Remaining: 60%</span>
-            </div>
-          </div>
+          Your position was fully closed due to extreme market conditions (auto-deleverage).
         </div>
 
         <div class="alert-details" style="margin-top: var(--x3);">
           <div class="alert-detail-item">
-            <div class="alert-detail-label">Closed Amount</div>
-            <div class="alert-detail-value">$2,000.00</div>
+            <div class="alert-detail-label">Invested</div>
+            <div class="alert-detail-value">$5,000.00</div>
           </div>
           <div class="alert-detail-item">
             <div class="alert-detail-label">Close Price</div>
-            <div class="alert-detail-value">$2,844.30</div>
+            <div class="alert-detail-value" style="color: var(--color-negative);">$2,844.30</div>
+          </div>
+          <div class="alert-detail-item">
+            <div class="alert-detail-label">Entry Price</div>
+            <div class="alert-detail-value">$3,241.80</div>
           </div>
           <div class="alert-detail-item">
             <div class="alert-detail-label">Realized P&amp;L</div>
-            <div class="alert-detail-value" style="color: var(--color-negative);">-$312.80</div>
+            <div class="alert-detail-value" style="color: var(--color-negative);">-$782.00</div>
           </div>
-          <div class="alert-detail-item">
-            <div class="alert-detail-label">Remaining Exposure</div>
-            <div class="alert-detail-value">$3,000.00</div>
-          </div>
+        </div>
+
+        <div class="alert-loss-row">
+          <div class="alert-loss-label">Realized Loss</div>
+          <div class="alert-loss-value">-$782.00</div>
         </div>
 
         <!-- Reason code -->
@@ -866,7 +857,7 @@ button { font-family: inherit; border: none; background: none; cursor: pointer; 
         </div>
 
         <div style="font-size: 11px; color: var(--color-text-secondary); margin-top: var(--x3); line-height: 1.5;">
-          During extreme market events, positions may be automatically reduced to maintain market stability. This is recorded as a trade in your account history. Your remaining 60% position is still active.
+          During extreme market events, positions may be automatically closed to maintain market stability. This is recorded as a trade in your account history with a full audit trail.
         </div>
 
         <div class="alert-actions">
@@ -879,20 +870,20 @@ button { font-family: inherit; border: none; background: none; cursor: pointer; 
 </div>
 
 <!-- ==================== SCREEN 6: ADL POSITION IN PORTFOLIO ==================== -->
-<div class="section-label orange" style="margin-top: 48px;">Screen 6 — Portfolio (ADL-Reduced Position, still active)</div>
+<div class="section-label orange" style="margin-top: 48px;">Screen 6 — Portfolio (ADL-Closed Position)</div>
 
 <div class="portfolio-section">
   <div class="portfolio-header">
     <div>
       <div class="portfolio-title">Portfolio</div>
-      <div class="portfolio-subtitle">1 open position · Partially reduced via ADL</div>
+      <div class="portfolio-subtitle">Closed positions · Auto-deleveraged</div>
     </div>
   </div>
 
   <div class="position-card adl">
     <div class="adl-strip">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-      AUTO-DELEVERAGED · 40% closed
+      AUTO-DELEVERAGED · Position closed
       <span class="liq-time">Apr 22, 2026 · 02:22 PM</span>
     </div>
 
@@ -904,41 +895,38 @@ button { font-family: inherit; border: none; background: none; cursor: pointer; 
             <span class="position-name">ETHUSDC</span>
             <span class="badge badge-positive">LONG</span>
             <span class="badge badge-purple">PERP</span>
-            <span class="badge" style="background: var(--color-accent-orange-bg); color: var(--color-accent-orange);">ADL 40%</span>
+            <span class="badge" style="background: var(--color-accent-orange-bg); color: var(--color-accent-orange);">ADL</span>
+            <span class="badge badge-negative">CLOSED</span>
             <span style="font-size: var(--type-caption); color: var(--color-text-muted);">×10</span>
           </div>
-          <div class="position-meta">Opened Apr 18, 2026 · ADL event Apr 22, 2026</div>
+          <div class="position-meta">Opened Apr 18, 2026 · Closed Apr 22, 2026 (auto)</div>
         </div>
       </div>
       <div class="position-pnl">
         <div style="display: flex; align-items: baseline; gap: var(--x2);">
-          <span class="pnl-value" style="color: var(--color-negative);">-$481.20</span>
-          <span class="pnl-pct" style="color: var(--color-negative);">(-16.04%)</span>
+          <span class="pnl-value" style="color: var(--color-negative);">-$782.00</span>
+          <span class="pnl-pct" style="color: var(--color-negative);">(-15.64%)</span>
         </div>
-        <div class="pnl-caption">Current $2,894.10 · Remaining 60%</div>
+        <div class="pnl-caption">Closed at $2,844.30 · ADL</div>
       </div>
     </div>
 
-    <div class="position-details" style="grid-template-columns: repeat(5, 1fr);">
+    <div class="position-details">
       <div>
-        <div class="detail-label">Original Invested</div>
+        <div class="detail-label">Invested</div>
         <div class="detail-value">$5,000.00</div>
-      </div>
-      <div>
-        <div class="detail-label">Current Invested</div>
-        <div class="detail-value">$3,000.00</div>
       </div>
       <div>
         <div class="detail-label">Entry Price</div>
         <div class="detail-value">$3,241.80</div>
       </div>
       <div>
-        <div class="detail-label">ADL Close Price</div>
+        <div class="detail-label">Close Price</div>
         <div class="detail-value" style="color: var(--color-accent-orange); font-weight: 600;">$2,844.30</div>
       </div>
       <div>
-        <div class="detail-label">ADL Realized</div>
-        <div class="detail-value" style="color: var(--color-negative); font-weight: 600;">-$312.80</div>
+        <div class="detail-label">Realized P&amp;L</div>
+        <div class="detail-value" style="color: var(--color-negative); font-weight: 600;">-$782.00</div>
       </div>
     </div>
 
@@ -962,16 +950,16 @@ button { font-family: inherit; border: none; background: none; cursor: pointer; 
         <div class="audit-row">
           <span class="audit-time">Apr 22, 14:22</span>
           <span class="audit-event" style="color: var(--color-accent-orange); font-weight: 600;">
-            ⚡ ADL — Partial close (40%)
+            ⚡ ADL — Position closed
           </span>
-          <span class="audit-value">SELL $2,000 @ $2,844.30</span>
+          <span class="audit-value">SELL $5,000 @ $2,844.30</span>
         </div>
         <div class="audit-row" style="background: var(--color-bg-secondary);">
           <span class="audit-time"></span>
           <span class="audit-event" style="font-size: 11px; color: var(--color-text-muted);">
             Reason: ADL_EXTREME_VOLATILITY
           </span>
-          <span class="audit-value" style="color: var(--color-negative);">P&amp;L: -$312.80</span>
+          <span class="audit-value" style="color: var(--color-negative);">P&amp;L: -$782.00</span>
         </div>
       </div>
 
@@ -1016,7 +1004,7 @@ button { font-family: inherit; border: none; background: none; cursor: pointer; 
         </div>
         <div style="padding: var(--x3) var(--x4);">
           <div style="font-size: 12px; font-weight: 600; color: var(--color-text-primary);">Auto-deleverage — extreme volatility</div>
-          <div style="font-size: 11px; color: var(--color-text-secondary); margin-top: 2px;">Position partially or fully reduced during extreme market conditions to maintain market stability. Can be partial (position remains open at reduced size) or full.</div>
+          <div style="font-size: 11px; color: var(--color-text-secondary); margin-top: 2px;">Position fully closed during extreme market conditions to maintain market stability. Entire position is closed — no partial reductions.</div>
         </div>
       </div>
 
