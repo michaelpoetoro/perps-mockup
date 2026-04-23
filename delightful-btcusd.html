@@ -213,11 +213,11 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
       <div class="field">
         <div class="field-header"><span class="field-label">Amount</span><span class="field-hint">Avail: <strong>$12,450</strong></span></div>
         <input type="text" class="field-input" value="1,000">
-        <div class="quick-amounts"><button class="amount-chip">$100</button><button class="amount-chip">$500</button><button class="amount-chip active">$1,000</button><button class="amount-chip">$5,000</button></div>
+        <div class="quick-amounts"><button class="amount-chip" onclick="selAmount(this)">$100</button><button class="amount-chip" onclick="selAmount(this)">$500</button><button class="amount-chip active" onclick="selAmount(this)">$1,000</button><button class="amount-chip" onclick="selAmount(this)">$5,000</button></div>
       </div>
       <div class="field">
         <div class="field-header"><span class="field-label">Leverage</span></div>
-        <div class="lev-pills"><div class="lev-pill active"><span class="lev-num">×1</span><span class="lev-tag">Real</span></div><div class="lev-pill"><span class="lev-num">×2</span><span class="lev-tag">CFD</span></div><div class="lev-pill"><span class="lev-num">×10</span><span class="lev-tag">CFD</span></div></div>
+        <div class="lev-pills"><div class="lev-pill active" onclick="selLev(this)"><span class="lev-num">×1</span><span class="lev-tag">Real</span></div><div class="lev-pill" onclick="selLev(this)"><span class="lev-num">×2</span><span class="lev-tag">CFD</span></div><div class="lev-pill" onclick="selLev(this)"><span class="lev-num">×10</span><span class="lev-tag">CFD</span></div></div>
       </div>
       <div class="sheet-upsell" onclick="window.location.href='delightful.html'">
         <div class="upsell-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
@@ -236,7 +236,8 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 <div class="page-footer"><p><a href="delightful.html">BTCUSDC Perp</a> · <a href="delightful-liquidation.html">Liquidation</a> · <a href="delightful-first-trade.html">First Trade</a> · <a href="index.html">eToro DS Version</a></p></div>
 
 <script>
-function selLev(el){document.querySelectorAll('.lev-pill').forEach(p=>p.classList.remove('active'));el.classList.add('active')}
+function selLev(el){el.closest('.lev-pills').querySelectorAll('.lev-pill').forEach(p=>p.classList.remove('active'));el.classList.add('active')}
+function selAmount(el){el.closest('.quick-amounts').querySelectorAll('.amount-chip').forEach(c=>c.classList.remove('active'));el.classList.add('active');document.querySelector('.field-input').value=el.textContent.replace('$','')}
 function openSheet(d){document.getElementById('sheet').classList.add('open');setDir(d);document.body.style.overflow='hidden'}
 function closeSheet(){document.getElementById('sheet').classList.remove('open');document.body.style.overflow=''}
 function setDir(d){const b=document.getElementById('btn-buy'),s=document.getElementById('btn-sell'),sub=document.getElementById('submit');b.className=d==='buy'?'active-buy':'';s.className=d==='sell'?'active-sell':'';sub.className='submit-btn '+(d==='buy'?'buy-mode':'sell-mode');sub.textContent=d==='buy'?'Open BUY Position':'Open SELL Position'}
