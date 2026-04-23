@@ -130,14 +130,14 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
       <div class="liq-loss"><div class="liq-loss-label">Realized Loss</div><div class="liq-loss-value">-$987.40</div></div>
       <div class="liq-note">Position auto-closed at the liquidation threshold. Remaining $12.60 credited to your account.</div>
       <div class="liq-actions">
-        <button class="btn btn-outline" onclick="window.location.href='delightful.html'">Trade Again</button>
-        <button class="btn btn-solid">View Statement</button>
+        <a href="delightful.html" class="btn btn-outline" style="text-decoration:none;text-align:center;display:flex;align-items:center;justify-content:center">Trade Again</a>
+        <a href="#statement" class="btn btn-solid" style="text-decoration:none;text-align:center;display:flex;align-items:center;justify-content:center">View Statement</a>
       </div>
     </div>
   </div>
 </div>
 
-<div class="statement">
+<div class="statement" id="statement">
   <div class="stmt-label">Account Statement · Closed Trades · April 2026</div>
   <div class="stmt-card fade-up">
     <div class="stmt-pos">
