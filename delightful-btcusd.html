@@ -142,6 +142,31 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .page-footer{max-width:430px;margin:0 auto;padding:var(--s-24) var(--s-20) var(--s-48);text-align:center;border-top:1px solid var(--border-1)}
 .page-footer p{font-size:var(--text-xs);color:var(--text-3);line-height:1.6}
 .page-footer a{color:var(--blue);text-decoration:none;font-weight:500}
+/* Portfolio — My Positions */
+.positions-section{padding:0 var(--s-20) var(--s-20)}
+.positions-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--s-12)}
+.positions-title{font-size:var(--text-xs);text-transform:uppercase;letter-spacing:0.08em;color:var(--text-3);font-weight:600}
+.positions-link{font-size:var(--text-xs);color:var(--green);font-weight:600;text-decoration:none;opacity:0.85}
+.pos-card{background:var(--bg-raised);border:1px solid var(--border-1);border-radius:var(--radius-md);padding:var(--s-16)}
+.pos-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--s-12)}
+.pos-asset{display:flex;align-items:center;gap:var(--s-8)}
+.pos-asset-icon{width:24px;height:24px;border-radius:var(--radius-full);display:flex;align-items:center;justify-content:center;font-family:var(--font-data);font-weight:700;font-size:10px;color:var(--bg-deep)}
+.pos-name{font-family:var(--font-data);font-size:var(--text-sm);font-weight:700;color:var(--text-1)}
+.pos-badge{font-family:var(--font-data);font-size:10px;font-weight:700;padding:var(--s-2) var(--s-6);border-radius:var(--radius-full);letter-spacing:0.04em}
+.pos-badge.long{background:var(--green-dim);color:var(--green)}
+.pos-badge.short{background:var(--red-dim);color:var(--red)}
+.pos-pnl{text-align:right}
+.pos-pnl-value{font-family:var(--font-data);font-size:var(--text-lg);font-weight:700;letter-spacing:-0.02em;font-variant-numeric:tabular-nums}
+.pos-pnl-value.gain{color:var(--green)}.pos-pnl-value.loss{color:var(--red)}
+.pos-pnl-pct{font-family:var(--font-data);font-size:10px;font-weight:600;margin-top:var(--s-2)}
+.pos-pnl-pct.gain{color:var(--green)}.pos-pnl-pct.loss{color:var(--red)}
+.pos-meta{display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--s-4);padding:var(--s-8) 0;border-top:1px solid var(--border-1);border-bottom:1px solid var(--border-1);margin-bottom:var(--s-12)}
+.pos-stat{display:flex;flex-direction:column;gap:var(--s-2)}
+.pos-stat-label{font-size:10px;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-3);font-weight:600}
+.pos-stat-value{font-family:var(--font-data);font-size:var(--text-xs);font-weight:700;color:var(--text-2);font-variant-numeric:tabular-nums}
+.pos-holding{background:var(--bg-hover);border-radius:var(--radius-sm);padding:var(--s-8) var(--s-12);display:flex;align-items:center;justify-content:space-between}
+.pos-holding-label{font-size:10px;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-3);font-weight:600}
+.pos-holding-value{font-family:var(--font-data);font-size:var(--text-sm);font-weight:700;color:var(--text-2)}
 </style>
 </head>
 <body>
@@ -195,6 +220,47 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
     <div class="stat"><div class="stat-label">52w Range</div><div class="stat-value">$58.2K–109.1K</div></div>
   </div>
 
+  <!-- Portfolio — My Positions -->
+  <div class="positions-section fade-up">
+    <div class="positions-header">
+      <span class="positions-title">My Positions</span>
+      <a class="positions-link" href="#">See all →</a>
+    </div>
+    <div class="pos-card">
+      <div class="pos-top">
+        <div class="pos-asset">
+          <div class="pos-asset-icon" style="background:#F7931A;">₿</div>
+          <div>
+            <div class="pos-name">BTCUSD</div>
+            <div style="margin-top:3px;"><span class="pos-badge long">BUY ×1</span></div>
+          </div>
+        </div>
+        <div class="pos-pnl">
+          <div class="pos-pnl-value gain">+$43.80</div>
+          <div class="pos-pnl-pct gain">+4.38%</div>
+        </div>
+      </div>
+      <div class="pos-meta">
+        <div class="pos-stat">
+          <span class="pos-stat-label">Entry</span>
+          <span class="pos-stat-value">83,275.00</span>
+        </div>
+        <div class="pos-stat">
+          <span class="pos-stat-label">Current</span>
+          <span class="pos-stat-value">84,231.50</span>
+        </div>
+        <div class="pos-stat">
+          <span class="pos-stat-label">Size</span>
+          <span class="pos-stat-value">$1,000</span>
+        </div>
+      </div>
+      <div class="pos-holding">
+        <span class="pos-holding-label">Holding cost</span>
+        <span class="pos-holding-value">None (×1 Real BTC)</span>
+      </div>
+    </div>
+  </div>
+
   <div class="bottom-pad"></div>
 
   <div class="trade-row">
@@ -221,7 +287,7 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
       </div>
       <div class="sheet-upsell" onclick="window.location.href='delightful.html'">
         <div class="upsell-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
-        <div><div class="upsell-title">Want ×10? Try BTCUSDC Perp →</div><div class="upsell-sub">0.25% spread · Funding every 8h</div></div>
+        <div><div class="upsell-title">×10 Fixed · BTCUSDC Perpetual →</div><div class="upsell-sub">USDC settled · Funding every 8h · Eligibility required</div></div>
       </div>
       <div class="summary">
         <div class="sum-row"><span class="k">Position</span><span class="v">$1,000</span></div>

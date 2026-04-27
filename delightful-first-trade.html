@@ -184,7 +184,7 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
             <div class="risk-icon funding"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
             <div class="risk-content">
               <div class="risk-title">Funding Rate</div>
-              <div class="risk-desc">Passed through from Perpetuals.com — <strong>can erode your balance even in a flat market.</strong></div>
+              <div class="risk-desc">Pure pass-through from Perpetuals.com, no mark-up — <strong>can erode your USDC balance even in a flat market. Shown as a separate line from P&L — not blended.</strong></div>
             </div>
           </div>
 
@@ -192,7 +192,7 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
             <div class="risk-icon liq"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
             <div class="risk-content">
               <div class="risk-title">Automatic Liquidation</div>
-              <div class="risk-desc">Balance below minimum = <strong>automatic closure, no warning.</strong></div>
+              <div class="risk-desc">Balance below minimum = <strong>automatic closure at venue close price, including slippage.</strong> Negative balance protection applies — you cannot owe more than your deposit.</div>
             </div>
           </div>
 
@@ -207,16 +207,25 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 
         <!-- Consent -->
         <div class="consent-section">
-          <div class="consent-box" id="consent-box">
+          <!-- Checkbox 1: General risk consent -->
+          <div class="consent-box" id="consent-box-1">
             <label>
-              <div class="cb-wrap"><input type="checkbox" id="consent-cb" onchange="onConsent()"><div class="cb-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div></div>
-              <span>I understand that <strong>ADL losses at Perpetuals.com are passed through to my position</strong> and I consent to this as a condition of trading Perpetuals.</span>
+              <div class="cb-wrap"><input type="checkbox" id="consent-cb-1" onchange="onConsent()"><div class="cb-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div></div>
+              <span>I have read and understood all risk disclosures above. I accept that <strong>losses may exceed my initial deposit</strong>, that <strong>funding charges will debit my USDC balance directly</strong> (shown as a separate line from P&L), and that my position may be automatically liquidated without warning.</span>
+            </label>
+          </div>
+
+          <!-- Checkbox 2: ADL-specific consent — separate, explicitly required, not pre-ticked -->
+          <div class="consent-box" id="consent-box-2" style="margin-top:var(--s-8)">
+            <label>
+              <div class="cb-wrap"><input type="checkbox" id="consent-cb-2" onchange="onConsent()"><div class="cb-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div></div>
+              <span>I specifically understand and <strong>consent to Auto-Deleveraging (ADL)</strong> — in extreme conditions, Perpetuals.com may reduce eToro's omnibus position and any resulting losses will be passed directly to my account at the ADL price.</span>
             </label>
           </div>
 
           <button class="cta disabled" id="cta" onclick="onAccept()" disabled>I Understand and Accept</button>
-          <div class="cta-note">By proceeding, I confirm I have read and understood all risk disclosures above.</div>
-          <div class="version-tag">Disclosure v1.0 · April 2026</div>
+          <div class="cta-note">Both consents are required and will be logged to your account (CID level).</div>
+          <div class="version-tag">Disclosure v1.0 · April 2026 · Negative balance protection applies per ESMA Feb 2026</div>
         </div>
 
       </div>
@@ -230,22 +239,27 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 
 <script>
 function onConsent(){
-  const c=document.getElementById('consent-cb').checked;
+  const c1=document.getElementById('consent-cb-1').checked;
+  const c2=document.getElementById('consent-cb-2').checked;
   const btn=document.getElementById('cta');
-  const box=document.getElementById('consent-box');
-  btn.classList.toggle('disabled',!c);
-  btn.classList.toggle('enabled',c);
-  btn.disabled=!c;
-  box.classList.toggle('checked',c);
+  document.getElementById('consent-box-1').classList.toggle('checked',c1);
+  document.getElementById('consent-box-2').classList.toggle('checked',c2);
+  const both=c1&&c2;
+  btn.classList.toggle('disabled',!both);
+  btn.classList.toggle('enabled',both);
+  btn.disabled=!both;
 }
 function onAccept(){
-  if(!document.getElementById('consent-cb').checked)return;
+  const c1=document.getElementById('consent-cb-1').checked;
+  const c2=document.getElementById('consent-cb-2').checked;
+  if(!c1||!c2)return;
   console.log('[CONSENT]',JSON.stringify({
     client_id:'demo_user_12345',
     popup_version:'1.0',
     timestamp_utc:new Date().toISOString(),
     consent_granted:true,
-    adl_checkbox_ticked:true
+    general_risks_checkbox:true,
+    adl_checkbox_ticked:true  // separate, explicitly required, not pre-ticked
   },null,2));
   document.getElementById('popup-overlay').classList.add('accepted');
   const t=document.getElementById('toast');

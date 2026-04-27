@@ -346,6 +346,38 @@ input:focus { outline: none; }
   margin-top: var(--s-4);
   line-height: 1.5;
 }
+/* 8h funding schedule breakdown */
+.fund-schedule {
+  margin-top: var(--s-12);
+  border-top: 1px solid var(--border-1);
+  padding-top: var(--s-8);
+  display: flex; flex-direction: column; gap: var(--s-4);
+}
+.fund-row {
+  display: flex; align-items: center; gap: var(--s-8);
+  padding: var(--s-4) 0;
+  font-family: var(--font-data);
+  font-size: var(--text-xs);
+}
+.fund-win-time {
+  min-width: 72px; color: var(--text-3); font-weight: 500;
+}
+.fund-win-rate { flex: 1; font-weight: 600; color: var(--text-2); }
+.fund-win-status { font-size: 10px; color: var(--text-3); font-variant-numeric: tabular-nums; }
+.fund-win-debit { font-size: var(--text-xs); font-weight: 700; font-family: var(--font-data); font-variant-numeric: tabular-nums; color: var(--red); }
+.fund-win-credit { font-size: var(--text-xs); font-weight: 700; font-family: var(--font-data); font-variant-numeric: tabular-nums; color: var(--green); }
+.fund-row.settled .fund-win-time,
+.fund-row.settled .fund-win-rate { opacity: 0.55; }
+.fund-row.fund-next {
+  background: oklch(0.78 0.15 80 / 0.07);
+  border: 1px solid oklch(0.78 0.15 80 / 0.22);
+  border-radius: var(--radius-sm);
+  padding: var(--s-8) var(--s-10);
+  margin: var(--s-2) 0;
+}
+.fund-row.fund-next .fund-win-time { color: var(--amber); font-weight: 700; opacity: 1; }
+.fund-row.fund-next .fund-win-rate { color: var(--green); font-weight: 700; opacity: 1; }
+.fund-win-status.live { color: var(--amber); font-family: var(--font-data); font-weight: 700; }
 
 /* ============================================================
    Volume Tiers (compact)
@@ -563,6 +595,18 @@ input:focus { outline: none; }
   font-size: 10px; color: var(--text-3); text-align: center;
   margin-top: var(--s-12); line-height: 1.6;
 }
+/* Order type picker */
+.ot-row { display: flex; gap: var(--s-6); flex-wrap: wrap; }
+.ot-btn {
+  padding: var(--s-6) var(--s-12);
+  background: var(--bg-raised); border: 1px solid var(--border-1);
+  border-radius: var(--radius-full);
+  font-family: var(--font-data); font-size: var(--text-xs); font-weight: 600;
+  color: var(--text-3); transition: all 0.15s; cursor: pointer;
+}
+.ot-btn:hover { border-color: var(--border-2); color: var(--text-2); }
+.ot-btn.active { background: var(--green-dim); border-color: var(--green); color: var(--green); }
+.ot-btn.active-sell-mode { background: var(--red-dim); border-color: var(--red); color: var(--red); }
 
 /* ============================================================
    Entry animations
@@ -580,6 +624,110 @@ input:focus { outline: none; }
 .fade-up:nth-child(6) { animation-delay: 0.3s; }
 .fade-up:nth-child(7) { animation-delay: 0.35s; }
 .fade-up:nth-child(8) { animation-delay: 0.4s; }
+
+/* ============================================================
+   Portfolio — My Positions
+   ============================================================ */
+.positions-section {
+  padding: 0 var(--s-20) var(--s-20);
+}
+.positions-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: var(--s-12);
+}
+.positions-title {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+  font-weight: 600;
+}
+.positions-link {
+  font-size: var(--text-xs);
+  color: var(--green);
+  font-weight: 600;
+  text-decoration: none;
+  opacity: 0.85;
+}
+.positions-link:hover { opacity: 1; }
+.pos-card {
+  background: var(--bg-raised);
+  border: 1px solid var(--border-1);
+  border-radius: var(--radius-md);
+  padding: var(--s-16);
+}
+.pos-top {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: var(--s-12);
+}
+.pos-asset { display: flex; align-items: center; gap: var(--s-8); }
+.pos-asset-icon {
+  width: 24px; height: 24px; border-radius: var(--radius-full);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-data); font-weight: 700; font-size: 10px;
+  color: var(--bg-deep);
+}
+.pos-name {
+  font-family: var(--font-data);
+  font-size: var(--text-sm); font-weight: 700; color: var(--text-1);
+}
+.pos-badge {
+  font-family: var(--font-data); font-size: 10px; font-weight: 700;
+  padding: var(--s-2) var(--s-6); border-radius: var(--radius-full);
+  letter-spacing: 0.04em;
+}
+.pos-badge.long { background: var(--green-dim); color: var(--green); }
+.pos-badge.short { background: var(--red-dim); color: var(--red); }
+.pos-pnl { text-align: right; }
+.pos-pnl-value {
+  font-family: var(--font-data); font-size: var(--text-lg); font-weight: 700;
+  letter-spacing: -0.02em; font-variant-numeric: tabular-nums;
+}
+.pos-pnl-value.gain { color: var(--green); }
+.pos-pnl-value.loss { color: var(--red); }
+.pos-pnl-pct {
+  font-family: var(--font-data); font-size: 10px; font-weight: 600;
+  margin-top: var(--s-2);
+}
+.pos-pnl-pct.gain { color: var(--green); }
+.pos-pnl-pct.loss { color: var(--red); }
+.pos-meta {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: var(--s-4);
+  padding: var(--s-8) 0;
+  border-top: 1px solid var(--border-1);
+  border-bottom: 1px solid var(--border-1);
+  margin-bottom: var(--s-12);
+}
+.pos-stat { display: flex; flex-direction: column; gap: var(--s-2); }
+.pos-stat-label {
+  font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--text-3); font-weight: 600;
+}
+.pos-stat-value {
+  font-family: var(--font-data); font-size: var(--text-xs); font-weight: 700;
+  color: var(--text-2); font-variant-numeric: tabular-nums;
+}
+/* Funding countdown pill on open perp position */
+.pos-funding {
+  background: oklch(0.78 0.15 80 / 0.06);
+  border: 1px solid oklch(0.78 0.15 80 / 0.22);
+  border-radius: var(--radius-sm);
+  padding: var(--s-8) var(--s-12);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.pos-funding-left { display: flex; flex-direction: column; gap: var(--s-2); }
+.pos-funding-label {
+  font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--amber); font-weight: 700;
+}
+.pos-funding-detail { font-size: 10px; color: var(--text-3); line-height: 1.4; }
+.pos-funding-detail strong { color: var(--red); font-family: var(--font-data); }
+.pos-funding-timer {
+  font-family: var(--font-data); font-size: var(--text-xl); font-weight: 700;
+  color: var(--amber); letter-spacing: 0.02em; font-variant-numeric: tabular-nums;
+  min-width: 80px; text-align: right;
+}
 
 /* Footer */
 .page-footer {
@@ -707,7 +855,25 @@ input:focus { outline: none; }
         <span class="panel-badge">Every 8h</span>
       </div>
       <div class="funding-value">+0.0100%</div>
-      <div class="funding-hint">Longs pay shorts · ~$0.10 per $1,000 at next settlement</div>
+      <div class="funding-hint">Pure pass-through · No mark-up · Debits USDC balance · next in <span id="fund-next-inline" style="color:var(--amber);font-family:var(--font-data);font-weight:700;">—</span></div>
+      <!-- 8h window breakdown -->
+      <div class="fund-schedule">
+        <div class="fund-row settled" id="fund-w0">
+          <span class="fund-win-time">00:00 UTC</span>
+          <span class="fund-win-rate">+0.0082%</span>
+          <span class="fund-win-debit" id="fund-w0-impact">−$0.82</span>
+        </div>
+        <div class="fund-row settled" id="fund-w1">
+          <span class="fund-win-time">08:00 UTC</span>
+          <span class="fund-win-rate">+0.0095%</span>
+          <span class="fund-win-debit" id="fund-w1-impact">−$0.95</span>
+        </div>
+        <div class="fund-row fund-next" id="fund-w2">
+          <span class="fund-win-time">16:00 UTC</span>
+          <span class="fund-win-rate">+0.0100%</span>
+          <span class="fund-win-status live" id="fund-sched-timer">→ —:—:—</span>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -724,6 +890,50 @@ input:focus { outline: none; }
       <div class="tier-row"><span>Gold</span><span>$500K–2M</span><span>0.15%</span></div>
       <div class="tier-row"><span>Platinum</span><span>$2M–10M</span><span>0.10%</span></div>
       <div class="tier-row"><span>Diamond</span><span>&gt; $10M</span><span>0.05%</span></div>
+    </div>
+  </div>
+
+  <!-- Portfolio — My Positions -->
+  <div class="positions-section fade-up">
+    <div class="positions-header">
+      <span class="positions-title">My Positions</span>
+      <a class="positions-link" href="#">See all →</a>
+    </div>
+    <div class="pos-card">
+      <div class="pos-top">
+        <div class="pos-asset">
+          <div class="pos-asset-icon" style="background:#F7931A;">₿</div>
+          <div>
+            <div class="pos-name">BTCUSDC</div>
+            <div style="margin-top:3px;"><span class="pos-badge long">LONG ×10</span></div>
+          </div>
+        </div>
+        <div class="pos-pnl">
+          <div class="pos-pnl-value gain">+$175.25</div>
+          <div class="pos-pnl-pct gain">+17.53%</div>
+        </div>
+      </div>
+      <div class="pos-meta">
+        <div class="pos-stat">
+          <span class="pos-stat-label">Entry</span>
+          <span class="pos-stat-value">82,480.00</span>
+        </div>
+        <div class="pos-stat">
+          <span class="pos-stat-label">Current</span>
+          <span class="pos-stat-value">84,231.50</span>
+        </div>
+        <div class="pos-stat">
+          <span class="pos-stat-label">Size</span>
+          <span class="pos-stat-value">$1,000</span>
+        </div>
+      </div>
+      <div class="pos-funding">
+        <div class="pos-funding-left">
+          <span class="pos-funding-label">⚡ Next Funding</span>
+          <span class="pos-funding-detail">+0.0100% · est. <strong>~$1.00</strong> USDC debit (separate from P&L)</span>
+        </div>
+        <span class="pos-funding-timer" id="pos-fund-timer">—:—:—</span>
+      </div>
     </div>
   </div>
 
@@ -758,6 +968,16 @@ input:focus { outline: none; }
         <button id="btn-sell" onclick="setDir('sell')">SELL</button>
       </div>
 
+      <div class="field" style="margin-bottom:var(--s-12)">
+        <div class="field-header"><span class="field-label">Order Type</span></div>
+        <div class="ot-row" id="ot-row">
+          <button class="ot-btn active" onclick="selOT(this)">Market</button>
+          <button class="ot-btn" onclick="selOT(this)">Limit</button>
+          <button class="ot-btn" onclick="selOT(this)">Stop Loss</button>
+          <button class="ot-btn" onclick="selOT(this)">Take Profit</button>
+        </div>
+      </div>
+
       <div class="field">
         <div class="field-header">
           <span class="field-label">Amount</span>
@@ -780,8 +1000,8 @@ input:focus { outline: none; }
         <div class="leverage-display">
           <span class="lev-value">×10</span>
           <div>
-            <div class="lev-text"><strong>Perpetual</strong></div>
-            <div class="lev-text">Funding every 8h</div>
+            <div class="lev-text"><strong>Fixed · Perpetual Contract (MVP)</strong></div>
+            <div class="lev-text">Funding every 8h · USDC settled</div>
           </div>
         </div>
       </div>
@@ -791,10 +1011,11 @@ input:focus { outline: none; }
         <div class="sum-row"><span class="k">Invested</span><span class="v" id="s-inv">$1,000</span></div>
         <div class="sum-row"><span class="k">Spread (0.25%)</span><span class="v" id="s-spread">$25.00</span></div>
         <div class="sum-row"><span class="k">Est. daily funding</span><span class="v" id="s-fund">~$2.31</span></div>
+        <div class="sum-row" style="font-size:10px;padding-top:var(--s-2)"><span class="k" style="color:var(--amber)">⚡ Funding debits</span><span class="v" style="color:var(--amber);font-size:10px">USDC balance · separate from P&L</span></div>
       </div>
 
       <button class="submit-btn buy-mode" id="submit" onclick="closeSheet()">Open BUY Position</button>
-      <p class="disclaimer">Perpetual contracts involve significant risk. You may lose more than your invested amount.</p>
+      <p class="disclaimer">Perpetuals carry significant risk. Losses may exceed your deposit. Funding charges debit your USDC balance every 8h and are shown as a separate line from P&L. Negative balance protection applies.</p>
     </div>
   </div>
 </div>
@@ -861,6 +1082,11 @@ function setAmt(el, v) {
   calc();
 }
 
+function selOT(el) {
+  el.closest('.ot-row').querySelectorAll('.ot-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+}
+
 function calc() {
   const raw = parseFloat(document.getElementById('amt').value.replace(/[^0-9.]/g,'')) || 0;
   amt = raw;
@@ -873,6 +1099,98 @@ function calc() {
 }
 
 document.addEventListener('keydown', e => { if(e.key==='Escape') closeSheet(); });
+
+// Live funding countdown — UTC-aligned to 00:00 / 08:00 / 16:00
+(function() {
+  // Position size $10,000 (invested $1,000 at ×10 leverage)
+  const POSITION_SIZE = 10000;
+  const WINDOWS = [
+    { h: 0,  label: '00:00 UTC', rateNum: 0.000082, rate: '+0.0082%' },
+    { h: 8,  label: '08:00 UTC', rateNum: 0.000095, rate: '+0.0095%' },
+    { h: 16, label: '16:00 UTC', rateNum: 0.000100, rate: '+0.0100%' },
+  ];
+
+  function fmtImpact(rateNum) {
+    // Positive rate = longs pay (debit). Negative = longs receive (credit).
+    const dollars = Math.abs(rateNum * POSITION_SIZE);
+    const formatted = '$' + dollars.toFixed(2);
+    return rateNum >= 0
+      ? { text: '−' + formatted, cls: 'fund-win-debit' }
+      : { text: '+' + formatted, cls: 'fund-win-credit' };
+  }
+
+  function buildSchedule(nextIdx, timeStr) {
+    WINDOWS.forEach((w, i) => {
+      const row = document.getElementById('fund-w' + i);
+      if (!row) return;
+      const timeEl = row.querySelector('.fund-win-time');
+      const rateEl = row.querySelector('.fund-win-rate');
+      if (timeEl) timeEl.textContent = w.label;
+      if (rateEl) rateEl.textContent = w.rate;
+      if (i === nextIdx) {
+        // Upcoming window
+        row.className = 'fund-row fund-next';
+        let statEl = row.querySelector('.fund-win-status, .fund-win-debit, .fund-win-credit, [id$="-impact"]');
+        if (!statEl) { statEl = document.createElement('span'); row.appendChild(statEl); }
+        statEl.className = 'fund-win-status live';
+        const impact = fmtImpact(w.rateNum);
+        statEl.textContent = '→ ' + timeStr + ' (' + impact.text + ')';
+      } else {
+        // Settled window
+        row.className = 'fund-row settled';
+        const impactId = 'fund-w' + i + '-impact';
+        let impactEl = document.getElementById(impactId);
+        if (!impactEl) {
+          impactEl = document.createElement('span');
+          impactEl.id = impactId;
+          row.appendChild(impactEl);
+        }
+        const impact = fmtImpact(w.rateNum);
+        impactEl.className = impact.cls;
+        impactEl.textContent = impact.text;
+        // Remove any stale status spans
+        row.querySelectorAll('.fund-win-status').forEach(el => el.remove());
+      }
+    });
+    const st = document.getElementById('fund-sched-timer');
+    if (st) st.textContent = '→ ' + timeStr;
+  }
+
+  function tick() {
+    const now = new Date();
+    const totalSec = now.getUTCHours() * 3600 + now.getUTCMinutes() * 60 + now.getUTCSeconds();
+
+    let nextIdx = -1, remSec = 0;
+    for (let i = 0; i < WINDOWS.length; i++) {
+      const wSec = WINDOWS[i].h * 3600;
+      if (wSec > totalSec) { nextIdx = i; remSec = wSec - totalSec; break; }
+    }
+    if (nextIdx === -1) { nextIdx = 0; remSec = 86400 - totalSec; } // wraps to 00:00 next day
+
+    const h = Math.floor(remSec / 3600);
+    const m = Math.floor((remSec % 3600) / 60);
+    const s = remSec % 60;
+    const timeStr = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+
+    // Position card timer
+    const posTimer = document.getElementById('pos-fund-timer');
+    if (posTimer) posTimer.textContent = timeStr;
+
+    // Funding panel inline
+    const inline = document.getElementById('fund-next-inline');
+    if (inline) inline.textContent = timeStr;
+
+    // Stats row
+    const sub = document.querySelector('.stat-sub');
+    if (sub) sub.textContent = `Next in ${h}h ${String(m).padStart(2,'0')}m`;
+
+    // Schedule rows
+    buildSchedule(nextIdx, timeStr);
+  }
+
+  tick();
+  setInterval(tick, 1000);
+})();
 </script>
 </body>
 </html>

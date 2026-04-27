@@ -121,14 +121,16 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
         <div class="liq-pair-icon">₿</div>
         <div><div class="liq-pair-name">BTCUSDC</div><div class="liq-pair-badges"><span class="badge badge-green">LONG</span><span style="font-size:10px;color:var(--text-3);">PERP ×10</span></div></div>
       </div>
-      <div class="liq-metrics">
+      <div class="liq-metrics" style="grid-template-columns:1fr 1fr 1fr">
         <div class="liq-metric"><div class="liq-metric-label">Entry</div><div class="liq-metric-value">$84,231.50</div></div>
-        <div class="liq-metric"><div class="liq-metric-label">Liquidation</div><div class="liq-metric-value" style="color:var(--red)">$75,536.12</div></div>
+        <div class="liq-metric"><div class="liq-metric-label">Liq. Trigger</div><div class="liq-metric-value" style="color:var(--red)">$75,536.12</div></div>
+        <div class="liq-metric"><div class="liq-metric-label">Venue Close<br><span style="font-size:9px;font-weight:400;color:var(--text-3)">Perpetuals.com</span></div><div class="liq-metric-value" style="color:var(--red)">$75,312.80</div></div>
+        <div class="liq-metric"><div class="liq-metric-label">Slippage</div><div class="liq-metric-value" style="color:var(--red)">-$22.32</div></div>
         <div class="liq-metric"><div class="liq-metric-label">Invested</div><div class="liq-metric-value">$1,000.00</div></div>
-        <div class="liq-metric"><div class="liq-metric-label">Exposure</div><div class="liq-metric-value">$10,000.00</div></div>
+        <div class="liq-metric"><div class="liq-metric-label">ADL Price</div><div class="liq-metric-value" style="color:var(--text-3);font-size:var(--text-sm)">N/A — std. liq.</div></div>
       </div>
       <div class="liq-loss"><div class="liq-loss-label">Realized Loss</div><div class="liq-loss-value">-$987.40</div></div>
-      <div class="liq-note">Position auto-closed at the liquidation threshold. Remaining $12.60 credited to your account.</div>
+      <div class="liq-note">Closed at Perpetuals.com venue price <strong>$75,312.80</strong> (trigger $75,536.12 · slippage $22.32). <strong>Negative balance protection applied</strong> — your balance cannot go below zero. Audit ref: <strong>#LIQ-2026-04-21-48291</strong> logged to your account.</div>
       <div class="liq-actions">
         <a href="delightful.html" class="btn btn-outline" style="text-decoration:none;text-align:center;display:flex;align-items:center;justify-content:center">Trade Again</a>
         <a href="#statement" class="btn btn-solid" style="text-decoration:none;text-align:center;display:flex;align-items:center;justify-content:center">View Statement</a>
@@ -150,15 +152,16 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
     <div class="stmt-details">
       <div><div class="stmt-d-label">Invested</div><div class="stmt-d-value">$1,000.00</div></div>
       <div><div class="stmt-d-label">Entry</div><div class="stmt-d-value">$84,231.50</div></div>
-      <div><div class="stmt-d-label">Liq. Price</div><div class="stmt-d-value" style="color:var(--red);font-weight:600">$75,536.12</div></div>
-      <div><div class="stmt-d-label">Type</div><div class="stmt-d-value" style="color:var(--red);font-weight:600">Liquidation</div></div>
+      <div><div class="stmt-d-label">Venue Close</div><div class="stmt-d-value" style="color:var(--red);font-weight:600">$75,312.80</div></div>
+      <div><div class="stmt-d-label">Slippage</div><div class="stmt-d-value" style="color:var(--red);font-weight:600">-$22.32</div></div>
     </div>
     <div class="stmt-fees">
-      <div class="fee-row"><span class="k">Price P&L</span><span class="v" style="color:var(--red)">-$1,031.82</span></div>
+      <div class="fee-row"><span class="k">Price P&L</span><span class="v" style="color:var(--red)">-$1,009.50</span></div>
+      <div class="fee-row"><span class="k">Slippage</span><span class="v" style="color:var(--red)">-$22.32</span></div>
       <div class="fee-row"><span class="k">Spread (0.25%)</span><span class="v">-$25.05</span></div>
-      <div class="fee-row"><span class="k">Funding (4d)</span><span class="v">-$30.03</span></div>
+      <div class="fee-row" style="border-top:1px dashed var(--border-1);margin-top:var(--s-6);padding-top:var(--s-6)"><span class="k" style="color:var(--amber)">⚡ Funding charges (USDC balance)</span><span class="v" style="color:var(--amber)">-$30.03</span></div>
       <div class="fee-row total"><span class="k">Net P&L</span><span class="v" style="color:var(--red)">-$987.40</span></div>
-      <div class="fee-row"><span class="k">Returned</span><span class="v">$12.60</span></div>
+      <div class="fee-row"><span class="k">Returned (NBP applied)</span><span class="v">$12.60</span></div>
     </div>
   </div>
 
